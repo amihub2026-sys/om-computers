@@ -17,6 +17,12 @@ import { Cart } from './features/cart/cart/cart';
 import { Checkout } from './features/checkout/checkout/checkout';
 import { OrderSuccess } from './features/orders/order-success/order-success';
 import { MyOrders } from './features/orders/my-orders/my-orders';
+import { AdminLogin } from './admin/admin-login/admin-login';
+import { AdminDashboard } from './admin/admin-dashboard/admin-dashboard';
+import { ManageProducts } from './admin/manage-products/manage-products';
+import { ManageServices } from './admin/manage-services/manage-services';
+import { ManageOrders } from './admin/manage-orders/manage-orders';
+import { ManageBookings } from './admin/manage-bookings/manage-bookings';
 export const routes: Routes = [
   {
     path: '',
@@ -87,6 +93,30 @@ export const routes: Routes = [
 {
   path: 'my-orders',
   component: MyOrders,
+},
+{
+  path: 'admin/login',
+  component: AdminLogin,
+},
+{
+  path: 'admin/dashboard',
+  component: AdminDashboard,
+},
+{
+  path: 'admin/products',
+  component: ManageProducts,
+},
+{
+  path: 'admin/services',
+  component: ManageServices,
+},
+{
+  path: 'admin/orders',
+  component: ManageOrders,
+},
+{
+  path: 'admin/bookings',
+  component: ManageBookings,
 },
     ],
   },
