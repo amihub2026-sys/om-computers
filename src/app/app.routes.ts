@@ -9,6 +9,7 @@ import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
 import { ServiceBooking } from './features/services/service-booking/service-booking';
 import { BookingSuccess } from './features/services/booking-success/booking-success';
+import { MyBookings } from './features/services/my-bookings/my-bookings';
 export const routes: Routes = [
   {
     path: '',
@@ -49,6 +50,10 @@ export const routes: Routes = [
 {
   path: 'booking-success',
   component: BookingSuccess,
+},
+{
+  path: 'my-bookings',
+  component: MyBookings,
 }
     ],
   },
