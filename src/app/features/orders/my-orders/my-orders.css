@@ -1,0 +1,97 @@
+.orders-page{
+    padding:70px 7%;
+    background:#eef4ff;
+    min-height:100vh;
+}
+
+.page-header{
+    text-align:center;
+    margin-bottom:35px;
+}
+
+.page-header h1{
+    font-size:42px;
+    color:#081126;
+    margin-bottom:10px;
+}
+
+.page-header p{
+    color:#64748b;
+}
+
+.orders-table{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+th,
+td{
+    padding:18px;
+    text-align:left;
+}
+
+tbody tr{
+    border-bottom:1px solid #eef2f7;
+}
+
+.processing,
+.shipped,
+.delivered{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.processing{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+.shipped{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.delivered{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+.view-btn{
+    display:inline-block;
+    background:#2563eb;
+    color:#fff;
+    text-decoration:none;
+    padding:8px 16px;
+    border-radius:8px;
+    font-weight:600;
+}
+
+.view-btn:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:768px){
+
+    .orders-table{
+        overflow-x:auto;
+    }
+
+    table{
+        min-width:850px;
+    }
+
+}
