@@ -1,4 +1,319 @@
-<div class="home-container">
-  <h1>Welcome to OM Computers</h1>
-  <p>Your trusted destination for PC Sales and Services.</p>
+<section class="hero">
+  <div class="hero-content">
+    <span class="badge">OM Computers</span>
+
+    <h1>Computer Sales & Service Experts</h1>
+
+    <p>
+      Buy new computers, laptops, accessories and get trusted PC repair,
+      upgrades, software installation and doorstep support.
+    </p>
+
+    <div class="hero-buttons">
+      <a class="primary-btn" routerLink="/products">Shop Products</a>
+      <a class="secondary-btn" routerLink="/services">Book Service</a>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     FEATURED CATEGORIES
+========================= -->
+
+<section class="categories-section">
+  <div class="section-title">
+    <h2>Explore Our Categories</h2>
+    <p>Everything you need for your computer and technology requirements.</p>
+  </div>
+
+  <div class="categories-grid">
+    <div class="category-item">
+      <img src="/assets/images/categories/laptop.png" alt="Laptops">
+      <h3>Laptops</h3>
+    </div>
+
+    <div class="category-item">
+      <img src="/assets/images/categories/desktop.png" alt="Desktop PCs">
+      <h3>Desktop PCs</h3>
+    </div>
+
+    <div class="category-item">
+      <img src="/assets/images/categories/accessories.png" alt="Accessories">
+      <h3>Accessories</h3>
+    </div>
+
+    <div class="category-item">
+      <img src="/assets/images/categories/repair.png" alt="Repair">
+      <h3>Repair</h3>
+    </div>
+
+    <div class="category-item">
+      <img src="/assets/images/categories/software.png" alt="Software">
+      <h3>Software</h3>
+    </div>
+
+    <div class="category-item">
+      <img src="/assets/images/categories/network.png" alt="Networking">
+      <h3>Networking</h3>
+    </div>
+  </div>
+</section>
+
+<!-- =========================
+     Featured Products
+========================= -->
+
+<section class="products-section">
+
+  <div class="section-title">
+    <h2>Featured Products</h2>
+    <p>Explore our latest computers, accessories and office solutions.</p>
+  </div>
+
+<div class="products-wrapper">
+
+  <button class="scroll-btn left" (click)="scrollLeft()">
+    &#10094;
+  </button>
+
+  <div class="products-grid" #productsContainer>
+
+    <!-- Product Card -->
+    <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+
+     <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+     <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+     <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+     <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+ <div class="product-card">
+
+      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+      <div class="product-content">
+        <span class="product-category">Desktop</span>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <h4>₹45,999</h4>
+
+        <a routerLink="/products" class="view-btn">
+          View Details
+        </a>
+      </div>
+
+    </div>
+  </div>
+  
+
+  <button class="scroll-btn right" (click)="scrollRight()">
+    &#10095;
+  </button>
+
 </div>
+</section>
+
+<section class="services-section">
+
+  <div class="section-title">
+    <h2>Our Services</h2>
+    <p>Professional computer solutions for homes, offices and businesses.</p>
+  </div>
+
+  <div class="services-slider">
+
+    <div class="services-track">
+
+      <div class="service-item">
+        <img src="assets/images/categories/laptop.png" alt="">
+        <h3>Laptop Repair</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/desktop.png" alt="">
+        <h3>Desktop Service</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/windows.png" alt="">
+        <h3>Windows Installation</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/network.png" alt="">
+        <h3>Networking</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/printer.jpg" alt="">
+        <h3>Printer Support</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/recovery.jpg" alt="">
+        <h3>Data Recovery</h3>
+      </div>
+
+      <!-- Duplicate for infinite loop -->
+
+      <div class="service-item">
+        <img src="assets/images/categories/laptop.png" alt="">
+        <h3>Laptop Repair</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/desktop.png" alt="">
+        <h3>Desktop Service</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/windows.png" alt="">
+        <h3>Windows Installation</h3>
+      </div>
+
+      <div class="service-item">
+        <img src="assets/images/categories/network.png" alt="">
+        <h3>Networking</h3>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+<section class="why-choose-section">
+
+  <div class="section-title">
+    <h2>Why Choose Us</h2>
+    <p>Your trusted partner for computer sales and professional IT services.</p>
+  </div>
+
+  <div class="why-grid">
+
+    <div class="why-item">
+      <img src="assets/images/icons/expert.png" alt="Expert Team">
+      <h3>Expert Technicians</h3>
+      <p>Certified professionals with years of experience in computer servicing.</p>
+    </div>
+
+    <div class="why-item">
+      <img src="assets/images/icons/support.png" alt="Support">
+      <h3>Fast Support</h3>
+      <p>Quick diagnosis and same-day repair services for most issues.</p>
+    </div>
+
+    <div class="why-item">
+      <img src="assets/images/icons/quality.png" alt="Quality">
+      <h3>Quality Products</h3>
+      <p>We supply genuine branded computers, laptops and accessories.</p>
+    </div>
+
+    <div class="why-item">
+      <img src="assets/images/icons/pricing.png" alt="Affordable">
+      <h3>Affordable Pricing</h3>
+      <p>Transparent pricing with no hidden charges and best value.</p>
+    </div>
+
+    <div class="why-item">
+      <img src="assets/images/icons/home-service.png" alt="Doorstep">
+      <h3>Doorstep Service</h3>
+      <p>Convenient on-site support for homes and businesses.</p>
+    </div>
+
+    <div class="why-item">
+      <img src="assets/images/icons/warranty.png" alt="Warranty">
+      <h3>Service Warranty</h3>
+      <p>Reliable repairs backed by quality assurance and warranty.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<a
+  href="https://wa.me/919789154220"
+  class="whatsapp-float"
+  target="_blank"
+  aria-label="Chat on WhatsApp"
+>
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
