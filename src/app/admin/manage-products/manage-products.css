@@ -157,3 +157,16 @@ td img{
     min-width:800px;
   }
 }
+.add-btn{
+  display:inline-block;
+  background:#2563eb;
+  color:#fff;
+  text-decoration:none;
+  padding:12px 22px;
+  border-radius:10px;
+  font-weight:700;
+}
+
+.add-btn:hover{
+  background:#1d4ed8;
+}
