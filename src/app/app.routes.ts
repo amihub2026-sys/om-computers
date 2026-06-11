@@ -24,6 +24,7 @@ import { ManageServices } from './admin/manage-services/manage-services';
 import { ManageOrders } from './admin/manage-orders/manage-orders';
 import { ManageBookings } from './admin/manage-bookings/manage-bookings';
 import { AddProduct } from './admin/add-product/add-product';
+import { AddService } from './admin/add-service/add-service';
 export const routes: Routes = [
   {
     path: '',
@@ -122,6 +123,10 @@ export const routes: Routes = [
 {
   path: 'admin/products/add',
   component: AddProduct,
+},
+{
+  path: 'admin/services/add',
+  component: AddService,
 }
     ],
   },
