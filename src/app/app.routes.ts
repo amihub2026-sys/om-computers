@@ -7,6 +7,8 @@ import { ServiceList } from './features/services/service-list/service-list';
 import { ServiceDetails } from './features/services/service-details/service-details';
 import { Login } from './features/auth/login/login';
 import { Register } from './features/auth/register/register';
+import { ServiceBooking } from './features/services/service-booking/service-booking';
+import { BookingSuccess } from './features/services/booking-success/booking-success';
 export const routes: Routes = [
   {
     path: '',
@@ -39,6 +41,14 @@ export const routes: Routes = [
 {
   path: 'register',
   component: Register,
+},
+{
+  path: 'service-booking/:id',
+  component: ServiceBooking,
+},
+{
+  path: 'booking-success',
+  component: BookingSuccess,
 }
     ],
   },
