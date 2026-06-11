@@ -1,0 +1,96 @@
+.bookings-page{
+    padding:70px 6%;
+    background:#eef4ff;
+    min-height:100vh;
+}
+
+.page-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.page-header h1{
+    font-size:42px;
+    color:#081126;
+    margin-bottom:10px;
+}
+
+.page-header p{
+    color:#64748b;
+}
+
+.booking-table{
+    background:#fff;
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+thead{
+    background:#2563eb;
+    color:#fff;
+}
+
+th,
+td{
+    padding:18px;
+    text-align:left;
+}
+
+tbody tr{
+    border-bottom:1px solid #eef2f7;
+}
+
+.pending,
+.progress,
+.completed{
+    padding:6px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.pending{
+    background:#fef3c7;
+    color:#b45309;
+}
+
+.progress{
+    background:#dbeafe;
+    color:#2563eb;
+}
+
+.completed{
+    background:#dcfce7;
+    color:#15803d;
+}
+
+button{
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    padding:10px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:768px){
+
+    .booking-table{
+        overflow-x:auto;
+    }
+
+    table{
+        min-width:700px;
+    }
+
+}
