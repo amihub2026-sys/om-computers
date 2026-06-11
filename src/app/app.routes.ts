@@ -11,6 +11,7 @@ import { ServiceBooking } from './features/services/service-booking/service-book
 import { BookingSuccess } from './features/services/booking-success/booking-success';
 import { MyBookings } from './features/services/my-bookings/my-bookings';
 import { UserDashboard } from './features/user/user-dashboard/user-dashboard';
+import { About } from './features/about/about/about';
 export const routes: Routes = [
   {
     path: '',
@@ -59,6 +60,9 @@ export const routes: Routes = [
 {
   path: 'dashboard',
   component: UserDashboard,
+},{
+  path: 'about',
+  component: About,
 }
     ],
   },
