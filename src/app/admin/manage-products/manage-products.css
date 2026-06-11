@@ -1,0 +1,159 @@
+.admin-page{
+  display:flex;
+  min-height:100vh;
+  background:#eef4ff;
+}
+
+.admin-sidebar{
+  width:260px;
+  background:#081126;
+  color:#fff;
+  padding:30px 20px;
+}
+
+.admin-sidebar h2{
+  margin-bottom:35px;
+}
+
+.admin-sidebar a{
+  display:block;
+  color:#cbd5e1;
+  text-decoration:none;
+  padding:14px 16px;
+  border-radius:12px;
+  margin-bottom:10px;
+  font-weight:700;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active{
+  background:#2563eb;
+  color:#fff;
+}
+
+.admin-content{
+  flex:1;
+  padding:35px;
+}
+
+.admin-header{
+  background:#fff;
+  padding:25px;
+  border-radius:20px;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+  margin-bottom:25px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.admin-header h1{
+  color:#081126;
+  margin-bottom:6px;
+}
+
+.admin-header p{
+  color:#64748b;
+}
+
+.admin-header button{
+  background:#2563eb;
+  color:#fff;
+  border:none;
+  padding:13px 24px;
+  border-radius:10px;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.product-table{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+thead{
+  background:#2563eb;
+  color:#fff;
+}
+
+th,
+td{
+  padding:16px;
+  text-align:left;
+  border-bottom:1px solid #e5e7eb;
+}
+
+td img{
+  width:70px;
+  height:60px;
+  object-fit:contain;
+}
+
+.stock,
+.low{
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.stock{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.low{
+  background:#fef3c7;
+  color:#b45309;
+}
+
+.edit,
+.delete{
+  border:none;
+  padding:8px 14px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+  margin-right:8px;
+}
+
+.edit{
+  background:#dbeafe;
+  color:#2563eb;
+}
+
+.delete{
+  background:#fee2e2;
+  color:#dc2626;
+}
+
+@media(max-width:900px){
+  .admin-page{
+    flex-direction:column;
+  }
+
+  .admin-sidebar{
+    width:100%;
+  }
+
+  .admin-header{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:15px;
+  }
+
+  .product-table{
+    overflow-x:auto;
+  }
+
+  table{
+    min-width:800px;
+  }
+}

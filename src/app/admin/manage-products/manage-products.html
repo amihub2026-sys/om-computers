@@ -1,1 +1,74 @@
-<p>manage-products works!</p>
+<section class="admin-page">
+
+  <aside class="admin-sidebar">
+    <h2>OM Admin</h2>
+
+    <a routerLink="/admin/dashboard">Dashboard</a>
+    <a routerLink="/admin/products" class="active">Products</a>
+    <a routerLink="/admin/services">Services</a>
+    <a routerLink="/admin/orders">Orders</a>
+    <a routerLink="/admin/bookings">Bookings</a>
+    <a routerLink="/admin/login">Logout</a>
+  </aside>
+
+  <main class="admin-content">
+
+    <div class="admin-header">
+      <div>
+        <h1>Manage Products</h1>
+        <p>Add, edit and manage product stock details.</p>
+      </div>
+
+      <button>Add Product</button>
+    </div>
+
+    <div class="product-table">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>
+              <img src="assets/images/products/gaming-pc.jpg" alt="">
+            </td>
+            <td>Gaming Desktop PC</td>
+            <td>Desktop</td>
+            <td>₹45,999</td>
+            <td><span class="stock">In Stock</span></td>
+            <td>
+              <button class="edit">Edit</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>
+              <img src="assets/images/products/gaming-pc.jpg" alt="">
+            </td>
+            <td>Business Laptop</td>
+            <td>Laptop</td>
+            <td>₹58,999</td>
+            <td><span class="low">Low Stock</span></td>
+            <td>
+              <button class="edit">Edit</button>
+              <button class="delete">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  </main>
+
+</section>
