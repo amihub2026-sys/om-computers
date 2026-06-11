@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
+
 import { WebsiteLayout } from './layouts/website-layout/website-layout/website-layout';
+
 import { Home } from './features/home/home/home';
 import { ProductList } from './features/products/product-list/product-list';
 import { ProductDetails } from './features/products/product-details/product-details';
@@ -17,7 +19,9 @@ import { Cart } from './features/cart/cart/cart';
 import { Checkout } from './features/checkout/checkout/checkout';
 import { OrderSuccess } from './features/orders/order-success/order-success';
 import { MyOrders } from './features/orders/my-orders/my-orders';
+
 import { AdminLogin } from './admin/admin-login/admin-login';
+import { AdminLayout } from './admin/admin-layout/admin-layout';
 import { AdminDashboard } from './admin/admin-dashboard/admin-dashboard';
 import { ManageProducts } from './admin/manage-products/manage-products';
 import { ManageServices } from './admin/manage-services/manage-services';
@@ -25,109 +29,50 @@ import { ManageOrders } from './admin/manage-orders/manage-orders';
 import { ManageBookings } from './admin/manage-bookings/manage-bookings';
 import { AddProduct } from './admin/add-product/add-product';
 import { AddService } from './admin/add-service/add-service';
+import { ManageCustomers } from './admin/manage-customers/manage-customers';
+
 export const routes: Routes = [
   {
     path: '',
     component: WebsiteLayout,
     children: [
-      {
-        path: '',
-        component: Home,
-      },
-       {
-        path: 'products',
-        component: ProductList,
-      },
-      {
-  path: 'products/:id',
-  component: ProductDetails,
-},
-{
-  path: 'services',
-  component: ServiceList,
-},
-{
-  path: 'services/:id',
-  component: ServiceDetails,
-},
-{
-  path: 'login',
-  component: Login,
-},
-{
-  path: 'register',
-  component: Register,
-},
-{
-  path: 'service-booking/:id',
-  component: ServiceBooking,
-},
-{
-  path: 'booking-success',
-  component: BookingSuccess,
-},
-{
-  path: 'my-bookings',
-  component: MyBookings,
-},
-{
-  path: 'dashboard',
-  component: UserDashboard,
-},{
-  path: 'about',
-  component: About,
-},{
-  path: 'contact',
-  component: Contact,
-},
-{
-  path: 'cart',
-  component: Cart,
-},
-{
-  path: 'checkout',
-  component: Checkout,
-},
-{
-  path: 'order-success',
-  component: OrderSuccess,
-},
-{
-  path: 'my-orders',
-  component: MyOrders,
-},
-{
-  path: 'admin/login',
-  component: AdminLogin,
-},
-{
-  path: 'admin/dashboard',
-  component: AdminDashboard,
-},
-{
-  path: 'admin/products',
-  component: ManageProducts,
-},
-{
-  path: 'admin/services',
-  component: ManageServices,
-},
-{
-  path: 'admin/orders',
-  component: ManageOrders,
-},
-{
-  path: 'admin/bookings',
-  component: ManageBookings,
-},
-{
-  path: 'admin/products/add',
-  component: AddProduct,
-},
-{
-  path: 'admin/services/add',
-  component: AddService,
-}
+      { path: '', component: Home },
+      { path: 'products', component: ProductList },
+      { path: 'products/:id', component: ProductDetails },
+      { path: 'services', component: ServiceList },
+      { path: 'services/:id', component: ServiceDetails },
+      { path: 'login', component: Login },
+      { path: 'register', component: Register },
+      { path: 'service-booking/:id', component: ServiceBooking },
+      { path: 'booking-success', component: BookingSuccess },
+      { path: 'my-bookings', component: MyBookings },
+      { path: 'dashboard', component: UserDashboard },
+      { path: 'about', component: About },
+      { path: 'contact', component: Contact },
+      { path: 'cart', component: Cart },
+      { path: 'checkout', component: Checkout },
+      { path: 'order-success', component: OrderSuccess },
+      { path: 'my-orders', component: MyOrders },
+    ],
+  },
+
+  {
+    path: 'admin/login',
+    component: AdminLogin,
+  },
+
+  {
+    path: 'admin',
+    component: AdminLayout,
+    children: [
+      { path: 'dashboard', component: AdminDashboard },
+      { path: 'products', component: ManageProducts },
+      { path: 'products/add', component: AddProduct },
+      { path: 'services', component: ManageServices },
+      { path: 'services/add', component: AddService },
+      { path: 'orders', component: ManageOrders },
+      { path: 'bookings', component: ManageBookings },
+      { path: 'customers', component: ManageCustomers },
     ],
   },
 ];
