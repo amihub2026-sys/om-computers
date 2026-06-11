@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './admin-dashboard.html',
   styleUrl: './admin-dashboard.css',
 })
