@@ -1,0 +1,47 @@
+.admin-page{
+  display:flex;
+  min-height:100vh;
+  background:#eef4ff;
+}
+
+.admin-sidebar{
+  width:260px;
+  background:#081126;
+  color:#fff;
+  padding:30px 20px;
+}
+
+.admin-sidebar h2{
+  margin-bottom:35px;
+}
+
+.admin-sidebar a{
+  display:block;
+  color:#cbd5e1;
+  text-decoration:none;
+  padding:14px 16px;
+  border-radius:12px;
+  margin-bottom:10px;
+  font-weight:700;
+}
+
+.admin-sidebar a:hover,
+.admin-sidebar a.active{
+  background:#2563eb;
+  color:#fff;
+}
+
+.admin-content{
+  flex:1;
+  padding:35px;
+}
+
+@media(max-width:900px){
+  .admin-page{
+    flex-direction:column;
+  }
+
+  .admin-sidebar{
+    width:100%;
+  }
+}
