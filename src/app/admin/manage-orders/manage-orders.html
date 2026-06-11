@@ -1,1 +1,82 @@
-<p>manage-orders works!</p>
+<section class="admin-page">
+
+  <aside class="admin-sidebar">
+    <h2>OM Admin</h2>
+
+    <a routerLink="/admin/dashboard">Dashboard</a>
+    <a routerLink="/admin/products">Products</a>
+    <a routerLink="/admin/services">Services</a>
+    <a routerLink="/admin/orders" class="active">Orders</a>
+    <a routerLink="/admin/bookings">Bookings</a>
+    <a routerLink="/admin/login">Logout</a>
+  </aside>
+
+  <main class="admin-content">
+
+    <div class="admin-header">
+      <div>
+        <h1>Manage Orders</h1>
+        <p>View and update all customer product orders.</p>
+      </div>
+    </div>
+
+    <div class="orders-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>#OM-P1001</td>
+            <td>Arun Kumar</td>
+            <td>Gaming Desktop PC</td>
+            <td>₹45,999</td>
+            <td>COD</td>
+            <td><span class="pending">Pending</span></td>
+            <td>
+              <button class="view">View</button>
+              <button class="update">Update</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>#OM-P1002</td>
+            <td>Priya S</td>
+            <td>Business Laptop</td>
+            <td>₹58,999</td>
+            <td>UPI</td>
+            <td><span class="shipped">Shipped</span></td>
+            <td>
+              <button class="view">View</button>
+              <button class="update">Update</button>
+            </td>
+          </tr>
+
+          <tr>
+            <td>#OM-P1003</td>
+            <td>Vignesh R</td>
+            <td>Mechanical Keyboard</td>
+            <td>₹2,499</td>
+            <td>Card</td>
+            <td><span class="delivered">Delivered</span></td>
+            <td>
+              <button class="view">View</button>
+              <button class="update">Update</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+</section>
