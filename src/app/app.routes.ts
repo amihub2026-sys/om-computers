@@ -15,6 +15,7 @@ import { About } from './features/about/about/about';
 import { Contact } from './features/contact/contact/contact';
 import { Cart } from './features/cart/cart/cart';
 import { Checkout } from './features/checkout/checkout/checkout';
+import { OrderSuccess } from './features/orders/order-success/order-success';
 export const routes: Routes = [
   {
     path: '',
@@ -77,6 +78,10 @@ export const routes: Routes = [
 {
   path: 'checkout',
   component: Checkout,
+},
+{
+  path: 'order-success',
+  component: OrderSuccess,
 }
     ],
   },
