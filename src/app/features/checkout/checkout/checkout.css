@@ -1,0 +1,104 @@
+.checkout-page{
+    padding:70px 7%;
+    background:#eef4ff;
+    min-height:100vh;
+}
+
+.page-header{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.page-header h1{
+    font-size:42px;
+    color:#081126;
+}
+
+.page-header p{
+    color:#64748b;
+}
+
+.checkout-container{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:30px;
+}
+
+.billing-section,
+.summary-section{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+.billing-section h2,
+.summary-section h2{
+    margin-bottom:20px;
+    color:#081126;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+    margin-bottom:16px;
+}
+
+input,
+textarea,
+select{
+    width:100%;
+    padding:14px;
+    border:1px solid #dbeafe;
+    border-radius:10px;
+    outline:none;
+    margin-bottom:16px;
+    box-sizing:border-box;
+}
+
+textarea{
+    resize:none;
+}
+
+.summary-item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:15px;
+    color:#475569;
+}
+
+.total{
+    font-size:20px;
+    font-weight:700;
+    color:#081126;
+}
+
+.place-order-btn{
+    width:100%;
+    padding:15px;
+    background:#2563eb;
+    color:#fff;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:700;
+    margin-top:20px;
+}
+
+.place-order-btn:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:900px){
+
+    .checkout-container{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+}

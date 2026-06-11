@@ -14,6 +14,7 @@ import { UserDashboard } from './features/user/user-dashboard/user-dashboard';
 import { About } from './features/about/about/about';
 import { Contact } from './features/contact/contact/contact';
 import { Cart } from './features/cart/cart/cart';
+import { Checkout } from './features/checkout/checkout/checkout';
 export const routes: Routes = [
   {
     path: '',
@@ -73,6 +74,10 @@ export const routes: Routes = [
   path: 'cart',
   component: Cart,
 },
+{
+  path: 'checkout',
+  component: Checkout,
+}
     ],
   },
 ];
