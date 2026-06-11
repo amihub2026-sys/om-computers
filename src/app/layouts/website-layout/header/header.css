@@ -21,3 +21,64 @@ nav a {
 nav a:hover {
   color: #38bdf8;
 }
+.header-right{
+    display:flex;
+    align-items:center;
+}
+
+.login-btn{
+    background:#2563eb;
+    color:#fff;
+    padding:10px 22px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.login-btn:hover{
+    background:#1d4ed8;
+}
+
+.profile-menu{
+    position:relative;
+}
+
+.profile-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.dropdown{
+    position:absolute;
+    right:0;
+    top:55px;
+    width:220px;
+    background:#fff;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.1);
+    display:none;
+    padding:15px;
+}
+
+.profile-menu:hover .dropdown{
+    display:block;
+}
+
+.dropdown p{
+    font-weight:700;
+    color:#111827;
+    margin-bottom:10px;
+}
+
+.dropdown a{
+    display:block;
+    padding:10px 0;
+    text-decoration:none;
+    color:#374151;
+}
+
+.dropdown a:hover{
+    color:#2563eb;
+}

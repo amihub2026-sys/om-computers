@@ -1,13 +1,62 @@
 <header class="header">
+
   <div class="logo">
     <h2>OM Computers</h2>
   </div>
 
   <nav>
-    <a href="#">Home</a>
-    <a href="#">Products</a>
-    <a href="#">Services</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+
+    <a routerLink="/">Home</a>
+    <a routerLink="/products">Products</a>
+    <a routerLink="/services">Services</a>
+    <a routerLink="/about">About</a>
+    <a routerLink="/contact">Contact</a>
+
   </nav>
+
+  <!-- Right Side -->
+
+  <div class="header-right">
+
+    <!-- Before Login -->
+    <a routerLink="/login" class="login-btn">
+      Login
+    </a>
+
+    <!-- After Login (Later) -->
+    <!--
+    <div class="profile-menu">
+
+      <img
+        src="assets/images/profile.png"
+        class="profile-icon"
+      >
+
+      <div class="dropdown">
+
+        <p>John Doe</p>
+
+        <a routerLink="/my-orders">
+          My Orders
+        </a>
+
+        <a routerLink="/my-bookings">
+          My Bookings
+        </a>
+
+        <a routerLink="/profile">
+          My Profile
+        </a>
+
+        <a routerLink="/logout">
+          Logout
+        </a>
+
+      </div>
+
+    </div>
+    -->
+
+  </div>
+
 </header>
