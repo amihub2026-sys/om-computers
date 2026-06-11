@@ -12,6 +12,7 @@ import { BookingSuccess } from './features/services/booking-success/booking-succ
 import { MyBookings } from './features/services/my-bookings/my-bookings';
 import { UserDashboard } from './features/user/user-dashboard/user-dashboard';
 import { About } from './features/about/about/about';
+import { Contact } from './features/contact/contact/contact';
 export const routes: Routes = [
   {
     path: '',
@@ -63,6 +64,9 @@ export const routes: Routes = [
 },{
   path: 'about',
   component: About,
+},{
+  path: 'contact',
+  component: Contact,
 }
     ],
   },
