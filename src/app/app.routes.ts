@@ -19,6 +19,7 @@ import { Cart } from './features/cart/cart/cart';
 import { Checkout } from './features/checkout/checkout/checkout';
 import { OrderSuccess } from './features/orders/order-success/order-success';
 import { MyOrders } from './features/orders/my-orders/my-orders';
+import { BookingDetails } from './features/services/booking-details/booking-details';
 
 import { AdminLogin } from './admin/admin-login/admin-login';
 import { AdminLayout } from './admin/admin-layout/admin-layout';
@@ -53,6 +54,7 @@ export const routes: Routes = [
       { path: 'checkout', component: Checkout },
       { path: 'order-success', component: OrderSuccess },
       { path: 'my-orders', component: MyOrders },
+      { path: 'my-bookings/:id', component: BookingDetails },
     ],
   },
 
