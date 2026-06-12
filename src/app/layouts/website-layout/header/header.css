@@ -2,11 +2,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 40px;
+  height: 80px;
+  padding: 0 40px;
   background-color: #0f172a;
   color: white;
+  position: relative;
+  z-index: 999;
 }
-
 nav {
   display: flex;
   gap: 20px;
@@ -22,8 +24,10 @@ nav a:hover {
   color: #38bdf8;
 }
 .header-right{
-    display:flex;
-    align-items:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 }
 
 .login-btn{
@@ -40,7 +44,10 @@ nav a:hover {
 }
 
 .profile-menu{
-    position:relative;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 100%;
 }
 
 .profile-icon{
@@ -50,16 +57,17 @@ nav a:hover {
     cursor:pointer;
 }
 
-.dropdown{
-    position:absolute;
-    right:0;
-    top:55px;
-    width:220px;
-    background:#fff;
-    border-radius:12px;
-    box-shadow:0 10px 30px rgba(0,0,0,.1);
-    display:none;
-    padding:15px;
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 50px;
+  width: 220px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.1);
+  display: none;
+  padding: 15px;
+  z-index: 1000;
 }
 
 .profile-menu:hover .dropdown{
@@ -81,4 +89,39 @@ nav a:hover {
 
 .dropdown a:hover{
     color:#2563eb;
+}
+.register-btn {
+  background: #38bdf8;
+  color: #0f172a;
+  padding: 10px 22px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 700;
+}
+.account-btn {
+  background: #38bdf8;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-weight: 700;
+  cursor: pointer;
+  margin: 0;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logout-btn {
+  width: 100%;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  text-align: left;
+  color: #374151;
+  cursor: pointer;
+}
+
+.logout-btn:hover {
+  color: #2563eb;
 }

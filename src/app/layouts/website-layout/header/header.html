@@ -16,47 +16,37 @@
 
   <!-- Right Side -->
 
-  <div class="header-right">
+<div class="header-right">
 
-    <!-- Before Login -->
+  <!-- Before Login -->
+  <ng-container *ngIf="!isLoggedIn">
     <a routerLink="/login" class="login-btn">
       Login
     </a>
 
-    <!-- After Login (Later) -->
-    <!--
-    <div class="profile-menu">
+    <a routerLink="/register" class="register-btn">
+      Register
+    </a>
+  </ng-container>
 
-      <img
-        src="assets/images/profile.png"
-        class="profile-icon"
-      >
+  <!-- After Login -->
+  <div class="profile-menu" *ngIf="isLoggedIn">
 
-      <div class="dropdown">
+    <button class="account-btn">
+      My Account ▼
+    </button>
 
-        <p>John Doe</p>
+    <div class="dropdown">
+      <a routerLink="/my-orders">My Orders</a>
+      <a routerLink="/my-bookings">My Bookings</a>
 
-        <a routerLink="/my-orders">
-          My Orders
-        </a>
-
-        <a routerLink="/my-bookings">
-          My Bookings
-        </a>
-
-        <a routerLink="/profile">
-          My Profile
-        </a>
-
-        <a routerLink="/logout">
-          Logout
-        </a>
-
-      </div>
-
+      <button class="logout-btn" (click)="logout()">
+        Logout
+      </button>
     </div>
-    -->
 
   </div>
+
+</div>
 
 </header>
