@@ -1,0 +1,95 @@
+<section class="order-details-page">
+
+  <div class="page-header">
+    <h1>Order Details</h1>
+    <p>Complete information about your product order.</p>
+
+    <a routerLink="/my-orders" class="back-btn">
+      ← Back to My Orders
+    </a>
+  </div>
+
+  <div class="order-card">
+
+    <div class="top-row">
+      <h2>Order ID: #OM1001</h2>
+     <span
+  class="status"
+  [ngClass]="{
+    'processing': orderStatus === 'Processing',
+    'cancelled': orderStatus === 'Cancelled'
+  }">
+  {{ orderStatus }}
+</span>
+    </div>
+
+    <div class="details-grid">
+
+      <div class="product-box">
+        <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+
+        <div>
+          <h3>Gaming Desktop PC</h3>
+          <p>Intel Core i7 | 16GB RAM | 1TB SSD</p>
+          <p><strong>Quantity:</strong> 1</p>
+          <p><strong>Price:</strong> ₹45,999</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h3>Order Information</h3>
+        <p><strong>Order Date:</strong> 12 Jun 2026</p>
+        <p><strong>Payment Mode:</strong> UPI</p>
+      <p><strong>Status:</strong> {{ orderStatus }}</p>
+      </div>
+
+    </div>
+
+    <div class="info-box">
+      <h3>Delivery Address</h3>
+      <p>John Doe</p>
+      <p>+91 98765 43210</p>
+      <p>No.25, Anna Nagar, Madurai - 625020</p>
+    </div>
+
+    <div class="summary-box">
+      <h3>Order Summary</h3>
+
+      <div>
+        <span>Subtotal</span>
+        <span>₹45,999</span>
+      </div>
+
+      <div>
+        <span>Delivery</span>
+        <span>Free</span>
+      </div>
+
+      <div class="total">
+        <span>Total</span>
+        <span>₹45,999</span>
+      </div>
+    </div>
+
+  <div class="actions">
+
+  <button
+    *ngIf="orderStatus === 'Pending' || orderStatus === 'Processing'"
+    class="cancel-btn"
+    (click)="cancelOrder()">
+    Cancel Order
+  </button>
+
+  <button class="invoice-btn" (click)="downloadInvoice()">
+    Download Invoice
+  </button>
+
+  <a href="https://wa.me/919789154220" target="_blank" class="whatsapp-btn">
+    Contact Support
+  </a>
+
+</div>
+
+  </div>
+
+</section>
