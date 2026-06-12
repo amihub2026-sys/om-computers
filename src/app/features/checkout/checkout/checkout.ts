@@ -1,20 +1,30 @@
 import { Component } from '@angular/core';
-import { Router} from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Toast } from '../../../core/services/toast';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './checkout.html',
   styleUrl: './checkout.css',
 })
 export class Checkout {
 
-  constructor(private router: Router) {}
+  constructor(
+  private router: Router,
+  private toast: Toast
+) {}
 
-  placeOrder() {
-    // Later you can save the order to the database here
-    this.router.navigate(['/order-success']);
-  }
+placeOrder() {
+
+  this.toast.success(
+    'Order placed successfully!',
+    'Success'
+  );
+
+  this.router.navigate(['/order-success']);
+
+}
 
 }

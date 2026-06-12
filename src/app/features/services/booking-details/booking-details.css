@@ -109,3 +109,7 @@
 .cancel-btn:hover {
   background: #b91c1c;
 }
+.cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}

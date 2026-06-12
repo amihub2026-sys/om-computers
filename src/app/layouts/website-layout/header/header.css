@@ -43,13 +43,17 @@ nav a:hover {
     background:#1d4ed8;
 }
 
-.profile-menu{
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 100%;
+.profile-menu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding-bottom: 15px;
 }
-
+.profile-menu:hover .dropdown,
+.dropdown:hover {
+  display: block;
+}
 .profile-icon{
     width:42px;
     height:42px;
@@ -60,7 +64,7 @@ nav a:hover {
 .dropdown {
   position: absolute;
   right: 0;
-  top: 50px;
+  top: 42px;
   width: 220px;
   background: #fff;
   border-radius: 12px;
