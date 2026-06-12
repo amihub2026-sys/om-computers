@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { Toast } from '../../../core/services/toast';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -10,6 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './product-list.css',
 })
 export class ProductList {
+  constructor(private toast: Toast) {}
   searchText = '';
   selectedCategories: string[] = [];
   selectedBrands: string[] = [];
@@ -85,4 +87,7 @@ export class ProductList {
       return searchMatch && categoryMatch && brandMatch && processorMatch && priceMatch;
     });
   }
+  addToCart() {
+  this.toast.success('Product added to cart!', 'Added');
+}
 }

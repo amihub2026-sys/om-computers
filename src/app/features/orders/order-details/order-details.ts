@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-
+import { AlertService } from '../../../core/services/alert';
 @Component({
   selector: 'app-order-details',
   standalone: true,
@@ -10,16 +10,28 @@ import { RouterLink } from '@angular/router';
   styleUrl: './order-details.css',
 })
 export class OrderDetails {
+    constructor(private alert: AlertService) {}
   orderStatus = 'Processing';
 
-  cancelOrder() {
-    const confirmCancel = confirm('Are you sure you want to cancel this order?');
+cancelOrder() {
+  this.alert.confirm(
+    'Cancel Order?',
+    'Are you sure you want to cancel this order?',
+    'Yes, Cancel',
+    'No'
+  ).then((result) => {
 
-    if (confirmCancel) {
+    if (result.isConfirmed) {
       this.orderStatus = 'Cancelled';
-      alert('Order cancelled successfully.');
+
+      this.alert.success(
+        'Order cancelled successfully.',
+        'Cancelled'
+      );
     }
-  }
+
+  });
+}
 
 downloadInvoice() {
   const invoiceContent = `
@@ -67,5 +79,9 @@ www.omcomputers.com
   a.click();
 
   window.URL.revokeObjectURL(url);
+  this.alert.success(
+  'Invoice downloaded successfully.',
+  'Downloaded'
+);
 }
 }

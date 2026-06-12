@@ -1,7 +1,38 @@
+@import 'ngx-toastr/toastr';
 /* You can add global styles to this file, and also import other style files */
 html,
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+}
+.toast-success {
+  background: linear-gradient(135deg, #16a34a, #22c55e) !important;
+  color: #ffffff !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(34, 197, 94, 0.35) !important;
+}
+
+.toast-error {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+}
+
+.toast-warning {
+  background: linear-gradient(135deg, #f59e0b, #d97706) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+}
+
+.toast-info {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+  color: #fff !important;
+  border-radius: 12px !important;
+}
+
+.toast-container .ngx-toastr {
+  padding: 16px 18px !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
 }

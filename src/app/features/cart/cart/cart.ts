@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
+import { AlertService } from '../../../core/services/alert';
+import { Toast } from '../../../core/services/toast';
 @Component({
   selector: 'app-cart',
   standalone: true,
@@ -10,7 +11,10 @@ import { RouterModule } from '@angular/router';
   styleUrl: './cart.css',
 })
 export class Cart {
-
+constructor(
+  private alert: AlertService,
+  private toast: Toast
+) {}
   quantity1 = 1;
   quantity2 = 1;
 
@@ -34,10 +38,26 @@ showItem1 = true;
 showItem2 = true;
 
 removeItem(item: number) {
-  if (item === 1) {
-    this.showItem1 = false;
-  } else {
-    this.showItem2 = false;
-  }
+  this.alert.confirm(
+    'Remove Item?',
+    'Are you sure you want to remove this item from the cart?',
+    'Remove',
+    'Cancel'
+  ).then((result) => {
+
+    if (result.isConfirmed) {
+      if (item === 1) {
+        this.showItem1 = false;
+      } else {
+        this.showItem2 = false;
+      }
+
+      this.toast.success(
+        'Item removed from cart.',
+        'Removed'
+      );
+    }
+
+  });
 }
 }

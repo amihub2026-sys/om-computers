@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Toast } from '../../../core/services/toast';
 @Component({
   selector: 'app-product-details',
   standalone: true,
@@ -10,16 +10,27 @@ import { Router } from '@angular/router';
 })
 export class ProductDetails {
 
-  constructor(private router: Router) {}
+  constructor(
+  private router: Router,
+  private toast: Toast
+) {}
 
-  buyNow() {
-    // Later you can add checkout logic here
-    this.router.navigate(['/checkout']);
-  }
+buyNow() {
+  this.toast.success(
+    'Proceeding to checkout...',
+    'Buy Now'
+  );
 
-  addToCart() {
-    // Later you can save the product to the cart here
-    this.router.navigate(['/cart']);
-  }
+  this.router.navigate(['/checkout']);
+}
+
+addToCart() {
+  this.toast.success(
+    'Product added to cart!',
+    'Added'
+  );
+
+  this.router.navigate(['/cart']);
+}
 
 }
