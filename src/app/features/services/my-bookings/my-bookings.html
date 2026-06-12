@@ -1,9 +1,13 @@
 <section class="bookings-page">
 
-  <div class="page-header">
-    <h1>My Service Bookings</h1>
-    <p>Track all your service requests in one place.</p>
-  </div>
+ <div class="page-header">
+  <h1>My Service Bookings</h1>
+  <p>Track all your service requests in one place.</p>
+
+  <a routerLink="/dashboard" class="back-btn">
+    ← Back to Dashboard
+  </a>
+</div>
 
   <div class="booking-table">
 
@@ -29,7 +33,9 @@
             <span class="pending">Pending</span>
           </td>
           <td>
-            <button>View</button>
+           <a routerLink="/my-bookings/1" class="view-btn">
+  View
+</a>
           </td>
         </tr>
 
@@ -41,7 +47,9 @@
             <span class="progress">In Progress</span>
           </td>
           <td>
-            <button>View</button>
+           <a routerLink="/my-bookings/2" class="view-btn">
+  View
+</a>
           </td>
         </tr>
 
@@ -53,7 +61,9 @@
             <span class="completed">Completed</span>
           </td>
           <td>
-            <button>View</button>
+            <a routerLink="/my-bookings/3" class="view-btn">
+  View
+</a>
           </td>
         </tr>
 

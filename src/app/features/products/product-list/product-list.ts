@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+ imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
@@ -22,6 +22,7 @@ export class ProductList {
 
   products = [
     {
+       id: 1,
       name: 'TechConnect Pro 15"',
       category: 'Laptops',
       brand: 'TechConnect',
@@ -33,6 +34,7 @@ export class ProductList {
       specs: ['Intel Core i7', '16GB RAM', '512GB SSD']
     },
     {
+        id: 2,
       name: 'Gaming Desktop',
       category: 'Gaming PCs',
       brand: 'Dell',
@@ -44,6 +46,7 @@ export class ProductList {
       specs: ['Intel Core i9', '32GB RAM', '1TB SSD']
     },
     {
+       id: 3,
       name: 'RGB Gaming Tower',
       category: 'Desktops',
       brand: 'Lenovo',

@@ -130,3 +130,23 @@
         min-height:280px;
     }
 }
+.back-section {
+  margin-bottom: 25px;
+}
+
+.back-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #1d4ed8;
+  transform: translateX(-3px);
+}

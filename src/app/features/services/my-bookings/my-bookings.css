@@ -94,3 +94,19 @@ button:hover{
     }
 
 }
+.back-btn,
+.view-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.back-btn:hover,
+.view-btn:hover {
+  background: #1d4ed8;
+}
