@@ -12,7 +12,6 @@ import { Register } from './features/auth/register/register';
 import { ServiceBooking } from './features/services/service-booking/service-booking';
 import { BookingSuccess } from './features/services/booking-success/booking-success';
 import { MyBookings } from './features/services/my-bookings/my-bookings';
-import { UserDashboard } from './features/user/user-dashboard/user-dashboard';
 import { About } from './features/about/about/about';
 import { Contact } from './features/contact/contact/contact';
 import { Cart } from './features/cart/cart/cart';
@@ -47,7 +46,6 @@ export const routes: Routes = [
       { path: 'service-booking/:id', component: ServiceBooking },
       { path: 'booking-success', component: BookingSuccess },
       { path: 'my-bookings', component: MyBookings },
-      { path: 'dashboard', component: UserDashboard },
       { path: 'about', component: About },
       { path: 'contact', component: Contact },
       { path: 'cart', component: Cart },
