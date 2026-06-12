@@ -1,47 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 80px;
-  padding: 0 40px;
-  background-color: #0f172a;
-  color: white;
-  position: relative;
-  z-index: 999;
+
+ padding: 0 3%;
+  height: 85px;
+
+  background: rgba(6, 15, 35, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border-bottom: 1px solid rgba(255,255,255,.08);
+
+  z-index: 9999;
+  transition: .35s ease;
 }
-nav {
-  display: flex;
-  gap: 20px;
+.logo h2{
+  margin:0;
+ font-size:34px;
+  font-weight:900;
+  letter-spacing:1px;
+
+ color:#FFF8D6;
+
+  text-shadow:
+    0 0 4px #ffd700,
+    0 0 8px #ffcc00,
+    0 0 16px rgba(255,204,0,.8),
+    0 0 28px rgba(255,184,0,.6);
+}
+nav{
+  display:flex;
+  align-items:center;
+gap:28px;
 }
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
+nav a{
+  position:relative;
+  color:#fff;
+  text-decoration:none;
+  font-size:17px;
+  font-weight:600;
+  transition:.3s;
 }
 
-nav a:hover {
-  color: #38bdf8;
+nav a::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-8px;
+
+  width:0;
+  height:2px;
+
+  background:#ffd700;
+  transition:.35s;
+}
+
+nav a:hover{
+  color:#ffd700;
+}
+
+nav a:hover::after{
+  width:100%;
 }
 .header-right{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    flex-shrink:0;
 }
 
 .login-btn{
-    background:#2563eb;
-    color:#fff;
-    padding:10px 22px;
-    border-radius:8px;
+    padding:10px 20px;
+    border-radius:10px;
+
+    background:transparent;
+    border:2px solid #ffd700;
+
+    color:#ffd700;
     text-decoration:none;
-    font-weight:600;
+    font-weight:700;
+
+    transition:.3s;
 }
 
 .login-btn:hover{
-    background:#1d4ed8;
+    background:#ffd700;
+    color:#111827;
 }
+
+
 
 .profile-menu {
   position: relative;
@@ -94,17 +152,29 @@ nav a:hover {
 .dropdown a:hover{
     color:#2563eb;
 }
-.register-btn {
-  background: #38bdf8;
-  color: #0f172a;
-  padding: 10px 22px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: 700;
+.register-btn{
+   padding:10px 20px;
+    border-radius:10px;
+
+    background:#ffd700;
+    border:2px solid #ffd700;
+
+    color:#111827;
+    text-decoration:none;
+    font-weight:700;
+
+    transition:.3s;
 }
+
+.register-btn:hover{
+    background:#ffca28;
+    border-color:#ffca28;
+}
+
+
 .account-btn {
-  background: #38bdf8;
-  color: #0f172a;
+background: #ffd700;
+color: #111;
   border: none;
   border-radius: 8px;
   padding: 10px 22px;
@@ -128,4 +198,19 @@ nav a:hover {
 
 .logout-btn:hover {
   color: #2563eb;
+}
+.active-link {
+  color: #FFD54F !important;
+}
+
+.active-link::after {
+  width: 100% !important;
+  background: linear-gradient(
+    90deg,
+    #FFD54F,
+    #FFE082,
+    transparent
+  );
+
+  box-shadow: 0 0 8px #FFD54F;
 }

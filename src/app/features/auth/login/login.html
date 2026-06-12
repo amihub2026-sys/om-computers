@@ -2,9 +2,15 @@
 
   <div class="login-card">
 
-    <h1>Welcome Back</h1>
+    <div class="login-icon">
+      🔒
+    </div>
 
-    <p>
+    <span class="login-tag">SIGN IN</span>
+
+    <h2>Welcome <span>Back!</span></h2>
+
+    <p class="login-subtitle">
       Login to your OM Computers account
     </p>
 
@@ -12,45 +18,33 @@
 
       <div class="form-group">
         <label>Email or Mobile</label>
-        <input
-          type="text"
-          placeholder="Enter email or mobile number"
-        >
+        <input type="text" placeholder="Enter email or mobile">
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input
-          type="password"
-          placeholder="Enter password"
-        >
+        <input type="password" placeholder="Enter password">
       </div>
 
       <div class="login-options">
-
         <label>
           <input type="checkbox">
           Remember Me
         </label>
 
-        <a href="#">
-          Forgot Password?
-        </a>
-
+        <a href="#">Forgot Password?</a>
       </div>
 
-    <button type="button" (click)="login()">
-  Login
-</button>
+      <button type="button" (click)="login()">
+        Login
+      </button>
 
     </form>
 
-    <div class="register-link">
+    <p class="bottom-text">
       Don't have an account?
-      <a routerLink="/register">
-        Register Now
-      </a>
-    </div>
+      <a routerLink="/register">Register Now</a>
+    </p>
 
   </div>
 
