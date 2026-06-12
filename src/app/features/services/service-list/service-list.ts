@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-service-list',
-  imports: [],
+  standalone: true,
+  imports: [RouterLink],
   templateUrl: './service-list.html',
   styleUrl: './service-list.css',
 })

@@ -70,9 +70,13 @@
             ₹{{ product.price }}
             <del>₹{{ product.oldPrice }}</del>
           </h4>
+<button class="cart-btn" [routerLink]="['/cart']">
+  Add to Cart
+</button>
 
-          <button class="cart-btn">Add to Cart</button>
-          <button class="details-btn">View Details</button>
+<button class="details-btn" [routerLink]="['/products', product.id]">
+  View Details
+</button>
         </div>
 
       </div>

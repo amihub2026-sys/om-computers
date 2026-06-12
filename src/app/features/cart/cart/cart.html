@@ -1,17 +1,20 @@
 <section class="cart-page">
 
-  <div class="page-header">
-    <h1>Shopping Cart</h1>
-    <p>Review your selected products before checkout.</p>
-  </div>
+<div class="page-header">
+  <h1>Shopping Cart</h1>
+  <p>Review your selected products before checkout.</p>
+
+  <a routerLink="/products" class="back-btn">
+    ← Back to Products
+  </a>
+</div>
 
   <div class="cart-container">
 
     <!-- Cart Items -->
 
     <div class="cart-items">
-
-      <div class="cart-card">
+<div class="cart-card" *ngIf="showItem1">
 
         <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
 
@@ -23,16 +26,21 @@
             ₹45,999
           </div>
         </div>
+<div class="quantity">
+  <button (click)="decrease(1)">-</button>
 
-        <div class="quantity">
-          <button>-</button>
-          <span>1</span>
-          <button>+</button>
-        </div>
+  <span>{{ quantity1 }}</span>
+
+  <button (click)="increase(1)">+</button>
+</div>
+
+<button class="remove-btn" (click)="removeItem(1)">
+  Remove
+</button>
 
       </div>
 
-      <div class="cart-card">
+     <div class="cart-card" *ngIf="showItem2">
 
         <img src="assets/images/products/gaming-pc.jpg" alt="Laptop">
 
@@ -45,11 +53,17 @@
           </div>
         </div>
 
-        <div class="quantity">
-          <button>-</button>
-          <span>1</span>
-          <button>+</button>
-        </div>
+       <div class="quantity">
+  <button (click)="decrease(2)">-</button>
+
+  <span>{{ quantity2 }}</span>
+
+  <button (click)="increase(2)">+</button>
+</div>
+
+<button class="remove-btn" (click)="removeItem(2)">
+  Remove
+</button>
 
       </div>
 
