@@ -1,34 +1,26 @@
-<section class="add-product-page">
+<form (ngSubmit)="saveProduct()">
 
-  <div class="form-card">
-
-    <h1>Add Product</h1>
-    <p>Enter product details for OM Computers.</p>
-
-    <form>
-
-      <div class="form-grid">
-        <input type="text" placeholder="Product Name">
-        <input type="text" placeholder="Category">
-        <input type="text" placeholder="Brand">
-        <input type="text" placeholder="Model">
-        <input type="number" placeholder="Price">
-        <input type="number" placeholder="Discount Price">
-        <input type="number" placeholder="Stock">
-        <input type="text" placeholder="Warranty">
-      </div>
-
-      <input type="file">
-
-      <textarea rows="5" placeholder="Product Description"></textarea>
-
-      <div class="buttons">
-        <button type="submit">Save Product</button>
-        <button type="button" class="cancel">Cancel</button>
-      </div>
-
-    </form>
-
+  <div class="form-grid">
+    <input type="text" placeholder="Product Name" [(ngModel)]="product.name" name="name">
+    <input type="text" placeholder="Category" [(ngModel)]="product.category" name="category">
+    <input type="text" placeholder="Brand" [(ngModel)]="product.brand" name="brand">
+    <input type="text" placeholder="Model" [(ngModel)]="product.model" name="model">
+    <input type="number" placeholder="Price" [(ngModel)]="product.price" name="price">
+    <input type="number" placeholder="Discount Price" [(ngModel)]="product.discountPrice" name="discountPrice">
+    <input type="number" placeholder="Stock" [(ngModel)]="product.stock" name="stock">
+    <input type="text" placeholder="Warranty" [(ngModel)]="product.warranty" name="warranty">
   </div>
 
-</section>
+ <input
+  type="file"
+  accept="image/*"
+  (change)="onImageSelected($event)">
+
+  <textarea rows="5" placeholder="Product Description" [(ngModel)]="product.description" name="description"></textarea>
+
+  <div class="buttons">
+    <button type="submit">Save Product</button>
+    <button type="button" class="cancel">Cancel</button>
+  </div>
+
+</form>
