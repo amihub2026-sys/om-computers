@@ -1,31 +1,55 @@
 <section class="hero">
-  <div class="hero-content">
-    <span class="badge">OM Computers</span>
 
-    <h1>Computer Sales & Service Experts</h1>
-
-    <p>
-      Buy new computers, laptops, accessories and get trusted PC repair,
-      upgrades, software installation and doorstep support.
-    </p>
-
-    <div class="hero-buttons">
-      <a class="primary-btn" routerLink="/products">Shop Products</a>
-      <a class="secondary-btn" routerLink="/services">Book Service</a>
-    </div>
+  <!-- Background Slider -->
+  <div class="hero-slider">
+    <div class="hero-slide active"></div>
+    <div class="hero-slide"></div>
   </div>
-</section>
 
+  <!-- Overlay -->
+  <div class="hero-overlay"></div>
+
+  <!-- Content -->
+  <div class="hero-content">
+
+  <span class="badge">OM Computers</span>
+
+  <h1>
+    Smart Computer <br>
+    <span class="typing-text">Sales & Service</span>
+  </h1>
+
+<p class="hero-subtitle">
+      Premium laptops, desktops, accessories, chip-level service,
+    software installation and doorstep computer support.
+  </p>
+
+  <div class="hero-buttons">
+    <a class="primary-btn" routerLink="/products">Shop Products</a>
+    <a class="secondary-btn" routerLink="/services">Book Service</a>
+  </div>
+
+</div>
+
+</section>
 <!-- =========================
      FEATURED CATEGORIES
 ========================= -->
 
 <section class="categories-section">
-  <div class="section-title">
-    <h2>Explore Our Categories</h2>
-    <p>Everything you need for your computer and technology requirements.</p>
-  </div>
+<div class="section-title">
 
+  <span class="section-tag">OUR COLLECTION</span>
+
+  <h2>Explore Our Categories</h2>
+
+  <p>
+    Discover premium computers, laptops, accessories, and innovative
+    technology solutions thoughtfully curated to power your work,
+    creativity, and everyday digital lifestyle.
+  </p>
+
+</div>
   <div class="categories-grid">
     <div class="category-item">
       <img src="/assets/images/categories/laptop.png" alt="Laptops">
@@ -65,16 +89,27 @@
 
 <section class="products-section">
 
- <div class="section-header">
-  <div class="section-title">
-    <h2>Featured Products</h2>
-    <p>Explore our latest computers, accessories and office solutions.</p>
-  </div>
+  <div class="section-header">
 
-  <a routerLink="/products" class="see-all-btn">
-    See All Products →
-  </a>
-</div>
+    <div class="section-title">
+      <span class="section-badge">OUR COLLECTION</span>
+
+      <h2>
+        Featured <span>Products</span>
+      </h2>
+
+      <p>
+        Explore our carefully selected computers, laptops, accessories, and
+        office solutions designed for performance and reliability.
+      </p>
+    </div>
+
+    <a routerLink="/products" class="see-all-btn">
+      View Collection
+      <span>→</span>
+    </a>
+
+  </div>
 
 <div class="products-wrapper">
 
@@ -200,116 +235,126 @@
 
 <section class="services-section">
 
-  <div class="section-title">
-    <h2>Our Services</h2>
-    <p>Professional computer solutions for homes, offices and businesses.</p>
-  </div>
+ <div class="section-title">
 
-  <div class="services-slider">
+  <span class="section-tag"> WHAT WE DO </span>
 
-    <div class="services-track">
+  <h2 class="shine-heading">
+    Expert Computer Services
+  </h2>
 
-      <div class="service-item">
+  <p>
+    Reliable repair, installation and support solutions for your home,
+    office and business needs.
+  </p>
+
+</div>
+
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-icon">
         <img src="assets/images/categories/laptop.png" alt="">
-        <h3>Laptop Repair</h3>
       </div>
+      <h3>Laptop Repair</h3>
+      <p>Screen, keyboard, battery, motherboard and performance issue repairs.</p>
+      <span>01</span>
+    </div>
 
-      <div class="service-item">
+    <div class="service-card">
+      <div class="service-icon">
         <img src="assets/images/categories/desktop.png" alt="">
-        <h3>Desktop Service</h3>
       </div>
+      <h3>Desktop Service</h3>
+      <p>PC assembling, cleaning, troubleshooting and system upgrades.</p>
+      <span>02</span>
+    </div>
 
-      <div class="service-item">
+    <div class="service-card">
+      <div class="service-icon">
         <img src="assets/images/categories/windows.png" alt="">
-        <h3>Windows Installation</h3>
       </div>
+      <h3>Windows Installation</h3>
+      <p>Windows setup, driver installation and essential software configuration.</p>
+      <span>03</span>
+    </div>
 
-      <div class="service-item">
+    <div class="service-card">
+      <div class="service-icon">
         <img src="assets/images/categories/network.png" alt="">
-        <h3>Networking</h3>
       </div>
-
-      <div class="service-item">
-        <img src="assets/images/categories/printer.jpg" alt="">
-        <h3>Printer Support</h3>
-      </div>
-
-      <div class="service-item">
-        <img src="assets/images/categories/recovery.jpg" alt="">
-        <h3>Data Recovery</h3>
-      </div>
-
-      <!-- Duplicate for infinite loop -->
-
-      <div class="service-item">
-        <img src="assets/images/categories/laptop.png" alt="">
-        <h3>Laptop Repair</h3>
-      </div>
-
-      <div class="service-item">
-        <img src="assets/images/categories/desktop.png" alt="">
-        <h3>Desktop Service</h3>
-      </div>
-
-      <div class="service-item">
-        <img src="assets/images/categories/windows.png" alt="">
-        <h3>Windows Installation</h3>
-      </div>
-
-      <div class="service-item">
-        <img src="assets/images/categories/network.png" alt="">
-        <h3>Networking</h3>
-      </div>
-
+      <h3>Networking</h3>
+      <p>WiFi, LAN, router setup and office network configuration support.</p>
+      <span>04</span>
     </div>
 
   </div>
 
 </section>
-<section class="why-choose-section">
+<section class="why-section">
 
-  <div class="section-title">
-    <h2>Why Choose Us</h2>
-    <p>Your trusted partner for computer sales and professional IT services.</p>
+  <!-- Left Content -->
+  <div class="why-content">
+
+    <span class="why-subtitle">
+       WHY CHOOSE US
+    </span>
+
+    <h2>
+      Why Customers Trust
+      <span>OM Computers</span>
+    </h2>
+
+    <p>
+      We provide professional computer sales, laptop repair,
+      networking solutions, CCTV installation and IT services
+      with genuine products and expert support.
+    </p>
+
+    <div class="why-features">
+
+      <div class="feature">
+        ✅ Certified Technicians
+      </div>
+
+      <div class="feature">
+        ✅ Genuine Products
+      </div>
+
+      <div class="feature">
+        ✅ Fast Doorstep Service
+      </div>
+
+      <div class="feature">
+        ✅ Affordable Pricing
+      </div>
+
+    </div>
+
+    <a href="#" class="why-btn">
+      Learn More →
+    </a>
+
   </div>
+  <div class="floating-bubbles">
+  <span class="bubble b1"></span>
+  <span class="bubble b2"></span>
+  <span class="bubble b3"></span>
+  <span class="bubble b4"></span>
+  <span class="bubble b5"></span>
+  <span class="bubble b6"></span>
+</div>
 
-  <div class="why-grid">
 
-    <div class="why-item">
-      <img src="assets/images/icons/expert.png" alt="Expert Team">
-      <h3>Expert Technicians</h3>
-      <p>Certified professionals with years of experience in computer servicing.</p>
-    </div>
+  <!-- Right Image -->
 
-    <div class="why-item">
-      <img src="assets/images/icons/support.png" alt="Support">
-      <h3>Fast Support</h3>
-      <p>Quick diagnosis and same-day repair services for most issues.</p>
-    </div>
+  <div class="why-image">
 
-    <div class="why-item">
-      <img src="assets/images/icons/quality.png" alt="Quality">
-      <h3>Quality Products</h3>
-      <p>We supply genuine branded computers, laptops and accessories.</p>
-    </div>
+    <div class="blue-bg"></div>
 
-    <div class="why-item">
-      <img src="assets/images/icons/pricing.png" alt="Affordable">
-      <h3>Affordable Pricing</h3>
-      <p>Transparent pricing with no hidden charges and best value.</p>
-    </div>
-
-    <div class="why-item">
-      <img src="assets/images/icons/home-service.png" alt="Doorstep">
-      <h3>Doorstep Service</h3>
-      <p>Convenient on-site support for homes and businesses.</p>
-    </div>
-
-    <div class="why-item">
-      <img src="assets/images/icons/warranty.png" alt="Warranty">
-      <h3>Service Warranty</h3>
-      <p>Reliable repairs backed by quality assurance and warranty.</p>
-    </div>
+    <img
+      src="/assets/images/hero/hero-banner4.png"
+      alt="Computer Repair">
 
   </div>
 
