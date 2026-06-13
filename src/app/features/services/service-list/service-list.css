@@ -1,47 +1,58 @@
 .services-page{
     display:flex;
-    gap:30px;
-    padding:40px;
+    gap:24px;
+    padding:35px 40px;
     background:#eef3fb;
     min-height:100vh;
 }
 
 .service-sidebar{
-    width:270px;
+    width:220px;
     background:#fff;
-    padding:22px;
-    border-radius:22px;
+    padding:18px;
+    border-radius:18px;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
     height:fit-content;
-}
 
+    position:sticky;
+    top:100px;
+}
 .service-sidebar h2{
-    font-size:34px;
+    font-size:22px;
+    line-height:1.1;
     color:#06122f;
-    margin-bottom:30px;
+    margin-bottom:22px;
 }
 
 .filter-group{
-    border-top:1px solid #e5e7eb;
-    padding-top:22px;
-    margin-bottom:28px;
+    border-top:1px solid #eef2f7;
+    padding-top:16px;
+    margin-bottom:18px;
 }
 
 .filter-group h3{
+    font-size:17px;
     color:#06122f;
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 .filter-group label{
-    display:block;
-    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
     color:#475569;
-    font-size:15px;
+    font-size:14px;
     cursor:pointer;
 }
-
+.filter-group input[type="checkbox"]{
+    width:14px;
+    height:14px;
+    accent-color:#2563eb;
+}
 .services-content{
     flex:1;
+    overflow:hidden;
 }
 
 .search-box{
@@ -57,9 +68,9 @@
 
 .service-categories{
     overflow:hidden;
-    margin-bottom:35px;
+    margin-bottom:28px;
+    padding-left:10px;
 }
-
 .service-track{
     display:flex;
     gap:35px;
@@ -89,8 +100,8 @@
 
 .services-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:26px;
+  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+gap:22px;
 }
 
 .service-card{
@@ -107,7 +118,7 @@
 
 .image-box{
     position:relative;
-    height:210px;
+    height:180px;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -115,8 +126,8 @@
 }
 
 .image-box img{
-    width:150px;
-    height:150px;
+   width:120px;
+height:120px;
     object-fit:contain;
     transition:.35s;
 }
@@ -170,8 +181,9 @@
     text-decoration:none;
     background:#2563eb;
     color:#fff;
-    padding:13px;
-    border-radius:12px;
+  padding:11px;
+border-radius:10px;
+font-size:15px;
     font-weight:800;
     transition:.3s;
 }
