@@ -43,7 +43,7 @@ removeItem(item: number) {
     'Are you sure you want to remove this item from the cart?',
     'Remove',
     'Cancel'
-  ).then((result) => {
+  ).then((result: any) => {
 
     if (result.isConfirmed) {
       if (item === 1) {
