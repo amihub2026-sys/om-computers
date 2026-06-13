@@ -12,12 +12,14 @@ import { Toast } from '../../../core/services/toast';
 })
 export class ProductList {
   constructor(private toast: Toast) {}
+
+  showFilters = false;
+
   searchText = '';
   selectedCategories: string[] = [];
   selectedBrands: string[] = [];
   selectedProcessors: string[] = [];
   maxPrice = 150000;
-
   categories = ['Laptops', 'Desktops', 'Gaming PCs', 'Monitors', 'Accessories'];
   brands = ['TechConnect', 'Apple', 'Dell', 'Lenovo'];
   processors = ['i5', 'i7', 'i9', 'Ryzen'];
@@ -90,4 +92,29 @@ export class ProductList {
   addToCart() {
   this.toast.success('Product added to cart!', 'Added');
 }
+openFilters() {
+  this.showFilters = true;
+  document.body.style.overflow = 'hidden';
 }
+
+closeFilters() {
+  this.showFilters = false;
+  document.body.style.overflow = '';
+}
+applyFilters() {
+  this.showFilters = false;
+}
+
+resetFilters() {
+  this.selectedCategories = [];
+  this.selectedBrands = [];
+  this.selectedProcessors = [];
+  this.maxPrice = 150000;
+  this.searchText = '';
+  this.showFilters = false;
+}
+}
+
+
+
+

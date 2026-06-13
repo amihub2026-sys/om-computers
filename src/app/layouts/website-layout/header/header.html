@@ -4,27 +4,49 @@
     <h2>OM Computers</h2>
   </div>
 
-  <nav>
+ <nav [class.mobile-open]="mobileMenuOpen">
 
- <a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Home</a>
+  <a routerLink="/" (click)="mobileMenuOpen=false"
+     routerLinkActive="active-link"
+     [routerLinkActiveOptions]="{exact:true}">
+    Home
+  </a>
 
-<a routerLink="/products" routerLinkActive="active-link">
-  Products
-</a>
+  <a routerLink="/products"
+     (click)="mobileMenuOpen=false"
+     routerLinkActive="active-link">
+    Products
+  </a>
 
-<a routerLink="/services" routerLinkActive="active-link">
-  Services
-</a>
+  <a routerLink="/services"
+     (click)="mobileMenuOpen=false"
+     routerLinkActive="active-link">
+    Services
+  </a>
 
-<a routerLink="/about" routerLinkActive="active-link">
-  About
-</a>
+  <a routerLink="/about"
+     (click)="mobileMenuOpen=false"
+     routerLinkActive="active-link">
+    About
+  </a>
 
-<a routerLink="/contact" routerLinkActive="active-link">
-  Contact
-</a>
+  <a routerLink="/contact"
+     (click)="mobileMenuOpen=false"
+     routerLinkActive="active-link">
+    Contact
+  </a>
 
-  </nav>
+  <div class="mobile-auth" *ngIf="!isLoggedIn">
+  <a routerLink="/login" class="login-btn" (click)="mobileMenuOpen=false">
+    Login
+  </a>
+
+  <a routerLink="/register" class="register-btn" (click)="mobileMenuOpen=false">
+    Register
+  </a>
+</div>
+
+</nav>
 
   <!-- Right Side -->
 
@@ -60,5 +82,7 @@
   </div>
 
 </div>
-
+<button class="menu-toggle" (click)="mobileMenuOpen = !mobileMenuOpen">
+  ☰
+</button>
 </header>
