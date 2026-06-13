@@ -1,5 +1,5 @@
 .product-details-page{
-    padding:30px 5%;
+    padding:120px 5% 50px;   /* navbar cut fix */
     background:#eef4ff;
     min-height:100vh;
 }

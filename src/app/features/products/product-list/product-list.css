@@ -1,7 +1,7 @@
 .products-page{
     display:flex;
-    gap:30px;
-    padding:40px;
+    gap:24px;
+    padding:35px 40px;
     background:#eef3fb;
     min-height:100vh;
 }
@@ -9,37 +9,45 @@
 /* Sidebar */
 
 .filter-sidebar{
-    width:260px;
+    width:220px;
     background:#fff;
-    padding:20px;
-    border-radius:20px;
+    padding:18px;
+    border-radius:18px;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
     height:fit-content;
+    position:sticky;
+    top:105px;
 }
 
 .filter-sidebar h2{
-    font-size:36px;
-    margin-bottom:30px;
+    font-size:26px;
+    line-height:1.1;
+    margin-bottom:22px;
     color:#06122f;
 }
-
 .filter-group{
-    margin-bottom:35px;
+    margin-bottom:22px;
 }
 
 .filter-group h3{
-    margin-bottom:15px;
+    font-size:17px;
+    margin-bottom:12px;
     color:#06122f;
 }
 
 .filter-group label{
-    display:block;
-    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:8px;
     cursor:pointer;
     color:#555;
-    font-size:15px;
+    font-size:14px;
 }
-
+.filter-group input[type="checkbox"]{
+    width:14px;
+    height:14px;
+}
 .filter-group input[type="range"]{
     width:100%;
 }
