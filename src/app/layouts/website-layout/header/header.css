@@ -417,13 +417,22 @@ color: #111;
 }
 
 @media (min-width:992px){
-  nav .mobile-auth{
-    display:none;
+  nav .mobile-auth,
+  nav .mobile-account{
+    display:none !important;
   }
 }
 @media (max-width:991px){
+ nav .mobile-auth{
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    gap:14px;
+    margin-top:20px;
+  }
 
-  nav .mobile-account{
+   nav .mobile-account{
+    display:block;
     width:100%;
     margin-top:20px;
   }
