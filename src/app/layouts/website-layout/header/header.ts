@@ -12,6 +12,7 @@ import { Router, RouterModule } from '@angular/router';
 export class Header {
 
   mobileMenuOpen = false;
+  mobileAccountOpen = false;
 
   constructor(private router: Router) {}
 

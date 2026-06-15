@@ -45,7 +45,40 @@
     Register
   </a>
 </div>
+<div class="mobile-account" *ngIf="isLoggedIn">
 
+  <button
+    class="mobile-account-btn"
+    (click)="mobileAccountOpen = !mobileAccountOpen">
+
+    My Account ▼
+
+  </button>
+
+  <div
+    class="mobile-account-dropdown"
+    *ngIf="mobileAccountOpen">
+
+    <a
+      routerLink="/my-orders"
+      (click)="mobileMenuOpen=false">
+      My Orders
+    </a>
+
+    <a
+      routerLink="/my-bookings"
+      (click)="mobileMenuOpen=false">
+      My Bookings
+    </a>
+
+    <button
+      (click)="logout(); mobileMenuOpen=false">
+      Logout
+    </button>
+
+  </div>
+
+</div>
 </nav>
 
   <!-- Right Side -->
