@@ -1,3 +1,4 @@
+
 <section class="hero">
 
   <!-- Background Slider -->
@@ -35,22 +36,21 @@
 <!-- =========================
      FEATURED CATEGORIES
 ========================= -->
-
 <section class="categories-section">
-<div class="section-title">
 
-  <span class="section-tag">OUR COLLECTION</span>
+  <div class="section-title">
+    <span class="section-tag">OUR COLLECTION</span>
 
-  <h2>Explore Our Categories</h2>
+    <h2>Explore Our Categories</h2>
 
-  <p>
-    Discover premium computers, laptops, accessories, and innovative
-    technology solutions thoughtfully curated to power your work,
-    creativity, and everyday digital lifestyle.
-  </p>
+    <p>
+      Discover premium computers, laptops, accessories, and innovative technology solutions
+      thoughtfully curated to power your work, creativity, and everyday digital lifestyle.
+    </p>
+  </div>
 
-</div>
   <div class="categories-grid">
+
     <div class="category-item">
       <img src="/assets/images/categories/laptop.png" alt="Laptops">
       <h3>Laptops</h3>
@@ -80,158 +80,294 @@
       <img src="/assets/images/categories/network.png" alt="Networking">
       <h3>Networking</h3>
     </div>
+
   </div>
+
 </section>
 
 <!-- =========================
      Featured Products
 ========================= -->
-
 <section class="products-section">
 
   <div class="section-header">
 
-    <div class="section-title">
+    <div class="section-title premium-title">
+
       <span class="section-badge">OUR COLLECTION</span>
 
-      <h2>
+      <h2 class="glow-title">
         Featured <span>Products</span>
       </h2>
 
-      <p>
-        Explore our carefully selected computers, laptops, accessories, and
-        office solutions designed for performance and reliability.
+      <p class="glow-text">
+        Explore our carefully selected computers, laptops, accessories, and office solutions.
       </p>
+
     </div>
 
-    <a routerLink="/products" class="see-all-btn">
-      View Collection
-      <span>→</span>
+    <a routerLink="/products" class="see-all-btn premium-btn">
+      View Collection <span>→</span>
     </a>
 
   </div>
 
-<div class="products-wrapper">
+  <div class="products-wrapper">
 
-  <button class="scroll-btn left" (click)="scrollLeft()">
-    &#10094;
-  </button>
+    <!-- <button class="scroll-btn left" (click)="scrollLeft()">&#10094;</button> -->
 
   <div class="products-grid" #productsContainer>
 
-    <!-- Product Card -->
-    <div class="product-card">
+      <!-- CARD 1 -->
+      <div class="card">
 
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+        <div class="card-top">
+          <span class="category">Laptops</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
 
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
+        <span class="badge">SALE</span>
 
-        <h3>Gaming Desktop PC</h3>
-
-        <h4>₹45,999</h4>
-
-       <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
-      </div>
-
-    </div>
-
-     <div class="product-card">
-
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
-
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
 
         <h3>Gaming Desktop PC</h3>
 
-        <h4>₹45,999</h4>
-
-     <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
-      </div>
-
-    </div>
-     <div class="product-card">
-
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
-
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <h4>₹45,999</h4>
+        <div class="price">$185 <del>$230</del></div>
 
         <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
+          View Details
+        </a>
+
       </div>
+        <!-- CARD 2 -->
+      <div class="card">
 
-    </div>
-     <div class="product-card">
+        <div class="card-top">
+          <span class="category">Desktops</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
 
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+        <!-- <span class="badge">SALE</span> -->
 
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
 
         <h3>Gaming Desktop PC</h3>
 
-        <h4>₹45,999</h4>
-
-      <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
-      </div>
-
-    </div>
-     <div class="product-card">
-
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
-
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <h4>₹45,999</h4>
+        <div class="price">$185 <del>$230</del></div>
 
         <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
+          View Details
+        </a>
+
       </div>
 
-    </div>
- <div class="product-card">
+        <!-- CARD 3 -->
+      <div class="card">
 
-      <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+        <div class="card-top">
+          <span class="category">Gaming PCs</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
 
-      <div class="product-content">
-        <span class="product-category">Desktop</span>
+        <!-- <span class="badge">SALE</span> -->
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
 
         <h3>Gaming Desktop PC</h3>
 
-        <h4>₹45,999</h4>
+        <div class="price">$185 <del>$230</del></div>
 
-      <a [routerLink]="['/products', 1]" class="view-btn">
-  View Details
-</a>
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+
+        <!-- CARD 4 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Gaming PCs</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <span class="badge">SALE</span>
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <div class="price">$185 <del>$230</del></div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+  <!-- CARD 5 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Monitors</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <!-- <span class="badge">SALE</span> -->
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <div class="price">$185 <del>$230</del></div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+       <!-- CARD 5 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Monitors</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <!-- <span class="badge">SALE</span> -->
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <div class="price">$185 <del>$230</del></div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+       <!-- CARD 5 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Monitors</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <!-- <span class="badge">SALE</span> -->
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <div class="price">$185 <del>$230</del></div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+       <!-- CARD 5 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Monitors</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <!-- <span class="badge">SALE</span> -->
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Gaming Desktop PC</h3>
+
+        <div class="price">$185 <del>$230</del></div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
+      </div>
+
+
+
+      <!-- CARD 6 -->
+      <div class="card">
+
+        <div class="card-top">
+          <span class="category">Accessories</span>
+          <div class="icons">
+            <span>♡</span>
+            <span>⇄</span>
+          </div>
+        </div>
+
+        <div class="image-box">
+          <img src="assets/images/products/gaming-pc.jpg" />
+        </div>
+
+        <h3>Laptop</h3>
+
+        <div class="price">$950</div>
+
+        <a [routerLink]="['/products', 1]" class="view-btn">
+          View Details
+        </a>
+
       </div>
 
     </div>
+<!-- 
+    <button class="scroll-btn right" (click)="scrollRight()">&#10095;</button> -->
+
   </div>
-  
 
-  <button class="scroll-btn right" (click)="scrollRight()">
-    &#10095;
-  </button>
-
-</div>
 </section>
+
+
+
+
+     
 
 <section class="services-section">
 

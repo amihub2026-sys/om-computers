@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 
 import { WebsiteLayout } from './layouts/website-layout/website-layout/website-layout';
 
-import { Home } from './features/home/home/home';
+import { HomeComponent } from './features/home/home/home';
 import { ProductList } from './features/products/product-list/product-list';
 import { ProductDetails } from './features/products/product-details/product-details';
 import { ServiceList } from './features/services/service-list/service-list';
@@ -37,7 +37,7 @@ export const routes: Routes = [
     path: '',
     component: WebsiteLayout,
     children: [
-      { path: '', component: Home },
+      { path: '', component: HomeComponent },
       { path: 'products', component: ProductList },
       { path: 'products/:id', component: ProductDetails },
       { path: 'services', component: ServiceList },
