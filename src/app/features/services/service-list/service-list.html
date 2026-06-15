@@ -1,31 +1,98 @@
 <section class="services-page">
+  
+<button class="filter-toggle" (click)="showFilters = true">
+  ☰ Filters
+</button>
 
-  <aside class="service-sidebar">
-    <h2>Advanced<br>Filtering</h2>
+<div class="filter-overlay" [class.show]="showFilters" (click)="showFilters = false"></div>
+
+<aside class="service-sidebar" [class.show]="showFilters">
+
+  <div class="filter-header">
+    <h2>Filters</h2>
+
+    <button class="filter-close" (click)="showFilters = false">
+      ×
+    </button>
+  </div>
+
+  <div class="filter-body">
 
     <div class="filter-group">
       <h3>Service Type</h3>
-      <label><input type="checkbox"> Laptop Repair</label>
-      <label><input type="checkbox"> Desktop Repair</label>
-      <label><input type="checkbox"> Printer Service</label>
-      <label><input type="checkbox"> Networking</label>
-      <label><input type="checkbox"> Data Recovery</label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.laptopRepair">
+        Laptop Repair
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.desktopRepair">
+        Desktop Repair
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.printerService">
+        Printer Service
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.networking">
+        Networking
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.dataRecovery">
+        Data Recovery
+      </label>
     </div>
 
     <div class="filter-group">
       <h3>Support Mode</h3>
-      <label><input type="checkbox"> Doorstep Service</label>
-      <label><input type="checkbox"> In-shop Service</label>
-      <label><input type="checkbox"> Remote Support</label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.doorstep">
+        Doorstep Service
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.inShop">
+        In-shop Service
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.remote">
+        Remote Support
+      </label>
     </div>
 
     <div class="filter-group">
       <h3>Availability</h3>
-      <label><input type="checkbox"> Same Day</label>
-      <label><input type="checkbox"> 24/7 Support</label>
-      <label><input type="checkbox"> Business Support</label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.sameDay">
+        Same Day
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.support247">
+        24/7 Support
+      </label>
+
+      <label>
+        <input type="checkbox" [(ngModel)]="filters.business">
+        Business Support
+      </label>
     </div>
-  </aside>
+
+  </div>
+
+  <div class="filter-actions">
+    <button class="reset-btn" (click)="resetFilters()">Reset</button>
+    <button class="apply-btn" (click)="applyFilters()">Apply</button>
+  </div>
+
+</aside>
 
   <main class="services-content">
 

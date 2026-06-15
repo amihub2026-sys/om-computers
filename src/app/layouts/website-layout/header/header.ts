@@ -10,14 +10,19 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './header.css'
 })
 export class Header {
-constructor(private router: Router) {}
 
-get isLoggedIn(): boolean {
-  return localStorage.getItem('isLoggedIn') === 'true';
-}
+  mobileMenuOpen = false;
+  mobileAccountOpen = false;
 
-logout() {
-  localStorage.removeItem('isLoggedIn');
-  this.router.navigate(['/']);
-}
+  constructor(private router: Router) {}
+
+  get isLoggedIn(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  logout() {
+    localStorage.removeItem('isLoggedIn');
+    this.mobileMenuOpen = false;
+    this.router.navigate(['/']);
+  }
 }
