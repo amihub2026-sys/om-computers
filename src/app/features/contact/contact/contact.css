@@ -106,17 +106,7 @@
     box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
-/* 🔥 DARK GLASS OVERLAY
-.contact-form::before{
-    content: "";
-    position: absolute;
-    inset: 0;
 
-    background: rgba(0, 0, 0, 0.45); /* dark glass layer */
-    backdrop-filter: blur(6px);
-
-    z-index: 0;
-} */
 
 /* CONTENT ABOVE OVERLAY */
 .contact-form h2,
