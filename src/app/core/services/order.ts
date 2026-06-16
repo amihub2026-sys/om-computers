@@ -1,0 +1,50 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class Order {
+
+  baseUrl = 'https://om-computers-backend.onrender.com/api/orders';
+
+  constructor(private http: HttpClient) {}
+
+  private getHeaders() {
+    const token = localStorage.getItem('token');
+
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
+
+  getOrders() {
+    return this.http.get(this.baseUrl, this.getHeaders());
+  }
+
+  getOrderById(id: string) {
+    return this.http.get(`${this.baseUrl}/${id}`, this.getHeaders());
+  }
+
+  createOrder(data: any) {
+    return this.http.post(this.baseUrl, data, this.getHeaders());
+  }
+
+  placeOrder(data: any) {
+    return this.http.post(
+      `${this.baseUrl}/place-order`,
+      data,
+      this.getHeaders()
+    );
+  }
+
+  updateOrder(id: string, data: any) {
+    return this.http.put(`${this.baseUrl}/${id}`, data, this.getHeaders());
+  }
+
+  deleteOrder(id: string) {
+    return this.http.delete(`${this.baseUrl}/${id}`, this.getHeaders());
+  }
+}

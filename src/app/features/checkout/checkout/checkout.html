@@ -1,17 +1,19 @@
 <section class="checkout-page">
 
- <div class="page-header">
-  <h1>Checkout</h1>
-  <p>Complete your order by filling in the details below.</p>
+  <div class="page-header">
+    <h1>Checkout</h1>
+    <p>Complete your order by filling in the details below.</p>
 
-  <a routerLink="/cart" class="back-btn">
-    ← Back to Cart
-  </a>
-</div>
+    <a routerLink="/cart" class="back-btn">
+      ← Back to Cart
+    </a>
+  </div>
 
-  <div class="checkout-container">
+  <div class="loading" *ngIf="isLoading">
+    Loading checkout...
+  </div>
 
-    <!-- Billing Form -->
+  <div class="checkout-container" *ngIf="!isLoading && cartItems.length > 0">
 
     <div class="billing-section">
 
@@ -19,59 +21,88 @@
 
       <div class="form-grid">
 
-        <input type="text" placeholder="Full Name">
+        <input
+          type="text"
+          placeholder="Full Name"
+          [(ngModel)]="orderData.customerName">
 
-        <input type="tel" placeholder="Mobile Number">
+        <input
+          type="tel"
+          placeholder="Mobile Number"
+          [(ngModel)]="orderData.phone">
 
-        <input type="email" placeholder="Email Address">
+        <input
+          type="email"
+          placeholder="Email Address"
+          [(ngModel)]="orderData.email">
 
-        <input type="text" placeholder="City">
+        <input
+          type="text"
+          placeholder="City"
+          [(ngModel)]="orderData.city">
 
       </div>
 
       <textarea
         rows="4"
-        placeholder="Full Delivery Address">
+        placeholder="Full Delivery Address"
+        [(ngModel)]="orderData.address">
       </textarea>
 
-      <select>
-        <option>Select Payment Method</option>
-        <option>Cash on Delivery</option>
-        <option>UPI</option>
-        <option>Credit / Debit Card</option>
+      <select [(ngModel)]="orderData.paymentMethod">
+        <option value="">Select Payment Method</option>
+        <option value="Cash on Delivery">Cash on Delivery</option>
+        <option value="UPI">UPI</option>
+        <option value="Credit / Debit Card">Credit / Debit Card</option>
       </select>
 
     </div>
-
-    <!-- Order Summary -->
 
     <div class="summary-section">
 
       <h2>Order Summary</h2>
 
-      <div class="summary-item">
-        <span>Gaming Desktop PC</span>
-        <span>₹45,999</span>
-      </div>
+      <div
+        class="summary-item"
+        *ngFor="let item of cartItems; trackBy: trackByCartId">
 
-      <div class="summary-item">
-        <span>Business Laptop</span>
-        <span>₹58,999</span>
+        <span>
+          {{ item.productName }} × {{ item.quantity }}
+        </span>
+
+        <span>
+          ₹{{ item.total }}
+        </span>
+
       </div>
 
       <hr>
 
       <div class="summary-item total">
         <span>Total</span>
-        <span>₹104,998</span>
+        <span>₹{{ totalAmount }}</span>
       </div>
 
-  <button class="place-order-btn" (click)="placeOrder()">
-  Place Order
-</button>
+      <button
+        class="place-order-btn"
+        [disabled]="isPlacingOrder"
+        (click)="placeOrder()">
+
+        {{ isPlacingOrder ? 'Placing Order...' : 'Place Order' }}
+
+      </button>
 
     </div>
 
+  </div>
+
+  <div class="empty-cart" *ngIf="!isLoading && cartItems.length === 0">
+    <h2>Your cart is empty</h2>
+    <p>Please add products before checkout.</p>
+
+    <a routerLink="/products" class="back-btn">
+      Explore Products
+    </a>
   </div>
 
 </section>
