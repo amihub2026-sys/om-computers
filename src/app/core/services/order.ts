@@ -1,6 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import {
+  OrderResponse,
+  SingleOrderResponse,
+  PlaceOrderRequest
+} from '../interfaces/order.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,19 +24,25 @@ export class Order {
     };
   }
 
-  getOrders() {
-    return this.http.get(this.baseUrl, this.getHeaders());
-  }
+getOrders() {
+  return this.http.get<OrderResponse>(
+    this.baseUrl,
+    this.getHeaders()
+  );
+}
 
-  getOrderById(id: string) {
-    return this.http.get(`${this.baseUrl}/${id}`, this.getHeaders());
-  }
+ getOrderById(id: string) {
+  return this.http.get<SingleOrderResponse>(
+    `${this.baseUrl}/${id}`,
+    this.getHeaders()
+  );
+}
 
   createOrder(data: any) {
     return this.http.post(this.baseUrl, data, this.getHeaders());
   }
 
-  placeOrder(data: any) {
+  placeOrder(data: PlaceOrderRequest) {
     return this.http.post(
       `${this.baseUrl}/place-order`,
       data,

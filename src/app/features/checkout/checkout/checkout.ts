@@ -14,6 +14,7 @@ import { Toast } from '../../../core/services/toast';
 import { Cart as CartService } from '../../../core/services/cart';
 import { CartItem } from '../../../core/interfaces/cart.interface';
 import { Order as OrderService } from '../../../core/services/order';
+import { PlaceOrderRequest } from '../../../core/interfaces/order.interface';
 
 @Component({
   selector: 'app-checkout',
@@ -138,7 +139,7 @@ placeOrder(): void {
   this.isPlacingOrder = true;
   this.cdr.detectChanges();
 
-  const orderPayload = {
+  const orderPayload: PlaceOrderRequest = {
     customerName: this.orderData.customerName,
     phone: this.orderData.phone,
     email: this.orderData.email,
