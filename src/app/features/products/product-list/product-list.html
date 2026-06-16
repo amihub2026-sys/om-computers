@@ -1,150 +1,96 @@
 <section class="products-page" [class.filter-open]="showFilters">
-<!-- Mobile Filter Button -->
-<button class="filter-toggle" (click)="openFilters()">
-  ☰ Filter Products
-</button>
 
-<!-- Background Overlay -->
-<div
-  class="filter-overlay"
-  [class.show]="showFilters"
-  (click)="closeFilters()">
-</div>
+  <button class="filter-toggle" (click)="openFilters()">
+    ☰ Filter Products
+  </button>
 
-<!-- Filter Sidebar -->
-<aside class="filter-sidebar" [class.show]="showFilters">
+  <div class="filter-overlay" [class.show]="showFilters" (click)="closeFilters()"></div>
 
-  <div class="filter-mobile-head">
-    <h3>Filters</h3>
+  <aside class="filter-sidebar" [class.show]="showFilters">
 
+    <div class="filter-mobile-head">
+      <h3>Filters</h3>
+      <button class="filter-close" type="button" (click)="closeFilters()">×</button>
+    </div>
 
+    <h2>Advanced<br>Filtering</h2>
+
+    <div class="filter-group">
+      <h3>Category</h3>
+      <label *ngFor="let category of categories">
+        <input type="checkbox" [checked]="selectedCategories.includes(category)"
+          (change)="toggleFilter(selectedCategories, category)">
+        {{ category }}
+      </label>
+    </div>
+
+    <div class="filter-group">
+      <h3>Brand</h3>
+      <label *ngFor="let brand of brands">
+        <input type="checkbox" [checked]="selectedBrands.includes(brand)"
+          (change)="toggleFilter(selectedBrands, brand)">
+        {{ brand }}
+      </label>
+    </div>
 
     <div class="filter-group">
       <h3>Price</h3>
       <input type="range" min="0" [max]="priceLimit" [(ngModel)]="maxPrice">
       <p>Up to ₹{{ maxPrice }}</p>
     </div>
+
+    <div class="filter-actions">
+      <button class="reset-filter" type="button" (click)="resetFilters()">Reset</button>
+      <button class="apply-filter" type="button" (click)="applyFilters()">Apply</button>
+    </div>
+
   </aside>
-
-    <button class="filter-close" type="button" (click)="closeFilters()">×</button>
-  </div>
-
-  <h2>Advanced<br>Filtering</h2>
-
-  <div class="filter-group">
-    <h3>Category</h3>
-
-    <label *ngFor="let category of categories">
-     <input
-  type="checkbox"
-  [checked]="selectedCategories.includes(category)"
-  (change)="toggleFilter(selectedCategories, category)">
-      {{ category }}
-    </label>
-  </div>
-
-  <div class="filter-group">
-    <h3>Brand</h3>
-
-    <label *ngFor="let brand of brands">
-    <input
-  type="checkbox"
-  [checked]="selectedBrands.includes(brand)"
-  (change)="toggleFilter(selectedBrands, brand)">
-      {{ brand }}
-    </label>
-  </div>
-
-  <div class="filter-group">
-    <h3>Processor</h3>
-
-    <label *ngFor="let processor of processors">
-      <input
-  type="checkbox"
-  [checked]="selectedProcessors.includes(processor)"
-  (change)="toggleFilter(selectedProcessors, processor)">
-      {{ processor }}
-    </label>
-  </div>
-
-  <div class="filter-group">
-    <h3>Price</h3>
-
-    <input
-      type="range"
-      min="5000"
-      max="150000"
-      [(ngModel)]="maxPrice">
-
-    <p>Up to ₹{{ maxPrice }}</p>
-  </div>
-
-  <div class="filter-actions">
-  <button class="reset-filter" type="button" (click)="resetFilters()">
-    Reset
-  </button>
-
-  <button class="apply-filter" type="button" (click)="applyFilters()">
-    Apply
-  </button>
-</div>
-</aside>
-
 
   <main class="products-content">
 
-    <input
-      class="search-box"
-      type="text"
+    <input class="search-box" type="text"
       placeholder="Search gaming PCs, laptops, accessories..."
-      [(ngModel)]="searchText"
-    >
+      [(ngModel)]="searchText">
 
     <div class="category-menu">
-  <div class="category-track">
-    <span *ngFor="let category of categories">{{ category }}</span>
-    <span *ngFor="let category of categories">{{ category }}</span>
-  </div>
-</div>
+      <div class="category-track">
+        <span *ngFor="let category of categories">{{ category }}</span>
+        <span *ngFor="let category of categories">{{ category }}</span>
+      </div>
+    </div>
 
+    <div class="products-grid" *ngIf="isLoading">
+      <div class="product-card skeleton" *ngFor="let item of [1,2,3,4]"></div>
+    </div>
 
-         <div class="products-grid" *ngIf="isLoading">
-  <div class="product-card skeleton" *ngFor="let item of [1,2,3,4]"></div>
-</div>
-
-        <p *ngIf="!isLoading && filteredProducts.length === 0">
-                        No products found
-      </p>
-
+    <p *ngIf="!isLoading && filteredProducts.length === 0">
+      No products found
+    </p>
 
     <div class="products-grid" *ngIf="!isLoading">
-
       <div class="product-card" *ngFor="let product of filteredProducts; trackBy: trackByProduct">
 
         <div class="image-box">
-
-<img
-  [src]="product.image ? 'http://localhost:5000/uploads/products/' + product.image : 'assets/images/products/gaming-pc.jpg'"
-  [alt]="product.name"
->
+          <img
+            [src]="product.image ? 'http://localhost:5000/uploads/products/' + product.image : 'assets/images/products/gaming-pc.jpg'"
+            [alt]="product.name">
         </div>
 
         <div class="product-body">
           <h3>{{ product.name }}</h3>
-<p>{{ product.description }}</p>
+          <p>{{ product.description }}</p>
 
           <h4>
             ₹{{ product.price }}
             <del *ngIf="product.discountPrice">₹{{ product.discountPrice }}</del>
           </h4>
 
-<button class="details-btn" [routerLink]="['/products', product._id]">
-  View Details
-</button>
+          <button class="details-btn" [routerLink]="['/products', product._id]">
+            View Details
+          </button>
         </div>
 
       </div>
-
     </div>
 
   </main>
