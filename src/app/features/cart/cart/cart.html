@@ -1,75 +1,56 @@
 <section class="cart-page">
 
-<div class="page-header">
-  <h1>Shopping Cart</h1>
-  <p>Review your selected products before checkout.</p>
+  <div class="page-header">
+    <h1>Shopping Cart</h1>
+    <p>Review your selected products before checkout.</p>
 
-  <a routerLink="/products" class="back-btn">
-    ← Back to Products
-  </a>
-</div>
+    <a routerLink="/products" class="back-btn">
+      ← Back to Products
+    </a>
+  </div>
 
-  <div class="cart-container">
+  <div class="loading" *ngIf="isLoading">
+    Loading cart items...
+  </div>
 
-    <!-- Cart Items -->
+  <div class="cart-container" *ngIf="!isLoading && cartItems.length > 0; else emptyCart">
 
     <div class="cart-items">
-<div class="cart-card" *ngIf="showItem1">
 
-        <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+      <div class="cart-card" *ngFor="let item of cartItems; trackBy: trackByCartId">
 
-        <div class="cart-details">
-          <h3>Gaming Desktop PC</h3>
-          <p>Intel Core i7 | 16GB RAM | 1TB SSD</p>
-
-          <div class="price">
-            ₹45,999
-          </div>
-        </div>
-<div class="quantity">
-  <button (click)="decrease(1)">-</button>
-
-  <span>{{ quantity1 }}</span>
-
-  <button (click)="increase(1)">+</button>
-</div>
-
-<button class="remove-btn" (click)="removeItem(1)">
-  Remove
-</button>
-
-      </div>
-
-     <div class="cart-card" *ngIf="showItem2">
-
-        <img src="assets/images/products/gaming-pc.jpg" alt="Laptop">
+        <img src="assets/images/products/gaming-pc.jpg" [alt]="item.productName">
 
         <div class="cart-details">
-          <h3>Business Laptop</h3>
-          <p>Intel Core i5 | 8GB RAM | 512GB SSD</p>
+          <h3>{{ item.productName }}</h3>
+
+          <p>
+            Customer: {{ item.customerName }} |
+            Phone: {{ item.phone }}
+          </p>
 
           <div class="price">
-            ₹58,999
+            ₹{{ item.total }}
           </div>
+
+          <small>
+            ₹{{ item.price }} × {{ item.quantity }}
+          </small>
         </div>
 
-       <div class="quantity">
-  <button (click)="decrease(2)">-</button>
+        <div class="quantity">
+          <button (click)="decrease(item)">-</button>
+          <span>{{ item.quantity }}</span>
+          <button (click)="increase(item)">+</button>
+        </div>
 
-  <span>{{ quantity2 }}</span>
-
-  <button (click)="increase(2)">+</button>
-</div>
-
-<button class="remove-btn" (click)="removeItem(2)">
-  Remove
-</button>
+        <button class="remove-btn" (click)="removeItem(item)">
+          Remove
+        </button>
 
       </div>
 
     </div>
-
-    <!-- Summary -->
 
     <div class="cart-summary">
 
@@ -77,7 +58,7 @@
 
       <div class="summary-row">
         <span>Subtotal</span>
-        <span>₹104,998</span>
+        <span>₹{{ subtotal }}</span>
       </div>
 
       <div class="summary-row">
@@ -87,7 +68,7 @@
 
       <div class="summary-row total">
         <span>Total</span>
-        <span>₹104,998</span>
+        <span>₹{{ subtotal }}</span>
       </div>
 
       <a routerLink="/checkout" class="checkout-btn">
@@ -97,5 +78,16 @@
     </div>
 
   </div>
+
+  <ng-template #emptyCart>
+    <div class="empty-cart" *ngIf="!isLoading">
+      <h2>Your cart is empty</h2>
+      <p>Add products to your cart and continue shopping.</p>
+
+      <a routerLink="/products" class="checkout-btn">
+        Explore Products
+      </a>
+    </div>
+  </ng-template>
 
 </section>
