@@ -95,8 +95,19 @@
     </a>
   </ng-container>
 
-  <!-- After Login -->
-  <div class="profile-menu" *ngIf="isLoggedIn">
+<!-- After Login -->
+<ng-container *ngIf="isLoggedIn">
+
+  <!-- Cart -->
+  <a routerLink="/cart" class="cart-btn">
+    🛒
+    <span class="cart-badge">
+      {{ cartCount }}
+    </span>
+  </a>
+
+  <!-- My Account -->
+  <div class="profile-menu">
 
     <button class="account-btn">
       My Account ▼
@@ -112,6 +123,8 @@
     </div>
 
   </div>
+
+</ng-container>
 
 </div>
 <button class="menu-toggle" (click)="mobileMenuOpen = !mobileMenuOpen">

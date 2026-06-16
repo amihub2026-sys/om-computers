@@ -68,8 +68,42 @@ get productImage(): string {
     this.router.navigate(['/checkout']);
   }
 
-  addToCart(): void {
-    this.toast.success('Product added to cart!', 'Added');
-    this.router.navigate(['/cart']);
+ addToCart(): void {
+  if (!this.product) {
+    this.toast.error('Product not found', 'Error');
+    return;
   }
+
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    this.toast.error('Please login to add product to cart.', 'Login Required');
+    this.router.navigate(['/login']);
+    return;
+  }
+
+  const cartData = {
+    customerName: localStorage.getItem('name') || 'Customer',
+    phone: localStorage.getItem('phone') || '0000000000',
+    productId: this.product._id,
+    productName: this.product.name,
+    price: this.product.price,
+    quantity: 1,
+    total: this.product.price
+  };
+
+  this.cart.addToCart(cartData).subscribe({
+    next: (res: any) => {
+      if (res.success) {
+        this.toast.success('Product added to cart!', 'Added');
+        this.router.navigate(['/cart']);
+      } else {
+        this.toast.error(res.message, 'Error');
+      }
+    },
+    error: () => {
+      this.toast.error('Failed to add product to cart.', 'Error');
+    }
+  });
+}
 }
