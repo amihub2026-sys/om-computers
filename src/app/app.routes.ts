@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { WebsiteLayout } from './layouts/website-layout/website-layout/website-layout';
-
+import { authGuard } from './core/guards/auth-guard';
 import { Home } from './features/home/home/home';
 import { ProductList } from './features/products/product-list/product-list';
 import { ProductDetails } from './features/products/product-details/product-details';
@@ -46,15 +46,15 @@ export const routes: Routes = [
       { path: 'register', component: Register },
       { path: 'service-booking/:id', component: ServiceBooking },
       { path: 'booking-success', component: BookingSuccess },
-      { path: 'my-bookings', component: MyBookings },
+      { path: 'my-bookings', component: MyBookings, canActivate: [authGuard] },
       { path: 'about', component: About },
       { path: 'contact', component: Contact },
       { path: 'cart', component: Cart },
-      { path: 'checkout', component: Checkout },
+      { path: 'checkout', component: Checkout, canActivate: [authGuard] },
       { path: 'order-success', component: OrderSuccess },
-      { path: 'my-orders', component: MyOrders },
-      { path: 'my-bookings/:id', component: BookingDetails },
-      { path: 'my-orders/:id', component: OrderDetails },
+      { path: 'my-orders', component: MyOrders, canActivate: [authGuard] },
+      { path: 'my-bookings/:id', component: BookingDetails, canActivate: [authGuard] },
+      { path: 'my-orders/:id', component: OrderDetails, canActivate: [authGuard] },
     ],
   },
 

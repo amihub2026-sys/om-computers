@@ -1,66 +1,55 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Toast } from '../../../core/services/toast';
+import { ProductService } from '../../../core/services/product.service';
+import { Product } from '../../../core/interfaces/product.interface';
 @Component({
   selector: 'app-product-list',
   standalone: true,
- imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
-export class ProductList {
-  constructor(private toast: Toast) {}
+export class ProductList implements OnInit {
+
   searchText = '';
   selectedCategories: string[] = [];
   selectedBrands: string[] = [];
-  selectedProcessors: string[] = [];
-  maxPrice = 150000;
+  maxPrice = 0;
+  priceLimit = 0;
+  isLoading = true;
+categories: string[] = [];
+brands: string[] = [];
 
-  categories = ['Laptops', 'Desktops', 'Gaming PCs', 'Monitors', 'Accessories'];
-  brands = ['TechConnect', 'Apple', 'Dell', 'Lenovo'];
-  processors = ['i5', 'i7', 'i9', 'Ryzen'];
+  products: Product[] = [];
 
-  products = [
-    {
-       id: 1,
-      name: 'TechConnect Pro 15"',
-      category: 'Laptops',
-      brand: 'TechConnect',
-      processor: 'i7',
-      price: 55000,
-      oldPrice: 85000,
-      image: 'assets/images/products/gaming-pc.jpg',
-      badge: 'New Arrival',
-      specs: ['Intel Core i7', '16GB RAM', '512GB SSD']
+  constructor(
+  private productService: ProductService,
+  private cdr: ChangeDetectorRef
+) {}
+
+ngOnInit(): void {
+  this.productService.getProducts().subscribe({
+    next: (res: any) => {
+      this.products = res.data || [];
+
+      this.categories = [...new Set(this.products.map(p => p.category).filter(Boolean))];
+      this.brands = [...new Set(this.products.map(p => p.brand).filter(Boolean))];
+
+      this.priceLimit = Math.max(...this.products.map(p => p.price || 0));
+      this.maxPrice = this.priceLimit;
+
+      this.isLoading = false;
+      this.cdr.detectChanges();
     },
-    {
-        id: 2,
-      name: 'Gaming Desktop',
-      category: 'Gaming PCs',
-      brand: 'Dell',
-      processor: 'i9',
-      price: 95000,
-      oldPrice: 110000,
-      image: 'assets/images/products/gaming-pc.jpg',
-      badge: 'Sale',
-      specs: ['Intel Core i9', '32GB RAM', '1TB SSD']
-    },
-    {
-       id: 3,
-      name: 'RGB Gaming Tower',
-      category: 'Desktops',
-      brand: 'Lenovo',
-      processor: 'Ryzen',
-      price: 125000,
-      oldPrice: 150000,
-      image: 'assets/images/products/gaming-pc.jpg',
-      badge: '',
-      specs: ['Ryzen 9', '64GB RAM', '2TB SSD']
+    error: (err) => {
+      console.log(err);
+      this.isLoading = false;
+      this.cdr.detectChanges();
     }
-  ];
-
+  });
+}
   toggleFilter(list: string[], value: string) {
     const index = list.indexOf(value);
     index > -1 ? list.splice(index, 1) : list.push(value);
@@ -68,7 +57,7 @@ export class ProductList {
 
   get filteredProducts() {
     return this.products.filter(product => {
-      const searchMatch = product.name.toLowerCase().includes(this.searchText.toLowerCase());
+      const searchMatch = product.name?.toLowerCase().includes(this.searchText.toLowerCase());
 
       const categoryMatch =
         this.selectedCategories.length === 0 ||
@@ -78,16 +67,13 @@ export class ProductList {
         this.selectedBrands.length === 0 ||
         this.selectedBrands.includes(product.brand);
 
-      const processorMatch =
-        this.selectedProcessors.length === 0 ||
-        this.selectedProcessors.includes(product.processor);
+      const priceMatch =
+  this.maxPrice === 0 || product.price <= this.maxPrice;
 
-      const priceMatch = product.price <= this.maxPrice;
-
-      return searchMatch && categoryMatch && brandMatch && processorMatch && priceMatch;
+      return searchMatch && categoryMatch && brandMatch && priceMatch;
     });
   }
-  addToCart() {
-  this.toast.success('Product added to cart!', 'Added');
+  trackByProduct(index: number, product: Product) {
+  return product._id;
 }
 }

@@ -1,62 +1,41 @@
 <section class="product-details-page">
 
-  <div class="product-container">
+  <p *ngIf="isLoading">Loading product...</p>
+
+  <div class="product-container" *ngIf="!isLoading && product">
 
     <div class="product-gallery">
       <div class="main-image">
-        <img src="assets/images/products/gaming-pc.jpg" alt="Gaming Desktop PC">
-      </div>
-
-      <div class="thumbs">
-        <img src="assets/images/products/gaming-pc.jpg" alt="">
-        <img src="assets/images/products/gaming-pc.jpg" alt="">
-        <img src="assets/images/products/gaming-pc.jpg" alt="">
+        <img [src]="productImage" [alt]="product.name">
       </div>
     </div>
 
     <div class="product-info">
 
-      <span class="category-badge">Desktop PC</span>
+      <span class="category-badge">{{ product.category }}</span>
 
-      <h1>Gaming Desktop PC</h1>
+      <h1>{{ product.name }}</h1>
 
       <div class="meta-grid">
-        <p><strong>Category:</strong> Desktop PC</p>
-        <p><strong>Brand:</strong> OM Computers</p>
-        <p><strong>Model:</strong> OMC-GAMING-i7</p>
-        <p><strong>Stock:</strong> <span class="stock">In Stock</span></p>
-        <p><strong>Warranty:</strong> 1 Year Warranty</p>
+        <p><strong>Category:</strong> {{ product.category }}</p>
+        <p><strong>Brand:</strong> {{ product.brand }}</p>
+        <p><strong>Model:</strong> {{ product.model || 'N/A' }}</p>
+        <p><strong>Stock:</strong> {{ product.stock }}</p>
+        <p><strong>Warranty:</strong> {{ product.warranty || 'N/A' }}</p>
       </div>
 
       <div class="price-box">
-        <h2>₹45,999</h2>
-        <del>₹52,999</del>
-        <span>Save ₹7,000</span>
+        <h2>₹{{ product.price }}</h2>
+        <del *ngIf="product.discountPrice">₹{{ product.discountPrice }}</del>
       </div>
 
       <p class="description">
-        High-performance gaming desktop with Intel Core i7 processor,
-        16GB RAM, 1TB SSD and RTX graphics card for gaming, editing and office use.
+        {{ product.description || 'No description available.' }}
       </p>
 
-      <h3>Specifications</h3>
-
-      <ul class="spec-list">
-        <li>Intel Core i7 Processor</li>
-        <li>16GB DDR4 RAM</li>
-        <li>1TB NVMe SSD</li>
-        <li>NVIDIA RTX Graphics</li>
-        <li>Windows 11 Preinstalled</li>
-      </ul>
-
       <div class="buttons">
-        <button class="buy-btn" (click)="buyNow()">
-  Buy Now
-</button>
-
-<button class="cart-btn" (click)="addToCart()">
-  Add to Cart
-</button>
+        <button class="buy-btn" (click)="buyNow()">Buy Now</button>
+        <button class="cart-btn" (click)="addToCart()">Add to Cart</button>
 
         <a class="whatsapp-btn" href="https://wa.me/919789154220" target="_blank">
           WhatsApp Enquiry

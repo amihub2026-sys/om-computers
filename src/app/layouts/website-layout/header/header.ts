@@ -13,11 +13,11 @@ export class Header {
 constructor(private router: Router) {}
 
 get isLoggedIn(): boolean {
-  return localStorage.getItem('isLoggedIn') === 'true';
+  return !!localStorage.getItem('token');
 }
 
-logout() {
-  localStorage.removeItem('isLoggedIn');
+logout(): void {
+  localStorage.removeItem('token');
   this.router.navigate(['/']);
 }
 }
