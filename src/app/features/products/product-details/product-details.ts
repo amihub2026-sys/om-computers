@@ -57,11 +57,11 @@ ngOnInit(): void {
   });
 }
 
-  get productImage(): string {
-    return this.product?.image
-      ? 'http://localhost:5000/uploads/products/' + this.product.image
-      : 'assets/images/products/gaming-pc.jpg';
-  }
+get productImage(): string {
+  return this.product?.image
+    ? 'https://om-computers-backend.onrender.com/uploads/products/' + this.product.image
+    : 'assets/images/products/gaming-pc.jpg';
+}
 
   buyNow(): void {
     this.toast.success('Proceeding to checkout...', 'Buy Now');

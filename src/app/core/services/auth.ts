@@ -10,7 +10,7 @@ import { AuthResponse } from '../interfaces/auth-response';
 })
 export class Auth {
 
-  baseUrl = 'http://localhost:5000/api';
+  baseUrl = 'https://om-computers-backend.onrender.com/api';
 
   constructor(private http: HttpClient) {}
 

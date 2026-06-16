@@ -12,7 +12,7 @@ import { ProductService } from '../../core/services/product.service';
 })
 export class ManageProducts implements OnInit {
   products: any[] = [];
-  imageBaseUrl = 'http://localhost:5000/uploads/products/';
+  imageBaseUrl = 'https://om-computers-backend.onrender.com/uploads/products/';
 
   constructor(private productService: ProductService) {}
 
