@@ -10,7 +10,7 @@ import { Router, RouterModule } from '@angular/router';
   styleUrl: './header.css'
 })
 export class Header {
-constructor(private router: Router) {}
+
 
 get isLoggedIn(): boolean {
   return !!localStorage.getItem('token');
@@ -20,4 +20,20 @@ logout(): void {
   localStorage.removeItem('token');
   this.router.navigate(['/']);
 }
+
+  mobileMenuOpen = false;
+  mobileAccountOpen = false;
+
+  constructor(private router: Router) {}
+
+  get isLoggedIn(): boolean {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  }
+
+  logout() {
+    localStorage.removeItem('isLoggedIn');
+    this.mobileMenuOpen = false;
+    this.router.navigate(['/']);
+  }
+
 }

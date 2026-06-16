@@ -1,30 +1,37 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterModule],   // ✅ THIS FIXES routerLink
   templateUrl: './home.html',
-  styleUrl: './home.css',
+  styleUrls: ['./home.css']
 })
-export class Home {
+export class HomeComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('productsContainer')
-  productsContainer!: ElementRef<HTMLDivElement>;
+  @ViewChild('productsContainer') productsContainer!: ElementRef;
+   activeCard: number | null = null;
+  intervalId: any;
 
-  scrollLeft(): void {
-    this.productsContainer.nativeElement.scrollBy({
-      left: -350,
-      behavior: 'smooth'
-    });
+  ngAfterViewInit() {
+    this.intervalId = setInterval(() => {
+      this.autoSlide();
+    }, 3000);
   }
 
-  scrollRight(): void {
-    this.productsContainer.nativeElement.scrollBy({
-      left: 350,
-      behavior: 'smooth'
-    });
+  autoSlide() {
+    const container = this.productsContainer.nativeElement;
+    const cardWidth = 320;
+
+    container.scrollLeft += cardWidth;
+
+    if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
+      container.scrollLeft = 0;
+    }
   }
 
+  ngOnDestroy() {
+    clearInterval(this.intervalId);
+  }
 }
