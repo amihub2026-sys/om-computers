@@ -116,146 +116,48 @@
 
     <!-- <button class="scroll-btn left" (click)="scrollLeft()">&#10094;</button> -->
 
-  <div class="products-grid" #productsContainer>
+<div class="products-grid" #productsContainer>
 
-      <!-- CARD 1 -->
-      <div class="card">
+  <div
+    class="card"
+    *ngFor="let product of products; trackBy: trackByProduct"
+  >
 
-        <div class="card-top">
-          <span class="category">Laptops</span>
-          <div class="icons">
-            <span>♡</span>
-            <span>⇄</span>
-          </div>
-        </div>
+    <div class="card-top">
+      <span class="category">{{ product.category || 'Product' }}</span>
 
-        <span class="badgee">SALE</span>
-
-        <div class="image-box">
-          <img src="assets/images/products/gaming-pc.jpg" />
-        </div>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <div class="price">$185 <del>$230</del></div>
-
-        <a [routerLink]="['/products', 1]" class="view-btn">
-          View Details
-        </a>
-
+      <div class="icons">
+        <span>♡</span>
+        <span>⇄</span>
       </div>
-        <!-- CARD 2 -->
-      <div class="card">
-
-        <div class="card-top">
-          <span class="category">Desktops</span>
-          <div class="icons">
-            <span>♡</span>
-            <span>⇄</span>
-          </div>
-        </div>
-
-        <!-- <span class="badge">SALE</span> -->
-
-        <div class="image-box">
-          <img src="assets/images/products/gaming-pc.jpg" />
-        </div>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <div class="price">$185 <del>$230</del></div>
-
-        <a [routerLink]="['/products', 1]" class="view-btn">
-          View Details
-        </a>
-
-      </div>
-
-        <!-- CARD 3 -->
-      <div class="card">
-
-        <div class="card-top">
-          <span class="category">Gaming PCs</span>
-          <div class="icons">
-            <span>♡</span>
-            <span>⇄</span>
-          </div>
-        </div>
-
-        <!-- <span class="badge">SALE</span> -->
-
-        <div class="image-box">
-          <img src="assets/images/products/gaming-pc.jpg" />
-        </div>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <div class="price">$185 <del>$230</del></div>
-
-        <a [routerLink]="['/products', 1]" class="view-btn">
-          View Details
-        </a>
-
-      </div>
-
-     
-  
-       
-       <!-- CARD 5 -->
-      <div class="card">
-
-        <div class="card-top">
-          <span class="category">Monitors</span>
-          <div class="icons">
-            <span>♡</span>
-            <span>⇄</span>
-          </div>
-        </div>
-
-        <!-- <span class="badge">SALE</span> -->
-
-        <div class="image-box">
-          <img src="assets/images/products/gaming-pc.jpg" />
-        </div>
-
-        <h3>Gaming Desktop PC</h3>
-
-        <div class="price">$185 <del>$230</del></div>
-
-        <a [routerLink]="['/products', 1]" class="view-btn">
-          View Details
-        </a>
-
-      </div>
-
-
-
-      <!-- CARD 6 -->
-      <div class="card">
-
-        <div class="card-top">
-          <span class="category">Accessories</span>
-          <div class="icons">
-            <span>♡</span>
-            <span>⇄</span>
-          </div>
-        </div>
-
-        <div class="image-box">
-          <img src="assets/images/products/gaming-pc.jpg" />
-        </div>
-
-        <h3>Laptop</h3>
-
-        <div class="price">$950</div>
-
-        <a [routerLink]="['/products', 1]" class="view-btn">
-          View Details
-        </a>
-
-      </div>
-
     </div>
+
+    <!-- <span class="badgee" *ngIf="product.discountPrice">SALE</span> -->
+
+    <div class="image-box">
+      <img
+        [src]="product.image
+          ? 'https://om-computers-backend.onrender.com/uploads/products/' + product.image
+          : 'assets/images/products/gaming-pc.jpg'"
+        [alt]="product.name">
+    </div>
+
+    <h3>{{ product.name }}</h3>
+
+    <div class="price">
+      ₹{{ product.price }}
+      <del *ngIf="product.discountPrice">
+        ₹{{ product.discountPrice }}
+      </del>
+    </div>
+
+    <a [routerLink]="['/products', product._id]" class="view-btn">
+      View Details
+    </a>
+
+  </div>
+
+</div>
     <div class="wave-bg">
     <svg viewBox="0 0 1440 220" preserveAspectRatio="none">
         <path d="
