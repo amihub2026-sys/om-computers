@@ -317,6 +317,22 @@
   }
 
 
+}
+.skeleton {
+  height: 360px;
+  border-radius: 18px;
+  background: linear-gradient(90deg, #e5e7eb, #f8fafc, #e5e7eb);
+  background-size: 200% 100%;
+  animation: skeletonLoading 1.2s infinite;
+}
+
+@keyframes skeletonLoading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+
 
   .filter-sidebar h2{
     display:none;
@@ -430,5 +446,6 @@
     font-size:13px;
     margin-top:7px;
     border-radius:8px;
+
   }
 }

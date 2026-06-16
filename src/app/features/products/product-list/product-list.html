@@ -17,6 +17,15 @@
   <div class="filter-mobile-head">
     <h3>Filters</h3>
 
+
+
+    <div class="filter-group">
+      <h3>Price</h3>
+      <input type="range" min="0" [max]="priceLimit" [(ngModel)]="maxPrice">
+      <p>Up to ₹{{ maxPrice }}</p>
+    </div>
+  </aside>
+
     <button class="filter-close" type="button" (click)="closeFilters()">×</button>
   </div>
 
@@ -81,6 +90,7 @@
 </div>
 </aside>
 
+
   <main class="products-content">
 
     <input
@@ -97,30 +107,38 @@
   </div>
 </div>
 
-    <div class="products-grid">
 
-      <div class="product-card" *ngFor="let product of filteredProducts">
+         <div class="products-grid" *ngIf="isLoading">
+  <div class="product-card skeleton" *ngFor="let item of [1,2,3,4]"></div>
+</div>
+
+        <p *ngIf="!isLoading && filteredProducts.length === 0">
+                        No products found
+      </p>
+
+
+    <div class="products-grid" *ngIf="!isLoading">
+
+      <div class="product-card" *ngFor="let product of filteredProducts; trackBy: trackByProduct">
 
         <div class="image-box">
-          <span class="badge" *ngIf="product.badge">{{ product.badge }}</span>
-          <img [src]="product.image" [alt]="product.name">
+
+<img
+  [src]="product.image ? 'http://localhost:5000/uploads/products/' + product.image : 'assets/images/products/gaming-pc.jpg'"
+  [alt]="product.name"
+>
         </div>
 
         <div class="product-body">
           <h3>{{ product.name }}</h3>
-
-          <ul>
-            <li *ngFor="let spec of product.specs">{{ spec }}</li>
-          </ul>
+<p>{{ product.description }}</p>
 
           <h4>
             ₹{{ product.price }}
-            <del>₹{{ product.oldPrice }}</del>
+            <del *ngIf="product.discountPrice">₹{{ product.discountPrice }}</del>
           </h4>
-<button class="cart-btn" (click)="addToCart()" routerLink="/cart">
-  Add to Cart
-</button>
-<button class="details-btn" [routerLink]="['/products', product.id]">
+
+<button class="details-btn" [routerLink]="['/products', product._id]">
   View Details
 </button>
         </div>

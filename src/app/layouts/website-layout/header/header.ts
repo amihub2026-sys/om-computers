@@ -11,6 +11,16 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class Header {
 
+
+get isLoggedIn(): boolean {
+  return !!localStorage.getItem('token');
+}
+
+logout(): void {
+  localStorage.removeItem('token');
+  this.router.navigate(['/']);
+}
+
   mobileMenuOpen = false;
   mobileAccountOpen = false;
 
@@ -25,4 +35,5 @@ export class Header {
     this.mobileMenuOpen = false;
     this.router.navigate(['/']);
   }
+
 }
