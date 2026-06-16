@@ -5,14 +5,18 @@
     <p>Track and manage all your product orders.</p>
   </div>
 
-  <div class="orders-table">
+  <div class="loading" *ngIf="isLoading">
+    Loading orders...
+  </div>
+
+  <div class="orders-table" *ngIf="!isLoading && orders.length > 0">
 
     <table>
 
       <thead>
         <tr>
           <th>Order ID</th>
-          <th>Product</th>
+          <th>Products</th>
           <th>Order Date</th>
           <th>Amount</th>
           <th>Status</th>
@@ -22,44 +26,29 @@
 
       <tbody>
 
-        <tr>
-          <td>#OM1001</td>
-          <td>Gaming Desktop PC</td>
-          <td>12 Jun 2026</td>
-          <td>₹45,999</td>
-          <td>
-            <span class="processing">Processing</span>
-          </td>
-          <td>
-           <a routerLink="/my-orders/1" class="view-btn">View</a>
+        <tr *ngFor="let order of orders; trackBy: trackByOrderId">
+          <td>#{{ order._id.slice(-6).toUpperCase() }}</td>
 
+          <td>
+            <span *ngFor="let product of order.products; let last = last">
+              {{ product.productName }} × {{ product.quantity }}<span *ngIf="!last">, </span>
+            </span>
           </td>
-        </tr>
 
-        <tr>
-          <td>#OM1002</td>
-          <td>Business Laptop</td>
-          <td>10 Jun 2026</td>
-          <td>₹58,999</td>
-          <td>
-            <span class="shipped">Shipped</span>
-          </td>
-          <td>
-            <a routerLink="/my-orders/2" class="view-btn">View</a>
+          <td>{{ order.createdAt | date:'dd MMM yyyy' }}</td>
 
-          </td>
-        </tr>
+          <td>₹{{ order.totalAmount }}</td>
 
-        <tr>
-          <td>#OM1003</td>
-          <td>Mechanical Keyboard</td>
-          <td>08 Jun 2026</td>
-          <td>₹2,499</td>
           <td>
-            <span class="delivered">Delivered</span>
+            <span [ngClass]="getStatusClass(order.orderStatus)">
+              {{ order.orderStatus }}
+            </span>
           </td>
+
           <td>
-          <a routerLink="/my-orders/3" class="view-btn">View</a>
+            <a [routerLink]="['/my-orders', order._id]" class="view-btn">
+              View
+            </a>
           </td>
         </tr>
 
@@ -67,6 +56,11 @@
 
     </table>
 
+  </div>
+
+  <div class="empty-orders" *ngIf="!isLoading && orders.length === 0">
+    <h2>No orders found</h2>
+    <p>Your placed orders will appear here.</p>
   </div>
 
 </section>
