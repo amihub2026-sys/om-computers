@@ -1,15 +1,21 @@
 <section class="bookings-page">
 
- <div class="page-header">
-  <h1>My Service Bookings</h1>
-  <p>Track all your service requests in one place.</p>
+  <div class="page-header">
+    <h1>My Service Bookings</h1>
+    <p>Track all your service requests in one place.</p>
 
-  <a routerLink="/dashboard" class="back-btn">
-    ← Back to Dashboard
-  </a>
-</div>
+    <a routerLink="/dashboard" class="back-btn">
+      ← Back to Dashboard
+    </a>
+  </div>
 
-  <div class="booking-table">
+  <p *ngIf="isLoading">Loading bookings...</p>
+
+  <p *ngIf="!isLoading && bookings.length === 0">
+    No bookings found.
+  </p>
+
+  <div class="booking-table" *ngIf="!isLoading && bookings.length > 0">
 
     <table>
 
@@ -24,49 +30,33 @@
       </thead>
 
       <tbody>
-
-        <tr>
-          <td>#OM1001</td>
-          <td>Laptop Repair</td>
-          <td>12 Jun 2026</td>
+        <tr *ngFor="let booking of bookings">
           <td>
-            <span class="pending">Pending</span>
+            #{{ booking._id.slice(-6).toUpperCase() }}
           </td>
+
           <td>
-           <a routerLink="/my-bookings/1" class="view-btn">
-  View
-</a>
+            {{ booking.serviceName }}
+          </td>
+
+          <td>
+            {{ booking.bookingDate | date:'dd MMM yyyy' }}
+          </td>
+
+          <td>
+            <span [ngClass]="booking.status?.toLowerCase()">
+              {{ booking.status }}
+            </span>
+          </td>
+
+          <td>
+            <a
+              [routerLink]="['/my-bookings', booking._id]"
+              class="view-btn">
+              View
+            </a>
           </td>
         </tr>
-
-        <tr>
-          <td>#OM1002</td>
-          <td>Desktop Service</td>
-          <td>10 Jun 2026</td>
-          <td>
-            <span class="progress">In Progress</span>
-          </td>
-          <td>
-           <a routerLink="/my-bookings/2" class="view-btn">
-  View
-</a>
-          </td>
-        </tr>
-
-        <tr>
-          <td>#OM1003</td>
-          <td>Printer Repair</td>
-          <td>08 Jun 2026</td>
-          <td>
-            <span class="completed">Completed</span>
-          </td>
-          <td>
-            <a routerLink="/my-bookings/3" class="view-btn">
-  View
-</a>
-          </td>
-        </tr>
-
       </tbody>
 
     </table>

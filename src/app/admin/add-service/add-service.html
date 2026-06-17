@@ -1,34 +1,32 @@
 <section class="add-service-page">
-
   <div class="form-card">
 
-    <h1>Add Service</h1>
+    <h1>{{ isEditMode ? 'Edit Service' : 'Add Service' }}</h1>
     <p>Enter service details for OM Computers.</p>
 
-    <form>
+    <form (ngSubmit)="saveService()">
 
       <div class="form-grid">
-        <input type="text" placeholder="Service Name">
-        <input type="text" placeholder="Category">
-        <input type="text" placeholder="Service Mode">
-        <input type="text" placeholder="Estimated Duration">
-        <input type="text" placeholder="Availability">
-        <input type="number" placeholder="Starting Price">
+        <input type="text" placeholder="Service Name" [(ngModel)]="service.name" name="name">
+        <input type="text" placeholder="Category" [(ngModel)]="service.category" name="category">
+        <input type="text" placeholder="Estimated Duration" [(ngModel)]="service.duration" name="duration">
+        <input type="number" placeholder="Starting Price" [(ngModel)]="service.price" name="price">
       </div>
 
-      <input type="file">
+      <input type="file" accept="image/*" (change)="onImageSelected($event)">
 
-      <textarea rows="5" placeholder="Service Description"></textarea>
-
-      <textarea rows="4" placeholder="Service Includes"></textarea>
+      <textarea rows="5" placeholder="Service Description" [(ngModel)]="service.description" name="description"></textarea>
 
       <div class="buttons">
-        <button type="submit">Save Service</button>
-        <button type="button" class="cancel">Cancel</button>
+        <button type="submit">
+          {{ isEditMode ? 'Update Service' : 'Save Service' }}
+        </button>
+
+        <button type="button" class="cancel" routerLink="/admin/services">
+          Cancel
+        </button>
       </div>
 
     </form>
-
   </div>
-
 </section>

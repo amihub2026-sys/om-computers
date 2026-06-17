@@ -1,49 +1,47 @@
 <section class="service-details-page">
-<div class="back-section">
-  <a routerLink="/services" class="back-btn">
-    ← Back to Services
-  </a>
-</div>
-  <div class="service-container">
+
+  <div class="back-section">
+    <a routerLink="/services" class="back-btn">
+      ← Back to Services
+    </a>
+  </div>
+
+  <div *ngIf="isLoading">
+    Loading service...
+  </div>
+
+  <div class="service-container" *ngIf="!isLoading && service">
 
     <div class="service-image">
-      <img src="assets/images/categories/laptop.png" alt="Laptop Repair">
+      <img
+        [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
+        [alt]="service.name">
     </div>
 
     <div class="service-info">
 
-      <span class="service-badge">Doorstep Service</span>
+      <span class="service-badge">
+        {{ service.category }}
+      </span>
 
-      <h1>Laptop Repair Service</h1>
+      <h1>{{ service.name }}</h1>
 
       <div class="service-meta">
-        <p><strong>Category:</strong> Repair</p>
-        <p><strong>Duration:</strong> 2 - 4 Hours</p>
-        <p><strong>Availability:</strong> Mon - Sat</p>
-        <p><strong>Service Type:</strong> Doorstep / In-shop</p>
+        <p><strong>Category:</strong> {{ service.category }}</p>
+        <p><strong>Duration:</strong> {{ service.duration || '-' }}</p>
+        <p><strong>Starting Price:</strong> ₹{{ service.price }}</p>
+        <p><strong>Status:</strong> {{ service.isActive ? 'Active' : 'Inactive' }}</p>
       </div>
 
       <p class="description">
-        We provide professional laptop repair services including screen replacement,
-        motherboard repair, SSD upgrade, RAM upgrade, keyboard replacement and
-        software installation.
+        {{ service.description || 'Professional computer service support.' }}
       </p>
 
-      <h3>Service Includes</h3>
-
-      <ul>
-        <li>Screen Replacement</li>
-        <li>Keyboard Replacement</li>
-        <li>Battery Replacement</li>
-        <li>SSD / RAM Upgrade</li>
-        <li>Windows Installation</li>
-        <li>Motherboard Diagnosis</li>
-      </ul>
 
       <div class="buttons">
-<button class="book-btn" (click)="bookService()">
-  Book Service
-</button>
+        <button class="book-btn" (click)="bookService()">
+          Book Service
+        </button>
 
         <a class="whatsapp-btn" href="https://wa.me/919789154220" target="_blank">
           WhatsApp
