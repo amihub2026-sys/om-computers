@@ -135,11 +135,9 @@
     <!-- <span class="badgee" *ngIf="product.discountPrice">SALE</span> -->
 
     <div class="image-box">
-      <img
-        [src]="product.image
-          ? 'https://om-computers-backend.onrender.com/uploads/products/' + product.image
-          : 'assets/images/products/gaming-pc.jpg'"
-        [alt]="product.name">
+ <img
+  [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
+  [alt]="product.name">
     </div>
 
     <h3>{{ product.name }}</h3>

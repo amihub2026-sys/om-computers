@@ -19,6 +19,7 @@ import {
 } from '../../../core/interfaces/order.interface';
 
 import { APP_INFO } from '../../../core/constants/app.constants';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-order-details',
@@ -31,7 +32,7 @@ export class OrderDetails implements OnInit, OnDestroy {
 
   order?: OrderItem;
   isLoading = false;
-
+  imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
   private destroy$ = new Subject<void>();
 
   constructor(
