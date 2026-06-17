@@ -1,8 +1,19 @@
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ChangeDetectorRef
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 import { BookingService } from '../../../core/services/booking.service';
+import {
+  Booking,
+  BookingResponse
+} from '../../../core/interfaces/booking.interface';
 
 @Component({
   selector: 'app-my-bookings',
@@ -11,9 +22,12 @@ import { BookingService } from '../../../core/services/booking.service';
   templateUrl: './my-bookings.html',
   styleUrl: './my-bookings.css',
 })
-export class MyBookings implements OnInit {
-  bookings: any[] = [];
+export class MyBookings implements OnInit, OnDestroy {
+
+  bookings: Booking[] = [];
   isLoading = false;
+
+  private destroy$ = new Subject<void>();
 
   constructor(
     private bookingService: BookingService,
@@ -24,20 +38,32 @@ export class MyBookings implements OnInit {
     this.loadBookings();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadBookings(): void {
     this.isLoading = true;
 
-    this.bookingService.getBookings().subscribe({
-      next: (res: any) => {
-        this.bookings = res.data || [];
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      },
-      error: (err) => {
-        console.error(err);
-        this.isLoading = false;
-        this.cdr.detectChanges();
-      }
-    });
+    this.bookingService.getBookings()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res: BookingResponse) => {
+          this.bookings = res.data || [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        },
+        error: (err) => {
+          console.error(err);
+          this.bookings = [];
+          this.isLoading = false;
+          this.cdr.detectChanges();
+        }
+      });
+  }
+
+  trackByBooking(index: number, booking: Booking): string {
+    return booking._id;
   }
 }
