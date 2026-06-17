@@ -11,6 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 
 import { Order as OrderService } from '../../../core/services/order';
 import { Toast } from '../../../core/services/toast';
+import { OrderItem } from '../../../core/interfaces/order.interface';
 
 @Component({
   selector: 'app-my-orders',
@@ -21,7 +22,7 @@ import { Toast } from '../../../core/services/toast';
 })
 export class MyOrders implements OnInit, OnDestroy {
 
-  orders: any[] = [];
+  orders: OrderItem[] = [];
   isLoading = false;
 
   private destroy$ = new Subject<void>();
@@ -48,7 +49,7 @@ export class MyOrders implements OnInit, OnDestroy {
     this.orderService.getOrders()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: any) => {
+        next: (res) => {
           this.isLoading = false;
           this.orders = res.success ? res.data : [];
           this.cdr.detectChanges();
@@ -62,7 +63,7 @@ export class MyOrders implements OnInit, OnDestroy {
       });
   }
 
-  getStatusClass(status: string): string {
+  getStatusClass(status: OrderItem['orderStatus']): string {
     switch (status) {
       case 'Pending':
         return 'processing';
@@ -79,8 +80,7 @@ export class MyOrders implements OnInit, OnDestroy {
     }
   }
 
-  trackByOrderId(index: number, order: any): string {
+  trackByOrderId(index: number, order: OrderItem): string {
     return order._id;
   }
-
 }

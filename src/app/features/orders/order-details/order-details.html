@@ -31,7 +31,9 @@
         class="product-box"
         *ngFor="let product of order.products; trackBy: trackByProduct">
 
-        <img src="assets/images/products/gaming-pc.jpg" [alt]="product.productName">
+<img
+  [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
+  [alt]="product.productName">
 
         <div>
           <h3>{{ product.productName }}</h3>

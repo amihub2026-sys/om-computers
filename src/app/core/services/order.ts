@@ -5,12 +5,13 @@ import {
   SingleOrderResponse,
   PlaceOrderRequest
 } from '../interfaces/order.interface';
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
 export class Order {
 
-  baseUrl = 'https://om-computers-backend.onrender.com/api/orders';
+  baseUrl = `${environment.baseUrl}/api/orders`;
 
   constructor(private http: HttpClient) {}
 
