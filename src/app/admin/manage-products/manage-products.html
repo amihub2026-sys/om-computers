@@ -8,6 +8,9 @@
     Add Product
   </a>
 </div>
+ 
+<p><strong>Total Products:</strong> {{ products.length }}</p>
+
 
 <div class="product-table">
   <table>
@@ -24,13 +27,13 @@
 
     <tbody>
       <tr *ngFor="let product of products">
-        <td>
-        <img
-  [src]="'https://om-computers-backend.onrender.com/uploads/products/' + product.image"
-  alt="Product Image"
-  width="80"
-  height="80">
-        </td>
+<td>
+  <img
+    [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
+    alt="Product Image"
+    width="80"
+    height="80">
+</td>
 
         <td>{{ product.name }}</td>
         <td>{{ product.category }}</td>
@@ -43,8 +46,13 @@
         </td>
 
         <td>
-          <button class="edit">Edit</button>
-          <button class="delete">Delete</button>
+          <button class="edit" [routerLink]="['/admin/products/edit', product._id]">
+  Edit
+</button>
+
+<button class="delete" (click)="deleteProduct(product._id)">
+  Delete
+</button> 
         </td>
       </tr>
     </tbody>

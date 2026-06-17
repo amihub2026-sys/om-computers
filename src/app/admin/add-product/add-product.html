@@ -19,7 +19,9 @@
   <textarea rows="5" placeholder="Product Description" [(ngModel)]="product.description" name="description"></textarea>
 
   <div class="buttons">
-    <button type="submit">Save Product</button>
+    <button type="submit">
+  {{ isEditMode ? 'Update Product' : 'Save Product' }}
+</button>
     <button type="button" class="cancel">Cancel</button>
   </div>
 
