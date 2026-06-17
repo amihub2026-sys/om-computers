@@ -70,11 +70,16 @@
     <div class="products-grid" *ngIf="!isLoading">
       <div class="product-card" *ngFor="let product of filteredProducts; trackBy: trackByProduct">
 
-        <div class="image-box">
-          <img
-            [src]="product.image ? 'https://om-computers-backend.onrender.com/uploads/products/' + product.image : 'assets/images/products/gaming-pc.jpg'"
-            [alt]="product.name">
-        </div>
+      <div class="image-box">
+  <div class="image-slider">
+
+    <img
+      *ngFor="let img of getProductImages(product)"
+      [src]="img"
+      [alt]="product.name">
+
+  </div>
+</div>
 
         <div class="product-body">
           <h3>{{ product.name }}</h3>

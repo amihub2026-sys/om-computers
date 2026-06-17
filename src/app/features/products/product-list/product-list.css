@@ -7,16 +7,24 @@
 }
 
 /* Sidebar */
+.filters{
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+}
 
 .filter-sidebar{
-    width:220px;
+    width:320px;
+        min-width: 320px;
+    max-width: 320px;
     background:#fff;
-    padding:18px;
-    border-radius:18px;
+    padding:30px;
+    border-radius:20px;
     box-shadow:0 10px 30px rgba(0,0,0,.08);
     height:fit-content;
     position:sticky;
     top:105px;
+
 }
 
 .filter-sidebar h2{
@@ -56,6 +64,13 @@
 
 .products-content{
     flex:1;
+}
+.products-container{
+      display: grid;
+    grid-template-columns: 320px 1fr; /* Bigger filter */
+    gap: 20px;
+    align-items: start;
+    
 }
 
 .search-box{
@@ -104,8 +119,9 @@
 
 .products-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:25px;
+    grid-template-columns:repeat(4,280px);
+    justify-content:start;
+    gap:20px;
 }
 
 .product-card{
@@ -121,13 +137,89 @@
 }
 
 .image-box{
-    position:relative;
+    width:100%;
+    height:180px;
+    overflow:hidden;
 }
 
-.image-box img{
+.image-slider{
+    display:flex;
+    height:100%;
+    transition:0.5s;
+}
+
+.image-slider img{
+    min-width:100%;
     width:100%;
     height:220px;
-    object-fit:cover;
+    object-fit:contain;
+    padding:10px;
+}
+
+.product-card:hover .image-slider{
+    animation:slideImages 8s infinite;
+}
+
+@keyframes slideImages{
+
+    0%{
+        transform:translateX(0%);
+    }
+
+    30%{
+        transform:translateX(0%);
+    }
+
+    40%{
+        transform:translateX(-100%);
+    }
+
+    60%{
+        transform:translateX(-100%);
+    }
+
+    70%{
+        transform:translateX(-200%);
+    }
+
+    90%{
+        transform:translateX(-200%);
+    }
+
+    100%{
+        transform:translateX(0%);
+    }
+
+}
+
+@media(max-width:1200px){
+
+    .products-grid{
+
+        grid-template-columns:repeat(3,1fr);
+
+    }
+
+}
+
+@media(max-width:900px){
+
+    .products-grid{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    .products-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
 }
 
 .badge{

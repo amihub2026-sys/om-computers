@@ -108,4 +108,22 @@ export class ProductList implements OnInit {
     this.showFilters = false;
     document.body.style.overflow = '';
   }
+
+  getProductImages(product: any): string[] {
+
+  const baseUrl =
+    'https://om-computers-backend.onrender.com/uploads/products/';
+
+  if (product.images && product.images.length > 0) {
+    return product.images.map((img: string) => baseUrl + img);
+  }
+
+  if (product.image) {
+    return [baseUrl + product.image];
+  }
+
+  return [
+    'assets/images/products/gaming-pc.jpg'
+  ];
+}
 }
