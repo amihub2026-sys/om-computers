@@ -1,71 +1,71 @@
+<div class="admin-header">
+  <div>
+    <h1>Manage Service Bookings</h1>
+    <p>View and update customer service requests.</p>
+  </div>
+</div>
 
+<p *ngIf="isLoading">
+  Loading bookings...
+</p>
 
-    <div class="admin-header">
-      <div>
-        <h1>Manage Service Bookings</h1>
-        <p>View and update customer service requests.</p>
-      </div>
-    </div>
+<p *ngIf="!isLoading && bookings.length === 0">
+  No bookings found.
+</p>
 
-    <div class="bookings-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Booking ID</th>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Service</th>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+<div class="bookings-table" *ngIf="!isLoading && bookings.length > 0">
 
-        <tbody>
-          <tr>
-            <td>#OM-S1001</td>
-            <td>Arun Kumar</td>
-            <td>97891 54220</td>
-            <td>Laptop Repair</td>
-            <td>12 Jun 2026</td>
-            <td>10:30 AM</td>
-            <td><span class="pending">Pending</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
+  <table>
+    <thead>
+      <tr>
+        <th>Booking ID</th>
+        <th>Customer</th>
+        <th>Phone</th>
+        <th>Service</th>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
 
-          <tr>
-            <td>#OM-S1002</td>
-            <td>Priya S</td>
-            <td>98765 43210</td>
-            <td>Printer Support</td>
-            <td>13 Jun 2026</td>
-            <td>02:00 PM</td>
-            <td><span class="progress">In Progress</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
+    <tbody>
+      <tr *ngFor="let booking of bookings; trackBy: trackByBooking">
 
-          <tr>
-            <td>#OM-S1003</td>
-            <td>Vignesh R</td>
-            <td>91234 56780</td>
-            <td>Networking</td>
-            <td>14 Jun 2026</td>
-            <td>11:00 AM</td>
-            <td><span class="completed">Completed</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <td>
+          #{{ booking._id.slice(-6).toUpperCase() }}
+        </td>
 
- 
+        <td>{{ booking.customerName }}</td>
+
+        <td>{{ booking.phone }}</td>
+
+        <td>{{ booking.serviceName }}</td>
+
+        <td>{{ booking.bookingDate | date:'dd MMM yyyy' }}</td>
+
+        <td>{{ booking.bookingTime || '-' }}</td>
+
+        <td>
+          <span [ngClass]="booking.status.toLowerCase()">
+            {{ booking.status }}
+          </span>
+        </td>
+
+        <td>
+          <select
+            [ngModel]="booking.status"
+            (ngModelChange)="updateStatus(booking, $event)">
+
+            <option *ngFor="let status of statuses" [value]="status">
+              {{ status }}
+            </option>
+
+          </select>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>
