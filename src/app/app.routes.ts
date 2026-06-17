@@ -75,6 +75,7 @@ export const routes: Routes = [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'products', component: ManageProducts },
       { path: 'products/add', component: AddProduct },
+      { path: 'products/edit/:id', component: AddProduct },
       { path: 'services', component: ManageServices },
       { path: 'services/add', component: AddService },
       { path: 'orders', component: ManageOrders },
