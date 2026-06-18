@@ -48,9 +48,10 @@
 
   <main class="products-content">
 
-    <input class="search-box" type="text"
-      placeholder="Search gaming PCs, laptops, accessories..."
-      [(ngModel)]="searchText">
+<app-common-search-bar
+  placeholder="Search gaming PCs, laptops, accessories..."
+  [(value)]="searchText">
+</app-common-search-bar>
 
     <div class="category-menu">
       <div class="category-track">

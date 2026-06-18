@@ -6,15 +6,17 @@ import { RouterLink } from '@angular/router';
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../core/interfaces/product.interface';
 import { environment } from '../../../../environments/environment';
+
+import { CommonSearchBar } from '../../../shared/components/common-search-bar/common-search-bar';
+
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
 export class ProductList implements OnInit {
-
   showFilters = false;
 
   searchText = '';
@@ -28,7 +30,9 @@ export class ProductList implements OnInit {
   categories: string[] = [];
   brands: string[] = [];
   products: Product[] = [];
+
   imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
+
   constructor(
     private productService: ProductService,
     private cdr: ChangeDetectorRef
@@ -42,7 +46,7 @@ export class ProductList implements OnInit {
         this.categories = [...new Set(this.products.map(p => p.category).filter(Boolean))];
         this.brands = [...new Set(this.products.map(p => p.brand).filter(Boolean))];
 
-        this.priceLimit = Math.max(...this.products.map(p => p.price || 0));
+        this.priceLimit = Math.max(...this.products.map(p => p.price || 0), 0);
         this.maxPrice = this.priceLimit;
 
         this.isLoading = false;
@@ -62,9 +66,15 @@ export class ProductList implements OnInit {
   }
 
   get filteredProducts(): Product[] {
+    const search = this.searchText.toLowerCase().trim();
+
     return this.products.filter(product => {
       const searchMatch =
-        product.name?.toLowerCase().includes(this.searchText.toLowerCase());
+        !search ||
+        product.name?.toLowerCase().includes(search) ||
+        product.description?.toLowerCase().includes(search) ||
+        product.category?.toLowerCase().includes(search) ||
+        product.brand?.toLowerCase().includes(search);
 
       const categoryMatch =
         this.selectedCategories.length === 0 ||
@@ -96,8 +106,7 @@ export class ProductList implements OnInit {
   }
 
   applyFilters(): void {
-    this.showFilters = false;
-    document.body.style.overflow = '';
+    this.closeFilters();
   }
 
   resetFilters(): void {
@@ -105,7 +114,6 @@ export class ProductList implements OnInit {
     this.selectedBrands = [];
     this.maxPrice = this.priceLimit;
     this.searchText = '';
-    this.showFilters = false;
-    document.body.style.overflow = '';
+    this.closeFilters();
   }
 }

@@ -22,15 +22,6 @@
 
     <div class="filter-body">
 
-      <div class="filter-group">
-        <h3>Search Service</h3>
-
-        <input
-          class="search-box"
-          type="text"
-          placeholder="Search services..."
-          [(ngModel)]="searchText">
-      </div>
 
       <div class="filter-group">
         <h3>Service Type</h3>
@@ -67,11 +58,10 @@
 
   <main class="services-content">
 
-    <input
-      class="search-box"
-      type="text"
-      placeholder="Search laptop repair, networking, data recovery..."
-      [(ngModel)]="searchText">
+<app-common-search-bar
+  placeholder="Search laptop repair, networking, data recovery..."
+  [(value)]="searchText">
+</app-common-search-bar>
 
     <div class="service-categories" *ngIf="categories.length">
       <div class="service-track">
