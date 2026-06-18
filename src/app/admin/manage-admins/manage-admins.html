@@ -1,0 +1,105 @@
+<div class="manage-admins-page">
+
+  <div class="page-header">
+    <h2>Manage Admins</h2>
+
+    <button class="add-btn" (click)="openAddAdmin()">
+      + Add Admin
+    </button>
+  </div>
+
+  <div class="admin-form" *ngIf="showForm">
+    <h3>Add New Admin</h3>
+
+    <input
+      type="text"
+      placeholder="Name"
+      [(ngModel)]="adminForm.name"
+    >
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="adminForm.email"
+    >
+
+    <input
+      type="text"
+      placeholder="Phone"
+      [(ngModel)]="adminForm.phone"
+    >
+
+  <div class="password-field">
+  <input
+    [type]="showPassword ? 'text' : 'password'"
+    placeholder="Password"
+    [(ngModel)]="adminForm.password"
+  />
+
+  <button
+    type="button"
+    class="toggle-password"
+    (click)="showPassword = !showPassword"
+  >
+    {{ showPassword ? '🙈' : '👁️' }}
+  </button>
+</div>
+
+    <div class="form-actions">
+      <button
+        class="save-btn"
+        (click)="saveAdmin()"
+        [disabled]="isLoading"
+      >
+        {{ isLoading ? 'Saving...' : 'Save Admin' }}
+      </button>
+
+      <button class="cancel-btn" (click)="cancelForm()">
+        Cancel
+      </button>
+    </div>
+  </div>
+
+  <div class="created-admin-card" *ngIf="createdAdmin">
+    <h3>Admin Created Successfully</h3>
+
+    <p><strong>Admin ID:</strong> {{ createdAdmin.adminId }}</p>
+    <p><strong>Email:</strong> {{ createdAdmin.email }}</p>
+    <p><strong>Password:</strong> {{ createdAdmin.password }}</p>
+
+    <small>Share these login details with the new admin.</small>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let admin of admins">
+        <td>{{ admin.name }}</td>
+        <td>{{ admin.email }}</td>
+        <td>{{ admin.phone || '-' }}</td>
+        <td>{{ admin.isActive ? 'Active' : 'Inactive' }}</td>
+        <td>{{ admin.role }}</td>
+        <td>
+          <button class="remove-btn" (click)="removeAdmin(admin)">
+            Remove Admin
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="admins.length === 0">
+    No admins found.
+  </p>
+
+</div>
