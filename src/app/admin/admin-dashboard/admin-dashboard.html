@@ -2,128 +2,219 @@
   Loading dashboard...
 </div>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!isLoading" class="dashboard-modern">
+
+  <div class="dashboard-top">
+    <div>
+      <h1>Dashboard</h1>
+      <p>Welcome back, Admin</p>
+    </div>
+
+    <div class="top-actions">
+      <button type="button">🌐 Visit Site</button>
+      <button type="button" class="logout-btn">↪ Logout</button>
+    </div>
+  </div>
 
   <div class="stats-grid">
 
     <div class="stat-card">
-      <h3>{{ stats.totalUsers }}</h3>
+      <div class="stat-icon">👥</div>
       <p>Total Users</p>
+      <h3>{{ stats.totalUsers }}</h3>
+      <span>Registered users</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalAdmins }}</h3>
+      <div class="stat-icon orange">🛡</div>
       <p>Total Admins</p>
+      <h3>{{ stats.totalAdmins }}</h3>
+      <span>Admin accounts</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalProducts }}</h3>
+      <div class="stat-icon green">📦</div>
       <p>Total Products</p>
+      <h3>{{ stats.totalProducts }}</h3>
+      <span>Active products</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalServices }}</h3>
+      <div class="stat-icon purple">🛠</div>
       <p>Total Services</p>
+      <h3>{{ stats.totalServices }}</h3>
+      <span>Available services</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalOrders }}</h3>
+      <div class="stat-icon">🛒</div>
       <p>Product Orders</p>
+      <h3>{{ stats.totalOrders }}</h3>
+      <span>Total orders</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalBookings }}</h3>
+      <div class="stat-icon green">📅</div>
       <p>Service Bookings</p>
+      <h3>{{ stats.totalBookings }}</h3>
+      <span>Total bookings</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.totalCarts }}</h3>
+      <div class="stat-icon purple">🧺</div>
       <p>Total Carts</p>
+      <h3>{{ stats.totalCarts }}</h3>
+      <span>Cart items</span>
     </div>
 
     <div class="stat-card revenue-card">
-      <h3>₹{{ stats.totalRevenue }}</h3>
+      <div class="stat-icon green">₹</div>
       <p>Total Revenue</p>
+      <h3>₹{{ stats.totalRevenue }}</h3>
+      <span>Overall earnings</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.pendingOrders }}</h3>
+      <div class="stat-icon orange">⏳</div>
       <p>Pending Orders</p>
+      <h3>{{ stats.pendingOrders }}</h3>
+      <span>Need action</span>
     </div>
 
     <div class="stat-card">
-      <h3>{{ stats.pendingBookings }}</h3>
+      <div class="stat-icon orange">🔔</div>
       <p>Pending Bookings</p>
+      <h3>{{ stats.pendingBookings }}</h3>
+      <span>Need confirmation</span>
     </div>
 
+  </div>
+
+  <div class="analytics-grid">
+    <div class="dashboard-card">
+      <h2>📊 Business Overview</h2>
+
+      <div class="bar-row">
+        <span>Products</span>
+        <div><i [style.width.%]="80"></i></div>
+        <b>{{ stats.totalProducts }}</b>
+      </div>
+
+      <div class="bar-row">
+        <span>Services</span>
+        <div><i [style.width.%]="60"></i></div>
+        <b>{{ stats.totalServices }}</b>
+      </div>
+
+      <div class="bar-row">
+        <span>Orders</span>
+        <div><i [style.width.%]="70"></i></div>
+        <b>{{ stats.totalOrders }}</b>
+      </div>
+
+      <div class="bar-row">
+        <span>Bookings</span>
+        <div><i [style.width.%]="55"></i></div>
+        <b>{{ stats.totalBookings }}</b>
+      </div>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>⚡ Quick Status</h2>
+
+      <div class="status-summary">
+        <div>
+          <strong>{{ stats.pendingOrders }}</strong>
+          <span>Pending Orders</span>
+        </div>
+
+        <div>
+          <strong>{{ stats.pendingBookings }}</strong>
+          <span>Pending Bookings</span>
+        </div>
+
+        <div>
+          <strong>{{ stats.totalCarts }}</strong>
+          <span>Cart Activity</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="dashboard-grid">
 
     <div class="dashboard-card">
-      <h2>Recent Orders</h2>
+      <div class="card-title-row">
+        <h2>🛒 Recent Orders</h2>
+      </div>
 
-      <table *ngIf="recentOrders.length > 0">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Status</th>
-            <th>Amount</th>
-          </tr>
-        </thead>
+      <div class="table-wrap">
+        <table *ngIf="recentOrders.length > 0">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Status</th>
+              <th>Amount</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr *ngFor="let order of recentOrders">
-            <td>{{ order.orderNumber || order._id }}</td>
-            <td>{{ order.userId?.name || '-' }}</td>
-            <td>
-              <span [ngClass]="{
-                'pending': order.orderStatus === 'Pending',
-                'completed': order.orderStatus === 'Delivered',
-                'progress': order.orderStatus === 'Confirmed' || order.orderStatus === 'Shipped'
-              }">
-                {{ order.orderStatus }}
-              </span>
-            </td>
-            <td>₹{{ order.totalAmount || 0 }}</td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr *ngFor="let order of recentOrders">
+              <td>{{ order.orderNumber || order._id }}</td>
+              <td>{{ order.userId?.name || '-' }}</td>
+              <td>
+                <span [ngClass]="{
+                  'pending': order.orderStatus === 'Pending',
+                  'completed': order.orderStatus === 'Delivered',
+                  'progress': order.orderStatus === 'Confirmed' || order.orderStatus === 'Shipped'
+                }">
+                  {{ order.orderStatus }}
+                </span>
+              </td>
+              <td>₹{{ order.totalAmount || 0 }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <p *ngIf="recentOrders.length === 0">No recent orders found.</p>
+      <p class="empty-text" *ngIf="recentOrders.length === 0">No recent orders found.</p>
     </div>
 
     <div class="dashboard-card">
-      <h2>Recent Bookings</h2>
+      <div class="card-title-row">
+        <h2>📅 Recent Bookings</h2>
+      </div>
 
-      <table *ngIf="recentBookings.length > 0">
-        <thead>
-          <tr>
-            <th>Booking ID</th>
-            <th>Customer</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div class="table-wrap">
+        <table *ngIf="recentBookings.length > 0">
+          <thead>
+            <tr>
+              <th>Booking ID</th>
+              <th>Customer</th>
+              <th>Status</th>
+            </tr>
+          </thead>
 
-        <tbody>
-          <tr *ngFor="let booking of recentBookings">
-            <td>{{ booking.bookingNumber || booking._id }}</td>
-            <td>{{ booking.userId?.name || '-' }}</td>
-            <td>
-              <span [ngClass]="{
-                'pending': booking.status === 'Pending',
-                'completed': booking.status === 'Completed',
-                'progress': booking.status === 'Confirmed'
-              }">
-                {{ booking.status }}
-              </span>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+          <tbody>
+            <tr *ngFor="let booking of recentBookings">
+              <td>{{ booking.bookingNumber || booking._id }}</td>
+              <td>{{ booking.userId?.name || '-' }}</td>
+              <td>
+                <span [ngClass]="{
+                  'pending': booking.status === 'Pending',
+                  'completed': booking.status === 'Completed',
+                  'progress': booking.status === 'Confirmed'
+                }">
+                  {{ booking.status }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-      <p *ngIf="recentBookings.length === 0">No recent bookings found.</p>
+      <p class="empty-text" *ngIf="recentBookings.length === 0">No recent bookings found.</p>
     </div>
 
   </div>
