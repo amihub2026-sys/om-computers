@@ -13,11 +13,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ServiceService } from '../../../core/services/service.service';
 import { Service } from '../../../core/interfaces/service.interface';
 import { environment } from '../../../../environments/environment';
-
+import { CommonSearchBar } from '../../../shared/components/common-search-bar/common-search-bar';
 @Component({
   selector: 'app-service-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar],
   templateUrl: './service-list.html',
   styleUrl: './service-list.css',
 })

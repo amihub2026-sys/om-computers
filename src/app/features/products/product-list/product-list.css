@@ -1,9 +1,9 @@
 .products-page{
-    display:flex;
-    gap:24px;
-    padding:35px 40px;
-    background:#eef3fb;
-    min-height:100vh;
+  display:flex;
+  gap:24px;
+  padding:115px 40px 35px; /* changed */
+  background:#eef3fb;
+  min-height:100vh;
 }
 
 /* Sidebar */
@@ -197,9 +197,35 @@
 
 .filter-toggle,
 .filter-mobile-head,
-.filter-overlay,
-.filter-actions{
-  display:none;
+.filter-overlay {
+  display: none;
+}
+
+.filter-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.reset-filter,
+.apply-filter {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.reset-filter {
+  background: #eef2f7;
+  color: #081126;
+}
+
+.apply-filter {
+  background: #081126;
+  color: #fff;
 }
 
 @media (max-width:767px){

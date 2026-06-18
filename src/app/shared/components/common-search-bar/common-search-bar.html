@@ -1,0 +1,9 @@
+<div class="common-search-wrap">
+  <input
+    class="common-search-box"
+    type="text"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="onSearchChange($event)"
+  />
+</div>
