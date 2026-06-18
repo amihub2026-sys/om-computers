@@ -1,83 +1,131 @@
-<div class="stats-grid">
-
-  <div class="stat-card">
-    <h3>25</h3>
-    <p>Total Products</p>
-  </div>
-
-  <div class="stat-card">
-    <h3>12</h3>
-    <p>Total Services</p>
-  </div>
-
-  <div class="stat-card">
-    <h3>48</h3>
-    <p>Product Orders</p>
-  </div>
-
-  <div class="stat-card">
-    <h3>31</h3>
-    <p>Service Bookings</p>
-  </div>
-
-  <!-- Revenue Card -->
-  <div class="stat-card">
-    <h3>₹1,25,000</h3>
-    <p>Total Revenue</p>
-  </div>
-
+<div *ngIf="isLoading" class="loading-box">
+  Loading dashboard...
 </div>
 
-<div class="dashboard-grid">
+<div *ngIf="!isLoading">
 
-  <!-- Recent Orders -->
-  <div class="dashboard-card">
-    <h2>Recent Orders</h2>
+  <div class="stats-grid">
 
-    <table>
-      <tr>
-        <th>Order ID</th>
-        <th>Product</th>
-        <th>Status</th>
-      </tr>
+    <div class="stat-card">
+      <h3>{{ stats.totalUsers }}</h3>
+      <p>Total Users</p>
+    </div>
 
-      <tr>
-        <td>#OM-P1001</td>
-        <td>Gaming Desktop PC</td>
-        <td><span class="pending">Pending</span></td>
-      </tr>
+    <div class="stat-card">
+      <h3>{{ stats.totalAdmins }}</h3>
+      <p>Total Admins</p>
+    </div>
 
-      <tr>
-        <td>#OM-P1002</td>
-        <td>Business Laptop</td>
-        <td><span class="completed">Delivered</span></td>
-      </tr>
-    </table>
+    <div class="stat-card">
+      <h3>{{ stats.totalProducts }}</h3>
+      <p>Total Products</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.totalServices }}</h3>
+      <p>Total Services</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.totalOrders }}</h3>
+      <p>Product Orders</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.totalBookings }}</h3>
+      <p>Service Bookings</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.totalCarts }}</h3>
+      <p>Total Carts</p>
+    </div>
+
+    <div class="stat-card revenue-card">
+      <h3>₹{{ stats.totalRevenue }}</h3>
+      <p>Total Revenue</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.pendingOrders }}</h3>
+      <p>Pending Orders</p>
+    </div>
+
+    <div class="stat-card">
+      <h3>{{ stats.pendingBookings }}</h3>
+      <p>Pending Bookings</p>
+    </div>
+
   </div>
 
-  <!-- Recent Bookings -->
-  <div class="dashboard-card">
-    <h2>Recent Bookings</h2>
+  <div class="dashboard-grid">
 
-    <table>
-      <tr>
-        <th>Booking ID</th>
-        <th>Service</th>
-        <th>Status</th>
-      </tr>
+    <div class="dashboard-card">
+      <h2>Recent Orders</h2>
 
-      <tr>
-        <td>#OM-S1001</td>
-        <td>Laptop Repair</td>
-        <td><span class="progress">In Progress</span></td>
-      </tr>
+      <table *ngIf="recentOrders.length > 0">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
 
-      <tr>
-        <td>#OM-S1002</td>
-        <td>Printer Support</td>
-        <td><span class="pending">Pending</span></td>
-      </tr>
-    </table>
+        <tbody>
+          <tr *ngFor="let order of recentOrders">
+            <td>{{ order.orderNumber || order._id }}</td>
+            <td>{{ order.userId?.name || '-' }}</td>
+            <td>
+              <span [ngClass]="{
+                'pending': order.orderStatus === 'Pending',
+                'completed': order.orderStatus === 'Delivered',
+                'progress': order.orderStatus === 'Confirmed' || order.orderStatus === 'Shipped'
+              }">
+                {{ order.orderStatus }}
+              </span>
+            </td>
+            <td>₹{{ order.totalAmount || 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="recentOrders.length === 0">No recent orders found.</p>
+    </div>
+
+    <div class="dashboard-card">
+      <h2>Recent Bookings</h2>
+
+      <table *ngIf="recentBookings.length > 0">
+        <thead>
+          <tr>
+            <th>Booking ID</th>
+            <th>Customer</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let booking of recentBookings">
+            <td>{{ booking.bookingNumber || booking._id }}</td>
+            <td>{{ booking.userId?.name || '-' }}</td>
+            <td>
+              <span [ngClass]="{
+                'pending': booking.status === 'Pending',
+                'completed': booking.status === 'Completed',
+                'progress': booking.status === 'Confirmed'
+              }">
+                {{ booking.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p *ngIf="recentBookings.length === 0">No recent bookings found.</p>
+    </div>
+
   </div>
 
 </div>
