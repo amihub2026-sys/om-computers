@@ -9,60 +9,63 @@
     </a>
   </div>
 
-  <div class="details-card">
+  <p *ngIf="isLoading">Loading booking...</p>
+
+  <div class="details-card" *ngIf="!isLoading && booking">
 
     <div class="top-row">
-      <h2>Booking ID: #OM1001</h2>
-    <span
-  class="status"
-  [ngClass]="{
-    'pending': bookingStatus === 'Pending',
-    'cancelled': bookingStatus === 'Cancelled'
-  }">
-  {{ bookingStatus }}
-</span>
+      <h2>Booking ID: {{ bookingId }}</h2>
+
+     <span class="status" [ngClass]="booking.status.toLowerCase()">
+        {{ booking.status }}
+      </span>
     </div>
 
     <div class="details-grid">
       <div>
         <h3>Customer Details</h3>
-        <p><strong>Name:</strong> John Doe</p>
-        <p><strong>Mobile:</strong> +91 98765 43210</p>
-        <p><strong>Email:</strong> john@example.com</p>
+        <p><strong>Name:</strong> {{ booking.customerName }}</p>
+        <p><strong>Mobile:</strong> {{ booking.phone }}</p>
+        <p><strong>Email:</strong> {{ booking.email || '-' }}</p>
       </div>
 
       <div>
         <h3>Service Details</h3>
-        <p><strong>Service:</strong> Laptop Repair</p>
-        <p><strong>Type:</strong> Doorstep Service</p>
-        <p><strong>Date:</strong> 12 Jun 2026</p>
-        <p><strong>Time:</strong> 10:00 AM</p>
+        <p><strong>Service:</strong> {{ booking.serviceName }}</p>
+        <p><strong>Date:</strong> {{ booking.bookingDate | date:'dd MMM yyyy' }}</p>
+        <p><strong>Time:</strong> {{ booking.bookingTime || '-' }}</p>
+        <p><strong>Status:</strong> {{ booking.status }}</p>
       </div>
     </div>
 
     <div class="info-box">
       <h3>Address</h3>
-      <p>No.25, Anna Nagar, Madurai, Tamil Nadu - 625020</p>
+      <p>{{ booking.address || '-' }}</p>
     </div>
 
     <div class="info-box">
       <h3>Problem Description</h3>
-      <p>Laptop is not powering on. Need motherboard diagnosis and SSD check.</p>
+      <p>{{ booking.issueDescription || '-' }}</p>
     </div>
 
-   <div class="actions">
-  <a routerLink="/services" class="blue-btn">Book Another Service</a>
+    <div class="actions">
+      <a routerLink="/services" class="blue-btn">Book Another Service</a>
 
-<button
-  *ngIf="bookingStatus === 'Pending'"
-  class="cancel-btn"
-  (click)="cancelBooking()">
-  Cancel Booking
-</button>
+      <button
+        *ngIf="booking.status === 'Pending'"
+        class="cancel-btn"
+        (click)="cancelBooking()">
+        Cancel Booking
+      </button>
 
-  <a href="https://wa.me/919789154220" target="_blank" class="green-btn">WhatsApp Support</a>
-  <a href="tel:+919789154220" class="dark-btn">Call Support</a>
-</div>
+      <a href="https://wa.me/919789154220" target="_blank" class="green-btn">
+        WhatsApp Support
+      </a>
+
+      <a href="tel:+919789154220" class="dark-btn">
+        Call Support
+      </a>
+    </div>
 
   </div>
 

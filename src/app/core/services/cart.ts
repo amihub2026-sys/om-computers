@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Cart {
 
-  baseUrl = 'https://om-computers-backend.onrender.com/api/carts';
+  baseUrl = `${environment.baseUrl}/api/carts`;
 
   constructor(private http: HttpClient) {}
 

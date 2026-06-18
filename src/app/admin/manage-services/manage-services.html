@@ -1,51 +1,62 @@
 <div class="admin-header">
-      <div>
-        <h1>Manage Services</h1>
-        <p>Add, edit and manage computer service details.</p>
-      </div>
+<a routerLink="/admin/services/add" class="add-btn">
+    + Add Service
+  </a>
+</div>
 
-     <a routerLink="/admin/services/add" class="add-btn">
-  + Add Service
-</a>
-    </div>
+<p><strong>Total Services:</strong> {{ services.length }}</p>
 
-    <div class="service-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Image</th>
-            <th>Service</th>
-            <th>Category</th>
-            <th>Mode</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+<div *ngIf="isLoading">
+  Loading services...
+</div>
 
-        <tbody>
-          <tr>
-            <td><img src="assets/images/categories/laptop.png" alt=""></td>
-            <td>Laptop Repair</td>
-            <td>Repair</td>
-            <td>Doorstep</td>
-            <td><span class="active-status">Active</span></td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
+<div class="service-table" *ngIf="!isLoading">
+  <table>
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Service</th>
+        <th>Category</th>
+        <th>Duration</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
 
-          <tr>
-            <td><img src="assets/images/categories/network.png" alt=""></td>
-            <td>Networking</td>
-            <td>IT Support</td>
-            <td>On-site</td>
-            <td><span class="active-status">Active</span></td>
-            <td>
-              <button class="edit">Edit</button>
-              <button class="delete">Delete</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <tbody>
+      <tr *ngFor="let service of services; trackBy: trackByService">
+        <td>
+          <img
+            [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
+            alt="Service Image">
+        </td>
+
+        <td>{{ service.name }}</td>
+        <td>{{ service.category }}</td>
+        <td>{{ service.duration || '-' }}</td>
+        <td>₹{{ service.price }}</td>
+
+        <td>
+          <span class="active-status">
+            {{ service.isActive ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+
+        <td>
+          <button
+            class="edit"
+            [routerLink]="['/admin/services/edit', service._id]">
+            Edit
+          </button>
+
+          <button
+            class="delete"
+            (click)="deleteService(service._id)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

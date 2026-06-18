@@ -9,47 +9,56 @@
     </a>
   </div>
 
-  <div class="order-card">
+  <div class="loading" *ngIf="isLoading">
+    Loading order details...
+  </div>
+
+  <div class="order-card" *ngIf="!isLoading && order">
 
     <div class="top-row">
-      <h2>Order ID: #OM1001</h2>
-     <span
-  class="status"
-  [ngClass]="{
-    'processing': orderStatus === 'Processing',
-    'cancelled': orderStatus === 'Cancelled'
-  }">
-  {{ orderStatus }}
-</span>
+      <h2>Order ID: {{ orderId }}</h2>
+
+      <span
+        class="status"
+        [ngClass]="getStatusClass(order.orderStatus)">
+        {{ order.orderStatus }}
+      </span>
     </div>
 
     <div class="details-grid">
 
-      <div class="product-box">
-        <img src="assets/images/products/gaming-pc.jpg" alt="Gaming PC">
+      <div
+        class="product-box"
+        *ngFor="let product of order.products; trackBy: trackByProduct">
+
+<img
+  [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
+  [alt]="product.productName">
 
         <div>
-          <h3>Gaming Desktop PC</h3>
-          <p>Intel Core i7 | 16GB RAM | 1TB SSD</p>
-          <p><strong>Quantity:</strong> 1</p>
-          <p><strong>Price:</strong> ₹45,999</p>
+          <h3>{{ product.productName }}</h3>
+          <p><strong>Quantity:</strong> {{ product.quantity }}</p>
+          <p><strong>Price:</strong> ₹{{ product.price }}</p>
+          <p><strong>Total:</strong> ₹{{ product.price * product.quantity }}</p>
         </div>
+
       </div>
 
       <div class="info-box">
         <h3>Order Information</h3>
-        <p><strong>Order Date:</strong> 12 Jun 2026</p>
-        <p><strong>Payment Mode:</strong> UPI</p>
-      <p><strong>Status:</strong> {{ orderStatus }}</p>
+        <p><strong>Order Date:</strong> {{ order.createdAt | date:'dd MMM yyyy' }}</p>
+        <p><strong>Payment Status:</strong> {{ order.paymentStatus }}</p>
+        <p><strong>Status:</strong> {{ order.orderStatus }}</p>
       </div>
 
     </div>
 
     <div class="info-box">
       <h3>Delivery Address</h3>
-      <p>John Doe</p>
-      <p>+91 98765 43210</p>
-      <p>No.25, Anna Nagar, Madurai - 625020</p>
+      <p>{{ order.customerName }}</p>
+      <p>{{ order.phone }}</p>
+      <p>{{ order.email || '-' }}</p>
+      <p>{{ order.address }}</p>
     </div>
 
     <div class="summary-box">
@@ -57,7 +66,7 @@
 
       <div>
         <span>Subtotal</span>
-        <span>₹45,999</span>
+        <span>₹{{ order.totalAmount }}</span>
       </div>
 
       <div>
@@ -67,29 +76,34 @@
 
       <div class="total">
         <span>Total</span>
-        <span>₹45,999</span>
+        <span>₹{{ order.totalAmount }}</span>
       </div>
     </div>
 
-  <div class="actions">
+    <div class="actions">
 
-  <button
-    *ngIf="orderStatus === 'Pending' || orderStatus === 'Processing'"
-    class="cancel-btn"
-    (click)="cancelOrder()">
-    Cancel Order
-  </button>
+      <button
+        *ngIf="canCancel"
+        class="cancel-btn"
+        (click)="cancelOrder()">
+        Cancel Order
+      </button>
 
-  <button class="invoice-btn" (click)="downloadInvoice()">
-    Download Invoice
-  </button>
+      <button class="invoice-btn" (click)="downloadInvoice()">
+        Download Invoice
+      </button>
 
-  <a href="https://wa.me/919789154220" target="_blank" class="whatsapp-btn">
-    Contact Support
-  </a>
+      <a href="https://wa.me/919042111424" target="_blank" class="whatsapp-btn">
+        Contact Support
+      </a>
 
-</div>
+    </div>
 
+  </div>
+
+  <div class="empty-orders" *ngIf="!isLoading && !order">
+    <h2>Order not found</h2>
+    <p>Please go back and select a valid order.</p>
   </div>
 
 </section>

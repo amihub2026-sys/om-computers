@@ -1,185 +1,125 @@
 <section class="services-page">
-  
-<button class="filter-toggle" (click)="showFilters = true">
-  ☰ Filters
-</button>
 
-<div class="filter-overlay" [class.show]="showFilters" (click)="showFilters = false"></div>
+  <button class="filter-toggle" (click)="showFilters = true">
+    ☰ Filters
+  </button>
 
-<aside class="service-sidebar" [class.show]="showFilters">
-
-  <div class="filter-header">
-    <h2>Filters</h2>
-
-    <button class="filter-close" (click)="showFilters = false">
-      ×
-    </button>
+  <div
+    class="filter-overlay"
+    [class.show]="showFilters"
+    (click)="showFilters = false">
   </div>
 
-  <div class="filter-body">
+  <aside class="service-sidebar" [class.show]="showFilters">
 
-    <div class="filter-group">
-      <h3>Service Type</h3>
+    <div class="filter-header">
+      <h2>Filters</h2>
 
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.laptopRepair">
-        Laptop Repair
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.desktopRepair">
-        Desktop Repair
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.printerService">
-        Printer Service
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.networking">
-        Networking
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.dataRecovery">
-        Data Recovery
-      </label>
+      <button class="filter-close" (click)="showFilters = false">
+        ×
+      </button>
     </div>
 
-    <div class="filter-group">
-      <h3>Support Mode</h3>
+    <div class="filter-body">
 
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.doorstep">
-        Doorstep Service
-      </label>
+      <div class="filter-group">
+        <h3>Search Service</h3>
 
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.inShop">
-        In-shop Service
-      </label>
+        <input
+          class="search-box"
+          type="text"
+          placeholder="Search services..."
+          [(ngModel)]="searchText">
+      </div>
 
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.remote">
-        Remote Support
-      </label>
+      <div class="filter-group">
+        <h3>Service Type</h3>
+
+        <label *ngFor="let category of categories">
+          <input
+            type="checkbox"
+            [checked]="selectedCategories.includes(category)"
+            (change)="toggleCategory(category)">
+          {{ category }}
+        </label>
+      </div>
+
+      <div class="filter-group">
+        <h3>Starting Price</h3>
+
+        <input
+          type="range"
+          min="0"
+          [max]="priceLimit"
+          [(ngModel)]="maxPrice">
+
+        <p>Up to ₹{{ maxPrice }}</p>
+      </div>
+
     </div>
 
-    <div class="filter-group">
-      <h3>Availability</h3>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.sameDay">
-        Same Day
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.support247">
-        24/7 Support
-      </label>
-
-      <label>
-        <input type="checkbox" [(ngModel)]="filters.business">
-        Business Support
-      </label>
+    <div class="filter-actions">
+      <button class="reset-btn" (click)="resetFilters()">Reset</button>
+      <button class="apply-btn" (click)="applyFilters()">Apply</button>
     </div>
 
-  </div>
-
-  <div class="filter-actions">
-    <button class="reset-btn" (click)="resetFilters()">Reset</button>
-    <button class="apply-btn" (click)="applyFilters()">Apply</button>
-  </div>
-
-</aside>
+  </aside>
 
   <main class="services-content">
 
-    <input class="search-box" type="text" placeholder="Search laptop repair, networking, data recovery...">
+    <input
+      class="search-box"
+      type="text"
+      placeholder="Search laptop repair, networking, data recovery..."
+      [(ngModel)]="searchText">
 
-    <div class="service-categories">
+    <div class="service-categories" *ngIf="categories.length">
       <div class="service-track">
-        <span>Laptop Repair</span>
-        <span>Desktop Repair</span>
-        <span>Printer Service</span>
-        <span>Networking</span>
-        <span>Data Recovery</span>
-        <span>Windows Installation</span>
-        <span>CCTV</span>
-        <span>AMC Support</span>
-
-        <span>Laptop Repair</span>
-        <span>Desktop Repair</span>
-        <span>Printer Service</span>
-        <span>Networking</span>
-        <span>Data Recovery</span>
-        <span>Windows Installation</span>
-        <span>CCTV</span>
-        <span>AMC Support</span>
+        <span *ngFor="let category of categories">{{ category }}</span>
+        <span *ngFor="let category of categories">{{ category }}</span>
       </div>
     </div>
 
-    <div class="services-grid">
+    <div *ngIf="isLoading">
+      Loading services...
+    </div>
 
-      <div class="service-card">
+    <p *ngIf="!isLoading && filteredServices.length === 0">
+      No services found
+    </p>
+
+    <div class="services-grid" *ngIf="!isLoading">
+
+      <div
+        class="service-card"
+        *ngFor="let service of filteredServices; trackBy: trackByService">
+
         <div class="image-box">
-          <span class="badge">Doorstep</span>
-          <img src="assets/images/categories/laptop.png" alt="Laptop Repair">
+          <span class="badge">{{ service.category }}</span>
+
+          <img
+            [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
+            [alt]="service.name">
         </div>
 
         <div class="service-content">
-          <h3>Laptop Repair</h3>
-          <p>Screen replacement, motherboard repair, SSD upgrade and chip-level servicing.</p>
+          <h3>{{ service.name }}</h3>
+
+          <p>
+            {{ service.description || 'Professional computer service support.' }}
+          </p>
 
           <ul>
-            <li>Same day diagnosis</li>
-            <li>Genuine spare support</li>
-            <li>Doorstep pickup available</li>
+            <li>{{ service.duration || 'Quick service support' }}</li>
+            <li>Starting from ₹{{ service.price }}</li>
+            <li>Expert technician support</li>
           </ul>
 
-          <a routerLink="/services/1">View Details</a>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="image-box">
-          <span class="badge">Professional</span>
-          <img src="assets/images/categories/desktop.png" alt="Desktop Service">
+          <a [routerLink]="['/services', service._id]">
+            View Details
+          </a>
         </div>
 
-        <div class="service-content">
-          <h3>Desktop Service</h3>
-          <p>Desktop assembly, hardware upgrade, software installation and maintenance.</p>
-
-          <ul>
-            <li>PC assembling</li>
-            <li>RAM / SSD upgrade</li>
-            <li>OS installation</li>
-          </ul>
-
-          <a routerLink="/services/2">View Details</a>
-        </div>
-      </div>
-
-      <div class="service-card">
-        <div class="image-box">
-          <span class="badge">Business</span>
-          <img src="assets/images/categories/network.png" alt="Networking">
-        </div>
-
-        <div class="service-content">
-          <h3>Networking</h3>
-          <p>Router setup, LAN wiring, WiFi optimization and office networking.</p>
-
-          <ul>
-            <li>Router setup</li>
-            <li>LAN configuration</li>
-            <li>Office network support</li>
-          </ul>
-
-          <a routerLink="/services/3">View Details</a>
-        </div>
       </div>
 
     </div>

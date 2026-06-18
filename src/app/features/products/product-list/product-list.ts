@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../core/interfaces/product.interface';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -28,7 +28,7 @@ export class ProductList implements OnInit {
   categories: string[] = [];
   brands: string[] = [];
   products: Product[] = [];
-
+  imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
   constructor(
     private productService: ProductService,
     private cdr: ChangeDetectorRef

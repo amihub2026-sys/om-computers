@@ -3,7 +3,7 @@ import { Routes } from '@angular/router';
 import { WebsiteLayout } from './layouts/website-layout/website-layout/website-layout';
 
 import { authGuard } from './core/guards/auth-guard';
-
+import { adminGuard } from './core/guards/admin-guard';
 
 
 import { HomeComponent } from './features/home/home/home';
@@ -68,13 +68,15 @@ export const routes: Routes = [
     component: AdminLogin,
   },
 
-  {
-    path: 'admin',
-    component: AdminLayout,
-    children: [
+{
+  path: 'admin',
+  component: AdminLayout,
+  canActivate: [adminGuard],
+  children: [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'products', component: ManageProducts },
       { path: 'products/add', component: AddProduct },
+      { path: 'products/edit/:id', component: AddProduct },
       { path: 'services', component: ManageServices },
       { path: 'services/add', component: AddService },
       { path: 'orders', component: ManageOrders },

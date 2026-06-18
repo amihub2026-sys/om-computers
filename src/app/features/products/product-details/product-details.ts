@@ -6,7 +6,7 @@ import { Toast } from '../../../core/services/toast';
 import { Cart } from '../../../core/services/cart';
 import { ProductService } from '../../../core/services/product.service';
 import { Product } from '../../../core/interfaces/product.interface';
-
+import { environment } from '../../../../environments/environment';
 @Component({
   selector: 'app-product-details',
   standalone: true,
@@ -59,7 +59,7 @@ ngOnInit(): void {
 
 get productImage(): string {
   return this.product?.image
-    ? 'https://om-computers-backend.onrender.com/uploads/products/' + this.product.image
+    ? `${environment.baseUrl}/uploads/products/${this.product.image}`
     : 'assets/images/products/gaming-pc.jpg';
 }
 
@@ -82,15 +82,16 @@ get productImage(): string {
     return;
   }
 
-  const cartData = {
-    customerName: localStorage.getItem('name') || 'Customer',
-    phone: localStorage.getItem('phone') || '0000000000',
-    productId: this.product._id,
-    productName: this.product.name,
-    price: this.product.price,
-    quantity: 1,
-    total: this.product.price
-  };
+const cartData = {
+  customerName: localStorage.getItem('name') || 'Customer',
+  phone: localStorage.getItem('phone') || '0000000000',
+  productId: this.product._id,
+  productName: this.product.name,
+  image: this.product.image || '',
+  price: Number(this.product.price || 0),
+  quantity: 1,
+  total: Number(this.product.price || 0)
+};
 
   this.cart.addToCart(cartData).subscribe({
     next: (res: any) => {

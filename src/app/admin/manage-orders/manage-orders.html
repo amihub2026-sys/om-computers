@@ -1,63 +1,76 @@
 <div class="admin-header">
-      <div>
-        <h1>Manage Orders</h1>
-        <p>View and update all customer product orders.</p>
-      </div>
-    </div>
+  <div>
+    <h1>Manage Orders</h1>
+    <p>View and update all customer product orders.</p>
+  </div>
+</div>
 
-    <div class="orders-table">
-      <table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer</th>
-            <th>Product</th>
-            <th>Amount</th>
-            <th>Payment</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+<p *ngIf="isLoading">
+  Loading orders...
+</p>
 
-        <tbody>
-          <tr>
-            <td>#OM-P1001</td>
-            <td>Arun Kumar</td>
-            <td>Gaming Desktop PC</td>
-            <td>₹45,999</td>
-            <td>COD</td>
-            <td><span class="pending">Pending</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
+<p *ngIf="!isLoading && orders.length === 0">
+  No orders found.
+</p>
 
-          <tr>
-            <td>#OM-P1002</td>
-            <td>Priya S</td>
-            <td>Business Laptop</td>
-            <td>₹58,999</td>
-            <td>UPI</td>
-            <td><span class="shipped">Shipped</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
+<div class="orders-table" *ngIf="!isLoading && orders.length > 0">
 
-          <tr>
-            <td>#OM-P1003</td>
-            <td>Vignesh R</td>
-            <td>Mechanical Keyboard</td>
-            <td>₹2,499</td>
-            <td>Card</td>
-            <td><span class="delivered">Delivered</span></td>
-            <td>
-              <button class="view">View</button>
-              <button class="update">Update</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer</th>
+        <th>Product</th>
+        <th>Amount</th>
+        <th>Payment</th>
+        <th>Status</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let order of orders; trackBy: trackByOrder">
+
+        <td>
+          #{{ order._id.slice(-6).toUpperCase() }}
+        </td>
+
+        <td>
+          {{ order.customerName }}
+        </td>
+
+        <td>
+          {{ getProductNames(order) }}
+        </td>
+
+        <td>
+          ₹{{ order.totalAmount }}
+        </td>
+
+        <td>
+          {{ order.paymentStatus }}
+        </td>
+
+        <td>
+          <span [ngClass]="order.orderStatus.toLowerCase()">
+            {{ order.orderStatus }}
+          </span>
+        </td>
+
+        <td>
+          <select
+            [ngModel]="order.orderStatus"
+            (ngModelChange)="updateStatus(order, $event)">
+
+            <option *ngFor="let status of statuses" [value]="status">
+              {{ status }}
+            </option>
+
+          </select>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+
+</div>

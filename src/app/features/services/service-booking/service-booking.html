@@ -1,80 +1,100 @@
 <section class="booking-page">
-<div class="back-section">
-  <a routerLink="/services/1" class="back-btn">
-    ← Back to Service Details
-  </a>
-</div>
+  <div class="back-section">
+    <a [routerLink]="['/services', serviceId]" class="back-btn">
+      ← Back to Service Details
+    </a>
+  </div>
+
   <div class="booking-card">
 
     <div class="booking-header">
       <h1>Book a Service</h1>
-      <p>
-        Fill in your details and our team will contact you shortly.
-      </p>
+      <p>Fill in your details and our team will contact you shortly.</p>
     </div>
 
-    <form class="booking-form">
+    <form class="booking-form" (ngSubmit)="bookService()">
 
       <div class="form-grid">
 
         <div class="form-group">
           <label>Full Name</label>
-          <input type="text" placeholder="Enter your name">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            [(ngModel)]="booking.customerName"
+            name="customerName">
         </div>
 
         <div class="form-group">
           <label>Mobile Number</label>
-          <input type="tel" placeholder="Enter mobile number">
+          <input
+            type="tel"
+            placeholder="Enter mobile number"
+            [(ngModel)]="booking.phone"
+            name="phone">
         </div>
 
         <div class="form-group">
           <label>Email</label>
-          <input type="email" placeholder="Enter email">
+          <input
+            type="email"
+            placeholder="Enter email"
+            [(ngModel)]="booking.email"
+            name="email">
         </div>
 
         <div class="form-group">
           <label>Service Type</label>
-          <select>
-            <option>Select Service</option>
-            <option>Laptop Repair</option>
-            <option>Desktop Service</option>
-            <option>Printer Service</option>
-            <option>Networking</option>
-            <option>Data Recovery</option>
-          </select>
+          <input
+            type="text"
+            [(ngModel)]="booking.serviceName"
+            name="serviceName"
+            readonly>
         </div>
 
         <div class="form-group">
           <label>Preferred Date</label>
-          <input type="date">
+          <input
+            type="date"
+            [(ngModel)]="booking.bookingDate"
+            name="bookingDate">
         </div>
 
         <div class="form-group">
           <label>Preferred Time</label>
-          <input type="time">
+          <input
+            type="time"
+            [(ngModel)]="booking.bookingTime"
+            name="bookingTime">
         </div>
 
       </div>
 
       <div class="form-group">
         <label>Address</label>
-        <textarea rows="3" placeholder="Enter your address"></textarea>
+        <textarea
+          rows="3"
+          placeholder="Enter your address"
+          [(ngModel)]="booking.address"
+          name="address">
+        </textarea>
       </div>
 
       <div class="form-group">
         <label>Problem Description</label>
-        <textarea rows="5" placeholder="Describe your issue"></textarea>
+        <textarea
+          rows="5"
+          placeholder="Describe your issue"
+          [(ngModel)]="booking.issueDescription"
+          name="issueDescription">
+        </textarea>
       </div>
 
-<button
-  type="button"
-  class="submit-btn"
-  (click)="bookService()">
-  Book Service
-</button>
+      <button type="submit" class="submit-btn">
+        Book Service
+      </button>
 
     </form>
 
   </div>
-
 </section>
