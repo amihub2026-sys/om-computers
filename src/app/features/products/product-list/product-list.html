@@ -69,7 +69,7 @@
     </p>
 
     <div class="products-grid" *ngIf="!isLoading">
-      <div class="product-card" *ngFor="let product of filteredProducts; trackBy: trackByProduct">
+      <div class="product-card" *ngFor="let product of paginatedProducts; trackBy: trackByProduct">
 
         <div class="image-box">
         <img
@@ -93,7 +93,12 @@
 
       </div>
     </div>
-
+<app-common-pagination
+  *ngIf="!isLoading && totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+</app-common-pagination>
   </main>
 
 </section>

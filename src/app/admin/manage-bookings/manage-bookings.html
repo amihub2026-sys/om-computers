@@ -23,7 +23,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let booking of bookings; trackBy: trackByBooking">
+      <tr *ngFor="let booking of paginatedBookings; trackBy: trackByBooking">
 
         <td>
           #{{ booking._id.slice(-6).toUpperCase() }}
@@ -62,3 +62,9 @@
   </table>
 
 </div>
+<app-common-pagination
+  *ngIf="!isLoading && totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+</app-common-pagination>

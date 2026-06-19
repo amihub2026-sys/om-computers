@@ -14,11 +14,11 @@ import {
   Customer,
   CustomerResponse
 } from '../../core/interfaces/customer.interface';
-
+import { CommonPagination } from '../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-manage-customers',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CommonPagination],
   templateUrl: './manage-customers.html',
   styleUrl: './manage-customers.css',
 })
@@ -26,7 +26,8 @@ export class ManageCustomers implements OnInit, OnDestroy {
 
   customers: Customer[] = [];
   isLoading = false;
-
+  currentPage = 1;
+  pageSize = 10;
   roles: Array<'user' | 'admin'> = ['user', 'admin'];
 
   private destroy$ = new Subject<void>();
@@ -64,6 +65,19 @@ export class ManageCustomers implements OnInit, OnDestroy {
         }
       });
   }
+
+  get paginatedCustomers(): Customer[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.customers.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.customers.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
 
   trackByCustomer(index: number, customer: Customer): string {
     return customer._id;

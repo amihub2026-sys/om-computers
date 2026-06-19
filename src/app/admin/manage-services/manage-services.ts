@@ -12,11 +12,11 @@ import { Subject, takeUntil } from 'rxjs';
 import { ServiceService } from '../../core/services/service.service';
 import { Service } from '../../core/interfaces/service.interface';
 import { environment } from '../../../environments/environment';
-
+import { CommonPagination } from '../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-manage-services',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, CommonPagination],
   templateUrl: './manage-services.html',
   styleUrl: './manage-services.css',
 })
@@ -24,7 +24,8 @@ export class ManageServices implements OnInit, OnDestroy {
 
   services: Service[] = [];
   isLoading = false;
-
+  currentPage = 1;
+  pageSize = 10;
   imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
 
   private destroy$ = new Subject<void>();
@@ -62,6 +63,20 @@ export class ManageServices implements OnInit, OnDestroy {
         }
       });
   }
+  
+   get paginatedServices(): Service[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.services.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.services.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
+
 
   trackByService(index: number, service: Service): string | undefined {
     return service._id;
