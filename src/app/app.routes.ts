@@ -37,6 +37,7 @@ import { AddProduct } from './admin/add-product/add-product';
 import { AddService } from './admin/add-service/add-service';
 import { ManageCustomers } from './admin/manage-customers/manage-customers';
 import { ManageAdminsComponent } from './admin/manage-admins/manage-admins';
+import { ManageContactsComponent } from './admin/manage-contacts/manage-contacts';
 export const routes: Routes = [
   {
     path: '',
@@ -82,6 +83,7 @@ export const routes: Routes = [
       { path: 'orders', component: ManageOrders },
       { path: 'bookings', component: ManageBookings },
       { path: 'customers', component: ManageCustomers },
+      { path: 'contacts', component: ManageContactsComponent },
       { path: 'admins', component: ManageAdminsComponent },
     ],
   },

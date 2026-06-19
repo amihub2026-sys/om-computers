@@ -1,0 +1,73 @@
+<div class="contacts-page">
+
+  <div class="page-header">
+    <h1>Customer Enquiries</h1>
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Loading enquiries...
+  </div>
+
+  <div class="table-wrapper" *ngIf="!loading">
+
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Subject</th>
+          <th>Message</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr *ngIf="contacts.length === 0">
+          <td colspan="8">No enquiries found</td>
+        </tr>
+
+        <tr *ngFor="let item of contacts">
+
+          <td>{{ item.name }}</td>
+
+          <td>{{ item.email }}</td>
+
+          <td>{{ item.phone }}</td>
+
+          <td>{{ item.subject }}</td>
+
+          <td class="message-cell">
+            {{ item.message }}
+          </td>
+
+          <td>
+            <span class="status">
+              {{ item.status }}
+            </span>
+          </td>
+
+          <td>
+            {{ item.createdAt | date:'dd/MM/yyyy hh:mm a' }}
+          </td>
+
+         <td>
+  <button
+    class="delete-btn"
+    [disabled]="deletingId === item._id"
+    (click)="deleteContact(item._id)">
+    {{ deletingId === item._id ? 'Deleting...' : 'Delete' }}
+  </button>
+</td>
+
+        </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+
+</div>

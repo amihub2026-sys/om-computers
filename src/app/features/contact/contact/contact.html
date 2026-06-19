@@ -36,35 +36,46 @@
 </div>
     <!-- Right -->
 
-    <div class="contact-form">
+<div class="contact-form">
 
-      <h2>Send Enquiry</h2>
+  <h2>Send Enquiry</h2>
 
-      <input
-        type="text"
-        placeholder="Your Name"
-      >
+  <input
+    type="text"
+    placeholder="Your Name"
+    [(ngModel)]="contactForm.name"
+    name="name"
+  >
 
-      <input
-        type="email"
-        placeholder="Email Address"
-      >
+  <input
+    type="email"
+    placeholder="Email Address"
+    [(ngModel)]="contactForm.email"
+    name="email"
+  >
 
-      <input
-        type="tel"
-        placeholder="Mobile Number"
-      >
+  <input
+    type="tel"
+    placeholder="Mobile Number"
+    [(ngModel)]="contactForm.phone"
+    name="phone"
+  >
 
-      <textarea
-        rows="5"
-        placeholder="Your Message"
-      ></textarea>
+  <textarea
+    rows="5"
+    placeholder="Your Message"
+    [(ngModel)]="contactForm.message"
+    name="message"
+  ></textarea>
 
-      <button>
-        Send Message
-      </button>
+  <button
+    type="button"
+    (click)="sendMessage()"
+    [disabled]="isSending">
+    {{ isSending ? 'Sending...' : 'Send Message' }}
+  </button>
 
-    </div>
+</div>
 
   </div>
 
