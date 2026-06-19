@@ -15,11 +15,11 @@ import {
   BookingResponse,
   BookingStatus
 } from '../../core/interfaces/booking.interface';
-
+import { CommonPagination } from '../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-manage-bookings',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CommonPagination],
   templateUrl: './manage-bookings.html',
   styleUrl: './manage-bookings.css',
 })
@@ -27,7 +27,8 @@ export class ManageBookings implements OnInit, OnDestroy {
 
   bookings: Booking[] = [];
   isLoading = false;
-
+  currentPage = 1;
+  pageSize = 10;
   statuses: BookingStatus[] = [
     'Pending',
     'Confirmed',
@@ -70,6 +71,19 @@ export class ManageBookings implements OnInit, OnDestroy {
         }
       });
   }
+   
+   get paginatedBookings(): Booking[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.bookings.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.bookings.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
 
   trackByBooking(index: number, booking: Booking): string {
     return booking._id;

@@ -14,11 +14,11 @@ import {
   OrderItem,
   OrderResponse
 } from '../../core/interfaces/order.interface';
-
+import { CommonPagination } from '../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-manage-orders',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CommonPagination],
   templateUrl: './manage-orders.html',
   styleUrl: './manage-orders.css',
 })
@@ -26,7 +26,8 @@ export class ManageOrders implements OnInit, OnDestroy {
 
   orders: OrderItem[] = [];
   isLoading = false;
-
+  currentPage = 1;
+  pageSize = 10;
   statuses: OrderItem['orderStatus'][] = [
     'Pending',
     'Confirmed',
@@ -70,6 +71,19 @@ export class ManageOrders implements OnInit, OnDestroy {
         }
       });
   }
+  
+get paginatedOrders(): OrderItem[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.orders.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.orders.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
 
   trackByOrder(index: number, order: OrderItem): string {
     return order._id;

@@ -3,11 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../../core/services/customer.service';
 import { Customer } from '../../core/interfaces/customer.interface';
-
+import { CommonPagination } from '../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-manage-admins',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, CommonPagination],
   templateUrl: './manage-admins.html',
   styleUrls: ['./manage-admins.css']
 })
@@ -16,6 +16,8 @@ export class ManageAdminsComponent implements OnInit {
 admins: Customer[] = [];
 showForm = false;
 isLoading = false;
+currentPage = 1;
+pageSize = 10;
 showPassword = false;
 
 createdAdmin: any = null;
@@ -49,6 +51,18 @@ createdAdmin: any = null;
       }
     });
   }
+  get paginatedAdmins(): Customer[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.admins.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.admins.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+} 
 
   openAddAdmin() {
     this.showForm = true;

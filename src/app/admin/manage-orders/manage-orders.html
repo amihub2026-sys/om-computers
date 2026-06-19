@@ -29,7 +29,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let order of orders; trackBy: trackByOrder">
+      <tr *ngFor="let order of paginatedOrders; trackBy: trackByOrder">
 
         <td>
           #{{ order._id.slice(-6).toUpperCase() }}
@@ -74,3 +74,9 @@
   </table>
 
 </div>
+  <app-common-pagination
+  *ngIf="!isLoading && totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+  </app-common-pagination>

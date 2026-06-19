@@ -1,6 +1,6 @@
 <div class="admin-header">
 
-
+<h1></h1>
   <a routerLink="/admin/products/add" class="add-btn">
     Add Product
   </a>
@@ -23,7 +23,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let product of products">
+      <tr *ngFor="let product of paginatedProducts">
 <td>
   <img
     [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
@@ -54,4 +54,13 @@
       </tr>
     </tbody>
   </table>
+
+
 </div>
+
+  <app-common-pagination
+  *ngIf="totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+  </app-common-pagination>

@@ -1,10 +1,3 @@
-<div class="admin-header">
-  <div>
-    <h1>Manage Customers</h1>
-    <p>View and manage all registered customers.</p>
-  </div>
-</div>
-
 <p *ngIf="isLoading">Loading customers...</p>
 
 <p *ngIf="!isLoading && customers.length === 0">
@@ -28,7 +21,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let customer of customers; trackBy: trackByCustomer">
+      <tr *ngFor="let customer of paginatedCustomers; trackBy: trackByCustomer">
         <td>#{{ customer._id.slice(-6).toUpperCase() }}</td>
         <td>{{ customer.name }}</td>
         <td>{{ customer.email }}</td>
@@ -66,3 +59,9 @@
   </table>
 
 </div>
+<app-common-pagination
+  *ngIf="!isLoading && totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+</app-common-pagination>

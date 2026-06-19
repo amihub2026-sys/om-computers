@@ -14,10 +14,11 @@ import { ServiceService } from '../../../core/services/service.service';
 import { Service } from '../../../core/interfaces/service.interface';
 import { environment } from '../../../../environments/environment';
 import { CommonSearchBar } from '../../../shared/components/common-search-bar/common-search-bar';
+import { CommonPagination } from '../../../shared/components/common-pagination/common-pagination';
 @Component({
   selector: 'app-service-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar],
+  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar, CommonPagination],
   templateUrl: './service-list.html',
   styleUrl: './service-list.css',
 })
@@ -33,6 +34,8 @@ export class ServiceList implements OnInit, OnDestroy {
   priceLimit = 0;
 
   categories: string[] = [];
+  currentPage = 1;
+  pageSize = 6;
 
   imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
 
@@ -109,6 +112,20 @@ export class ServiceList implements OnInit, OnDestroy {
       return searchMatch && categoryMatch && priceMatch;
     });
   }
+    
+  get paginatedServices(): Service[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.filteredServices.slice(start, start + this.pageSize);
+}
+
+get totalPages(): number {
+  return Math.ceil(this.filteredServices.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
+
 
   toggleCategory(category: string): void {
     const index = this.selectedCategories.indexOf(category);

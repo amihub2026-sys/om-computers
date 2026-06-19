@@ -1,4 +1,5 @@
 <div class="admin-header">
+  <h1></h1>
 <a routerLink="/admin/services/add" class="add-btn">
     + Add Service
   </a>
@@ -25,7 +26,7 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let service of services; trackBy: trackByService">
+      <tr *ngFor="let service of paginatedServices; trackBy: trackByService">
         <td>
           <img
             [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
@@ -59,4 +60,12 @@
       </tr>
     </tbody>
   </table>
+   
+
 </div>
+   <app-common-pagination
+  *ngIf="!isLoading && totalPages > 1"
+  [currentPage]="currentPage"
+  [totalPages]="totalPages"
+  (pageChange)="changePage($event)">
+</app-common-pagination>

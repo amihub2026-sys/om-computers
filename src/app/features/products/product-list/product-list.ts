@@ -8,11 +8,12 @@ import { Product } from '../../../core/interfaces/product.interface';
 import { environment } from '../../../../environments/environment';
 
 import { CommonSearchBar } from '../../../shared/components/common-search-bar/common-search-bar';
+import { CommonPagination } from '../../../shared/components/common-pagination/common-pagination';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar],
+  imports: [CommonModule, FormsModule, RouterLink, CommonSearchBar, CommonPagination],
   templateUrl: './product-list.html',
   styleUrl: './product-list.css',
 })
@@ -30,7 +31,8 @@ export class ProductList implements OnInit {
   categories: string[] = [];
   brands: string[] = [];
   products: Product[] = [];
-
+  currentPage = 1;
+  pageSize = 6;
   imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
 
   constructor(
@@ -90,7 +92,18 @@ export class ProductList implements OnInit {
       return searchMatch && categoryMatch && brandMatch && priceMatch;
     });
   }
+  get paginatedProducts(): Product[] {
+  const start = (this.currentPage - 1) * this.pageSize;
+  return this.filteredProducts.slice(start, start + this.pageSize);
+}
 
+get totalPages(): number {
+  return Math.ceil(this.filteredProducts.length / this.pageSize);
+}
+
+changePage(page: number): void {
+  this.currentPage = page;
+}
   trackByProduct(index: number, product: Product): string | undefined {
     return product._id;
   }
