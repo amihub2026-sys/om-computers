@@ -80,6 +80,7 @@ export const routes: Routes = [
       { path: 'products/edit/:id', component: AddProduct },
       { path: 'services', component: ManageServices },
       { path: 'services/add', component: AddService },
+      { path: 'services/edit/:id', component: AddService },
       { path: 'orders', component: ManageOrders },
       { path: 'bookings', component: ManageBookings },
       { path: 'customers', component: ManageCustomers },
