@@ -31,6 +31,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   activeCard: number | null = null;
   intervalId: any;
+  categories = [
+  { name: 'Laptops', img: '/assets/images/categories/laptop.png' },
+  { name: 'Desktop PCs', img: '/assets/images/categories/desktop.png' },
+  { name: 'Accessories', img: '/assets/images/categories/accessories.png' },
+  { name: 'Repair', img: '/assets/images/categories/repair.png' },
+  { name: 'Software', img: '/assets/images/categories/software.png' },
+  { name: 'Networking', img: '/assets/images/categories/network.png' },
+];
+offset = 0;
+
+// show 2 cards per view
+step = 100; // shift %
 
   constructor(
     private productService: ProductService,
@@ -51,6 +63,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
+  next() {
+  const max = (this.categories.length / 2 - 1) * this.step;
+  if (this.offset < max) {
+    this.offset += this.step;
+  }
+}
+
+prev() {
+  if (this.offset > 0) {
+    this.offset -= this.step;
+  }
+}
 
   ngAfterViewInit() {
     this.intervalId = setInterval(() => {
