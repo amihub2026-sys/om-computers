@@ -1185,3 +1185,56 @@
   }
 
 }
+@media (max-width: 768px) {
+
+  .om-work-image-card {
+    position: relative;
+    min-height: 420px;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+
+  .om-work-image-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .om-image-content {
+    position: absolute;
+    inset: 15px;
+    padding: 20px 18px;
+    border-radius: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .om-image-content span {
+    font-size: 10px;
+    margin-bottom: 2px;
+  }
+
+  .om-image-content h3 {
+    font-size: 18px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  .om-image-content p {
+    font-size: 10px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+
+  .om-service-points {
+    gap: 12px;
+  }
+
+  .om-service-points div {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+}
