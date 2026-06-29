@@ -134,7 +134,7 @@
 /* GLASS INPUT */
 .contact-form input,
 .contact-form textarea{
-    width: 100%;
+    width: 500px;
     padding: 14px 18px;
     margin-bottom: 15px;
 
@@ -200,4 +200,35 @@
     .page-header h1{
         font-size: 34px;
     }
+}
+@media (max-width: 768px) {
+
+  .contact-form {
+    flex: 1 1 100%;       /* full width on mobile */
+    max-width: 95%;       /* leave small margin */
+    padding: 20px 15px;   /* reduce padding */
+    margin: 20px auto;    /* center the form */
+  }
+
+  .contact-form h2 {
+    font-size: 24px;      /* smaller title for mobile */
+    margin-bottom: 20px;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form button {
+    width: 250px;           /* full width inputs */
+    font-size: 14px;       /* smaller text */
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 12px 14px;    /* smaller padding inside inputs */
+  }
+
+  .contact-form button {
+    padding: 12px;
+    font-size: 14px;
+  }
 }
