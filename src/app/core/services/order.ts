@@ -59,7 +59,12 @@ export class Order {
       this.getHeaders()
     );
   }
-
+placeGuestOrder(data: any) {
+  return this.http.post<SingleOrderResponse>(
+    `${this.baseUrl}/guest-order`,
+    data
+  );
+}
   updateOrder(
     id: string,
     data: Partial<OrderItem>
@@ -95,4 +100,14 @@ export class Order {
       this.getHeaders()
     );
   }
+  updateAdminPaymentStatus(
+  id: string,
+  status: OrderItem['paymentStatus']
+) {
+  return this.http.put<SingleOrderResponse>(
+    `${this.adminBaseUrl}/${id}/payment-status`,
+    { paymentStatus: status },
+    this.getHeaders()
+  );
+}
 }

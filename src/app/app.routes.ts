@@ -56,7 +56,7 @@ export const routes: Routes = [
       { path: 'about', component: About },
       { path: 'contact', component: Contact },
       { path: 'cart', component: Cart },
-      { path: 'checkout', component: Checkout, canActivate: [authGuard] },
+      { path: 'checkout', component: Checkout },
       { path: 'order-success', component: OrderSuccess },
       { path: 'my-orders', component: MyOrders, canActivate: [authGuard] },
       { path: 'my-bookings/:id', component: BookingDetails, canActivate: [authGuard] },

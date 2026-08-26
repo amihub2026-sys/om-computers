@@ -138,3 +138,81 @@ td{
     min-width:900px;
   }
 }
+.order-details-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.order-details-modal {
+  width: 100%;
+  max-width: 520px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 28px;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.order-details-modal h2 {
+  margin: 0 0 20px;
+}
+
+.order-details-modal h3 {
+  margin: 20px 0 12px;
+}
+
+.order-details-modal p {
+  margin: 10px 0;
+  line-height: 1.5;
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: transparent;
+  font-size: 28px;
+  cursor: pointer;
+}
+.customer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.customer-actions a {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 8px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.call-customer-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.whatsapp-customer-btn {
+  background: #25d366;
+  color: #ffffff;
+}
+
+.customer-actions a:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 600px) {
+  .customer-actions {
+    flex-direction: column;
+  }
+}

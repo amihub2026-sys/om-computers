@@ -23,8 +23,9 @@
         <th>Product</th>
         <th>Amount</th>
         <th>Payment</th>
-        <th>Status</th>
-        <th>Update</th>
+     <th>Status</th>
+<th>Details</th>
+<th>Update</th>
       </tr>
     </thead>
 
@@ -46,17 +47,32 @@
         <td>
           ₹{{ order.totalAmount }}
         </td>
+<td>
+  <select
+    [ngModel]="order.paymentStatus"
+    (ngModelChange)="updatePaymentStatus(order, $event)">
 
-        <td>
-          {{ order.paymentStatus }}
-        </td>
+    <option
+      *ngFor="let status of paymentStatuses"
+      [value]="status">
+      {{ status }}
+    </option>
+
+  </select>
+</td>
 
         <td>
           <span [ngClass]="order.orderStatus.toLowerCase()">
             {{ order.orderStatus }}
           </span>
         </td>
-
+<td>
+  <button
+    type="button"
+    (click)="openOrderDetails(order)">
+    View Details
+  </button>
+</td>
         <td>
           <select
             [ngModel]="order.orderStatus"
@@ -80,3 +96,58 @@
   [totalPages]="totalPages"
   (pageChange)="changePage($event)">
   </app-common-pagination>
+  <div
+  class="order-details-overlay"
+  *ngIf="showDetails && selectedOrder">
+
+  <div class="order-details-modal">
+
+    <button
+      type="button"
+      class="close-btn"
+      (click)="closeOrderDetails()">
+      ×
+    </button>
+
+    <h2>Order Details</h2>
+
+    <h3>Customer Details</h3>
+
+    <p>
+      <strong>Name:</strong>
+      {{ selectedOrder.customerName }}
+    </p>
+
+    <p>
+      <strong>Phone:</strong>
+      {{ selectedOrder.phone }}
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      {{ selectedOrder.email || 'Not provided' }}
+    </p>
+
+    <p>
+      <strong>Address:</strong>
+      {{ selectedOrder.address }}
+    </p>
+<div class="customer-actions">
+
+  <a
+    [href]="'tel:' + selectedOrder.phone"
+    class="call-customer-btn">
+    Call Customer
+  </a>
+
+  <a
+    [href]="'https://wa.me/91' + selectedOrder.phone"
+    target="_blank"
+    class="whatsapp-customer-btn">
+    WhatsApp Customer
+  </a>
+
+</div>
+  </div>
+
+</div>
