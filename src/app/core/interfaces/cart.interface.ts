@@ -5,6 +5,7 @@ export interface CartItem {
   phone: string;
   productId?: string;
   productName: string;
+  image?: string;
   price: number;
   quantity: number;
   total: number;

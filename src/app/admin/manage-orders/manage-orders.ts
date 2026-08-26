@@ -26,6 +26,10 @@ export class ManageOrders implements OnInit, OnDestroy {
 
   orders: OrderItem[] = [];
   isLoading = false;
+
+  selectedOrder: OrderItem | null = null;
+  showDetails = false;
+
   currentPage = 1;
   pageSize = 10;
   statuses: OrderItem['orderStatus'][] = [
@@ -35,7 +39,11 @@ export class ManageOrders implements OnInit, OnDestroy {
     'Delivered',
     'Cancelled'
   ];
-
+paymentStatuses: OrderItem['paymentStatus'][] = [
+  'Pending',
+  'Paid',
+  'Failed'
+];
   private destroy$ = new Subject<void>();
 
   constructor(
@@ -94,6 +102,15 @@ changePage(page: number): void {
       .map(product => product.productName)
       .join(', ');
   }
+  openOrderDetails(order: OrderItem): void {
+  this.selectedOrder = order;
+  this.showDetails = true;
+}
+
+closeOrderDetails(): void {
+  this.selectedOrder = null;
+  this.showDetails = false;
+}
 
   updateStatus(order: OrderItem, status: OrderItem['orderStatus']): void {
     if (order.orderStatus === status) {
@@ -114,4 +131,28 @@ changePage(page: number): void {
         }
       });
   }
+  updatePaymentStatus(
+  order: OrderItem,
+  status: OrderItem['paymentStatus']
+): void {
+
+  if (order.paymentStatus === status) {
+    return;
+  }
+
+  this.orderService
+    .updateAdminPaymentStatus(order._id, status)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: () => {
+        order.paymentStatus = status;
+        alert('Payment status updated');
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        console.error(err);
+        alert('Payment status update failed');
+      }
+    });
+}
 }

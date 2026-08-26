@@ -7,7 +7,7 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
 import { Toast } from '../../../core/services/toast';
@@ -15,7 +15,7 @@ import { Cart as CartService } from '../../../core/services/cart';
 import { CartItem } from '../../../core/interfaces/cart.interface';
 import { Order as OrderService } from '../../../core/services/order';
 import { PlaceOrderRequest } from '../../../core/interfaces/order.interface';
-
+import { ProductService } from '../../../core/services/product.service';
 @Component({
   selector: 'app-checkout',
   standalone: true,
@@ -40,22 +40,75 @@ export class Checkout implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(
-    private router: Router,
-    private toast: Toast,
-    private cartService: CartService,
-    private orderService: OrderService,
-    private cdr: ChangeDetectorRef
-  ) {}
+constructor(
+  private router: Router,
+  private route: ActivatedRoute,
+  private toast: Toast,
+  private cartService: CartService,
+  private orderService: OrderService,
+  private productService: ProductService,
+  private cdr: ChangeDetectorRef
+) {}
 
-  ngOnInit(): void {
+ngOnInit(): void {
+  const productId = this.route.snapshot.queryParamMap.get('productId');
+
+  console.log('CHECKOUT PRODUCT ID:', productId);
+
+  if (productId) {
+    this.loadSingleProduct(productId);
+  } else {
     this.loadCartItems();
   }
+}
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  loadSingleProduct(productId: string): void {
+  this.isLoading = true;
+  this.cdr.detectChanges();
+
+  this.productService.getProductById(productId)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (res: any) => {
+        const product = res.data || res;
+
+        this.cartItems = [
+   {
+  _id: product._id,
+  userId: '',
+  customerName: '',
+  phone: '',
+  productId: product._id,
+  productName: product.name,
+  image: product.image || '',
+  price: Number(product.price || 0),
+  quantity: 1,
+  total: Number(product.price || 0)
+} as CartItem
+];
+
+this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+
+      error: () => {
+        this.isLoading = false;
+        this.cartItems = [];
+
+        this.toast.error(
+          'Failed to load product.',
+          'Error'
+        );
+
+        this.cdr.detectChanges();
+      }
+    });
+}
 
   loadCartItems(): void {
     this.isLoading = true;
@@ -136,24 +189,39 @@ placeOrder(): void {
     return;
   }
 
+  if (this.cartItems.length === 0) {
+    this.toast.error('No products selected.', 'Error');
+    return;
+  }
+
   this.isPlacingOrder = true;
   this.cdr.detectChanges();
 
-  const orderPayload: PlaceOrderRequest = {
+  const guestOrderPayload = {
     customerName: this.orderData.customerName,
     phone: this.orderData.phone,
     email: this.orderData.email,
     address: `${this.orderData.address}, ${this.orderData.city}`,
-    paymentMethod: this.orderData.paymentMethod
+    paymentMethod: this.orderData.paymentMethod,
+
+    products: this.cartItems.map(item => ({
+      productName: item.productName,
+      image: item.image || '',
+      quantity: Number(item.quantity || 1),
+      price: Number(item.price || 0)
+    })),
+
+    totalAmount: this.totalAmount
   };
 
-  this.orderService.placeOrder(orderPayload)
+  this.orderService.placeGuestOrder(guestOrderPayload)
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next: (res: any) => {
         this.isPlacingOrder = false;
 
         if (res.success) {
+          this.cartService.clearCart();
           this.cartItems = [];
 
           this.toast.success(
@@ -168,9 +236,15 @@ placeOrder(): void {
 
         this.cdr.detectChanges();
       },
+
       error: () => {
         this.isPlacingOrder = false;
-        this.toast.error('Failed to place order.', 'Error');
+
+        this.toast.error(
+          'Failed to place order.',
+          'Error'
+        );
+
         this.cdr.detectChanges();
       }
     });

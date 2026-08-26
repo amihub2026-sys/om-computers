@@ -63,22 +63,22 @@ get productImage(): string {
     : 'assets/images/products/gaming-pc.jpg';
 }
 
-  buyNow(): void {
-    this.toast.success('Proceeding to checkout...', 'Buy Now');
-    this.router.navigate(['/checkout']);
-  }
-
- addToCart(): void {
+buyNow(): void {
   if (!this.product) {
     this.toast.error('Product not found', 'Error');
     return;
   }
 
-  const token = localStorage.getItem('token');
+  this.router.navigate(['/checkout'], {
+    queryParams: {
+      productId: this.product._id
+    }
+  });
+}
 
-  if (!token) {
-    this.toast.error('Please login to add product to cart.', 'Login Required');
-    this.router.navigate(['/login']);
+ addToCart(): void {
+  if (!this.product) {
+    this.toast.error('Product not found', 'Error');
     return;
   }
 
