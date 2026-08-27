@@ -15,7 +15,6 @@ import { Cart as CartService } from '../../../core/services/cart';
 export class Header implements OnInit {
 
   mobileMenuOpen = false;
-  mobileAccountOpen = false;
   cartCount = 0;
 
   constructor(
@@ -34,16 +33,8 @@ export class Header implements OnInit {
       });
   }
 
-  get isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
-  }
-
   getCartCount(): void {
-    if (!this.isLoggedIn) {
-      this.cartCount = 0;
-      this.cdr.detectChanges();
-      return;
-    }
+  
 
     this.cartService.getCartItems().subscribe({
       next: (res: any) => {
@@ -63,14 +54,6 @@ export class Header implements OnInit {
         this.cdr.detectChanges();
       }
     });
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    this.cartCount = 0;
-    this.mobileMenuOpen = false;
-    this.mobileAccountOpen = false;
-    this.router.navigate(['/']);
   }
 
 }
