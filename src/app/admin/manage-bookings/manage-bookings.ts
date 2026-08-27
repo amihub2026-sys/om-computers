@@ -25,9 +25,13 @@ import { CommonPagination } from '../../shared/components/common-pagination/comm
 })
 export class ManageBookings implements OnInit, OnDestroy {
 
-  bookings: Booking[] = [];
-  isLoading = false;
-  currentPage = 1;
+bookings: Booking[] = [];
+isLoading = false;
+
+selectedBooking: Booking | null = null;
+showDetails = false;
+
+currentPage = 1;
   pageSize = 10;
   statuses: BookingStatus[] = [
     'Pending',
@@ -88,7 +92,15 @@ changePage(page: number): void {
   trackByBooking(index: number, booking: Booking): string {
     return booking._id;
   }
+openBookingDetails(booking: Booking): void {
+  this.selectedBooking = booking;
+  this.showDetails = true;
+}
 
+closeBookingDetails(): void {
+  this.selectedBooking = null;
+  this.showDetails = false;
+}
   updateStatus(booking: Booking, status: BookingStatus): void {
     if (!booking._id || booking.status === status) {
       return;

@@ -17,8 +17,9 @@
         <th>Service</th>
         <th>Date</th>
         <th>Time</th>
-        <th>Status</th>
-        <th>Update</th>
+       <th>Status</th>
+<th>Details</th>
+<th>Update</th>
       </tr>
     </thead>
 
@@ -44,7 +45,13 @@
             {{ booking.status }}
           </span>
         </td>
-
+<td>
+  <button
+    type="button"
+    (click)="openBookingDetails(booking)">
+    View Details
+  </button>
+</td>
         <td>
           <select
             [ngModel]="booking.status"
@@ -68,3 +75,80 @@
   [totalPages]="totalPages"
   (pageChange)="changePage($event)">
 </app-common-pagination>
+<div
+  class="booking-details-overlay"
+  *ngIf="showDetails && selectedBooking">
+
+  <div class="booking-details-modal">
+
+    <button
+      type="button"
+      class="close-btn"
+      (click)="closeBookingDetails()">
+      ×
+    </button>
+
+    <h2>Booking Details</h2>
+
+    <h3>Customer Details</h3>
+
+    <p>
+      <strong>Name:</strong>
+      {{ selectedBooking.customerName }}
+    </p>
+
+    <p>
+      <strong>Phone:</strong>
+      {{ selectedBooking.phone }}
+    </p>
+
+    <p>
+      <strong>Email:</strong>
+      {{ selectedBooking.email || 'Not provided' }}
+    </p>
+
+    <p>
+      <strong>Address:</strong>
+      {{ selectedBooking.address || 'Not provided' }}
+    </p>
+
+    <h3>Service Details</h3>
+
+    <p>
+      <strong>Service:</strong>
+      {{ selectedBooking.serviceName }}
+    </p>
+
+    <p>
+      <strong>Preferred Date:</strong>
+      {{ selectedBooking.bookingDate | date:'dd MMM yyyy' }}
+    </p>
+
+    <p>
+      <strong>Preferred Time:</strong>
+      {{ selectedBooking.bookingTime || 'Not provided' }}
+    </p>
+
+    <p>
+      <strong>Problem Description:</strong>
+      {{ selectedBooking.issueDescription || 'Not provided' }}
+    </p>
+
+    <p>
+      <strong>Status:</strong>
+      {{ selectedBooking.status }}
+    </p>
+<div class="booking-actions">
+
+  <a
+    class="whatsapp-customer-btn"
+    [href]="'https://wa.me/91' + selectedBooking.phone"
+    target="_blank"
+    rel="noopener noreferrer">
+    WhatsApp Customer
+  </a>
+
+</div>
+  </div>
+
+</div>

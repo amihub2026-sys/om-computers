@@ -56,13 +56,6 @@ export class ServiceBooking implements OnInit {
   }
 
   bookService(): void {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-      this.toast.error('Please login to book service.', 'Login Required');
-      this.router.navigate(['/login']);
-      return;
-    }
 
     this.bookingService.createBooking(this.booking).subscribe({
       next: (res: any) => {
