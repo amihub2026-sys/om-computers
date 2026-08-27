@@ -4,130 +4,66 @@
     <h2>OM Computers</h2>
   </div>
 
- <nav [class.mobile-open]="mobileMenuOpen">
+  <nav [class.mobile-open]="mobileMenuOpen">
 
-  <a routerLink="/" (click)="mobileMenuOpen=false"
-     routerLinkActive="active-link"
-     [routerLinkActiveOptions]="{exact:true}">
-    Home
-  </a>
+    <a
+      routerLink="/"
+      (click)="mobileMenuOpen=false"
+      routerLinkActive="active-link"
+      [routerLinkActiveOptions]="{ exact: true }">
+      Home
+    </a>
 
-  <a routerLink="/products"
-     (click)="mobileMenuOpen=false"
-     routerLinkActive="active-link">
-    Products
-  </a>
+    <a
+      routerLink="/products"
+      (click)="mobileMenuOpen=false"
+      routerLinkActive="active-link">
+      Products
+    </a>
 
-  <a routerLink="/services"
-     (click)="mobileMenuOpen=false"
-     routerLinkActive="active-link">
-    Services
-  </a>
+    <a
+      routerLink="/services"
+      (click)="mobileMenuOpen=false"
+      routerLinkActive="active-link">
+      Services
+    </a>
 
-  <a routerLink="/about"
-     (click)="mobileMenuOpen=false"
-     routerLinkActive="active-link">
-    About
-  </a>
+    <a
+      routerLink="/about"
+      (click)="mobileMenuOpen=false"
+      routerLinkActive="active-link">
+      About
+    </a>
 
-  <a routerLink="/contact"
-     (click)="mobileMenuOpen=false"
-     routerLinkActive="active-link">
-    Contact
-  </a>
+    <a
+      routerLink="/contact"
+      (click)="mobileMenuOpen=false"
+      routerLinkActive="active-link">
+      Contact
+    </a>
 
-  <div class="mobile-auth" *ngIf="!isLoggedIn">
-  <a routerLink="/login" class="login-btn" (click)="mobileMenuOpen=false">
-    Login
-  </a>
+  </nav>
 
-  <a routerLink="/register" class="register-btn" (click)="mobileMenuOpen=false">
-    Register
-  </a>
-</div>
-<ng-container *ngIf="isLoggedIn && mobileMenuOpen">
+  <div class="header-right">
 
-  <div class="mobile-account">
+    <a routerLink="/cart" class="cart-btn">
+      🛒
 
-    <button
-      class="mobile-account-btn"
-      (click)="mobileAccountOpen = !mobileAccountOpen">
+      <span
+        class="cart-badge"
+        *ngIf="cartCount > 0">
+        {{ cartCount }}
+      </span>
 
-      My Account ▼
-
-    </button>
-
-    <div
-      class="mobile-account-dropdown"
-      *ngIf="mobileAccountOpen">
-
-      <a routerLink="/my-orders" (click)="mobileMenuOpen=false">
-        My Orders
-      </a>
-
-      <a routerLink="/my-bookings" (click)="mobileMenuOpen=false">
-        My Bookings
-      </a>
-
-      <button (click)="logout(); mobileMenuOpen=false">
-        Logout
-      </button>
-
-    </div>
+    </a>
 
   </div>
 
-</ng-container>
-</nav>
+  <button
+    class="menu-toggle"
+    type="button"
+    (click)="mobileMenuOpen = !mobileMenuOpen">
+    ☰
+  </button>
 
-  <!-- Right Side -->
-
-<div class="header-right">
-
-  <!-- Before Login -->
-  <ng-container *ngIf="!isLoggedIn">
-    <a routerLink="/login" class="login-btn">
-      Login
-    </a>
-
-    <a routerLink="/register" class="register-btn">
-      Register
-    </a>
-  </ng-container>
-
-<!-- After Login -->
-<ng-container *ngIf="isLoggedIn">
-
-  <!-- Cart -->
-  <a routerLink="/cart" class="cart-btn">
-    🛒
-    <span class="cart-badge">
-      {{ cartCount }}
-    </span>
-  </a>
-
-  <!-- My Account -->
-  <div class="profile-menu">
-
-    <button class="account-btn">
-      My Account ▼
-    </button>
-
-    <div class="dropdown">
-      <a routerLink="/my-orders">My Orders</a>
-      <a routerLink="/my-bookings">My Bookings</a>
-
-      <button class="logout-btn" (click)="logout()">
-        Logout
-      </button>
-    </div>
-
-  </div>
-
-</ng-container>
-
-</div>
-<button class="menu-toggle" (click)="mobileMenuOpen = !mobileMenuOpen">
-  ☰
-</button>
 </header>
