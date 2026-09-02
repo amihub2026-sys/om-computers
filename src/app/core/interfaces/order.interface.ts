@@ -13,8 +13,15 @@ export interface OrderItem {
   email?: string;
   address: string;
   products: OrderProduct[];
-  totalAmount: number;
-  paymentStatus: 'Pending' | 'Paid' | 'Failed';
+totalAmount: number;
+
+paymentMethod:
+  | 'Cash on Delivery'
+  | 'UPI';
+
+transactionId?: string;
+
+paymentStatus: 'Pending' | 'Paid' | 'Failed';
   orderStatus: 'Pending' | 'Confirmed' | 'Shipped' | 'Delivered' | 'Cancelled';
   createdAt?: string;
   updatedAt?: string;
@@ -33,9 +40,18 @@ export interface SingleOrderResponse {
 }
 
 export interface PlaceOrderRequest {
+
   customerName: string;
+
   phone: string;
+
   email: string;
+
   address: string;
-  paymentMethod?: string;
+
+  paymentMethod:
+    | 'Cash on Delivery'
+    | 'UPI';
+
+  transactionId?: string;
 }

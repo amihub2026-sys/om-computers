@@ -1,67 +1,561 @@
-<p *ngIf="isLoading">Loading customers...</p>
+<div class="admin-header">
 
-<p *ngIf="!isLoading && customers.length === 0">
-  No customers found.
+  <div>
+
+    <h1>Customer History</h1>
+
+    <p>
+      View completed and cancelled
+      product orders and service bookings.
+    </p>
+
+  </div>
+
+</div>
+
+
+<!-- FILTER SECTION -->
+
+<div class="history-filter-card">
+
+  <div class="filter-group">
+
+    <span class="filter-title">
+      Type
+    </span>
+
+    <div class="history-filters">
+
+      <button
+        type="button"
+        [class.active]="selectedType === 'All'"
+        (click)="changeType('All')">
+
+        All
+
+      </button>
+
+
+      <button
+        type="button"
+        [class.active]="selectedType === 'Order'"
+        (click)="changeType('Order')">
+
+        Product Orders
+
+      </button>
+
+
+      <button
+        type="button"
+        [class.active]="selectedType === 'Service'"
+        (click)="changeType('Service')">
+
+        Service Bookings
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="filter-group">
+
+    <span class="filter-title">
+      Status
+    </span>
+
+    <div class="history-filters status-filters">
+
+      <button
+        type="button"
+        [class.active]="selectedStatus === 'All'"
+        (click)="changeStatus('All')">
+
+        All
+
+      </button>
+
+
+      <button
+        type="button"
+        [class.active]="selectedStatus === 'Completed'"
+        (click)="changeStatus('Completed')">
+
+        Completed
+
+      </button>
+
+
+      <button
+        type="button"
+        [class.active]="selectedStatus === 'Delivered'"
+        (click)="changeStatus('Delivered')">
+
+        Delivered
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cancel-filter"
+        [class.active]="selectedStatus === 'Cancelled'"
+        (click)="changeStatus('Cancelled')">
+
+        Cancelled
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- LOADING -->
+
+<p *ngIf="isLoading">
+  Loading customer history...
 </p>
 
-<div class="customers-table" *ngIf="!isLoading && customers.length > 0">
+
+<!-- EMPTY -->
+
+<p
+  *ngIf="
+    !isLoading &&
+    filteredCustomers.length === 0
+  ">
+
+  No records found for this filter.
+
+</p>
+
+
+<!-- TABLE -->
+
+<div
+  class="customers-table"
+  *ngIf="
+    !isLoading &&
+    filteredCustomers.length > 0
+  ">
 
   <table>
+
     <thead>
+
       <tr>
-        <th>Customer ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Mobile</th>
-        <th>Role</th>
+
+        <th>ID</th>
+
+        <th>Customer</th>
+
+        <th>Phone</th>
+
+        <th>Type</th>
+
+        <th>
+          Product / Service
+        </th>
+
         <th>Status</th>
-        <th>Update Role</th>
-        <th>Action</th>
+
+        <th>Date</th>
+
+        <th>Details</th>
+
       </tr>
+
     </thead>
 
+
     <tbody>
-      <tr *ngFor="let customer of paginatedCustomers; trackBy: trackByCustomer">
-        <td>#{{ customer._id.slice(-6).toUpperCase() }}</td>
-        <td>{{ customer.name }}</td>
-        <td>{{ customer.email }}</td>
-        <td>{{ customer.phone || '-' }}</td>
 
-        <td>{{ customer.role }}</td>
+      <tr
+        *ngFor="
+          let customer of paginatedCustomers;
+          trackBy: trackByCustomer
+        ">
 
         <td>
+
+          #{{
+            customer._id
+              .slice(-6)
+              .toUpperCase()
+          }}
+
+        </td>
+
+
+        <td>
+          {{ customer.customerName }}
+        </td>
+
+
+        <td>
+          {{ customer.phone }}
+        </td>
+
+
+        <td>
+
           <span
-            [class.active-status]="customer.isActive"
-            [class.inactive-status]="!customer.isActive">
-            {{ customer.isActive ? 'Active' : 'Inactive' }}
+            class="history-type"
+            [class.order-type]="
+              customer.type === 'Order'
+            "
+            [class.service-type]="
+              customer.type === 'Service'
+            ">
+
+            {{
+              customer.type === 'Order'
+                ? 'Product'
+                : 'Service'
+            }}
+
           </span>
+
         </td>
 
-        <td>
-          <select
-            [ngModel]="customer.role"
-            (ngModelChange)="updateRole(customer, $event)">
-            <option *ngFor="let role of roles" [value]="role">
-              {{ role }}
-            </option>
-          </select>
-        </td>
 
         <td>
+          {{ customer.itemName }}
+        </td>
+
+
+        <td>
+
+          <span
+            class="history-status"
+            [class.completed-status]="
+              customer.status === 'Completed'
+            "
+            [class.delivered-status]="
+              customer.status === 'Delivered'
+            "
+            [class.cancelled-status]="
+              customer.status === 'Cancelled'
+            ">
+
+            {{ customer.status }}
+
+          </span>
+
+        </td>
+
+
+        <td>
+
+          {{
+            customer.date
+              | date:'dd MMM yyyy'
+          }}
+
+        </td>
+
+
+        <td>
+
           <button
+            type="button"
             class="view-btn"
-            (click)="toggleStatus(customer)">
-            {{ customer.isActive ? 'Deactivate' : 'Activate' }}
+            (click)="openCustomerDetails(customer)">
+
+            View Details
+
           </button>
+
         </td>
+
       </tr>
+
     </tbody>
+
   </table>
 
 </div>
+
+
+<!-- PAGINATION -->
+
 <app-common-pagination
-  *ngIf="!isLoading && totalPages > 1"
+  *ngIf="
+    !isLoading &&
+    totalPages > 1
+  "
   [currentPage]="currentPage"
   [totalPages]="totalPages"
   (pageChange)="changePage($event)">
 </app-common-pagination>
+
+
+<!-- DETAILS MODAL -->
+
+<div
+  class="customer-details-overlay"
+  *ngIf="
+    showDetails &&
+    selectedCustomer
+  ">
+
+  <div class="customer-details-modal">
+
+
+    <button
+      type="button"
+      class="close-btn"
+      (click)="closeCustomerDetails()">
+
+      ×
+
+    </button>
+
+
+    <h2>
+      Customer History Details
+    </h2>
+
+
+    <h3>
+      Customer Details
+    </h3>
+
+
+    <p>
+      <strong>Name:</strong>
+      {{ selectedCustomer.customerName }}
+    </p>
+
+
+    <p>
+      <strong>Phone:</strong>
+      {{ selectedCustomer.phone }}
+    </p>
+
+
+    <p>
+      <strong>Email:</strong>
+
+      {{
+        selectedCustomer.email ||
+        'Not provided'
+      }}
+
+    </p>
+
+
+    <p>
+      <strong>Address:</strong>
+
+      {{
+        selectedCustomer.address ||
+        'Not provided'
+      }}
+
+    </p>
+
+
+    <hr>
+
+
+    <h3>
+
+      {{
+        selectedCustomer.type === 'Order'
+          ? 'Order Details'
+          : 'Service Details'
+      }}
+
+    </h3>
+
+
+    <p>
+
+      <strong>
+        Type:
+      </strong>
+
+      {{
+        selectedCustomer.type === 'Order'
+          ? 'Product Order'
+          : 'Service Booking'
+      }}
+
+    </p>
+
+
+    <p>
+
+      <strong>
+
+        {{
+          selectedCustomer.type === 'Order'
+            ? 'Products:'
+            : 'Service:'
+        }}
+
+      </strong>
+
+      {{ selectedCustomer.itemName }}
+
+    </p>
+
+
+    <p>
+
+      <strong>Status:</strong>
+
+      {{ selectedCustomer.status }}
+
+    </p>
+
+
+    <p>
+
+      <strong>Date:</strong>
+
+      {{
+        selectedCustomer.date
+          | date:'dd MMM yyyy, hh:mm a'
+      }}
+
+    </p>
+
+
+    <!-- ORDER PAYMENT DETAILS -->
+
+    <div
+      *ngIf="
+        selectedCustomer.type === 'Order'
+      ">
+
+      <hr>
+
+      <h3>
+        Payment Details
+      </h3>
+
+
+      <p>
+
+        <strong>
+          Amount:
+        </strong>
+
+        ₹{{ selectedCustomer.amount }}
+
+      </p>
+
+
+      <p>
+
+        <strong>
+          Payment Method:
+        </strong>
+
+        {{
+          selectedCustomer.paymentMethod ||
+          'Not provided'
+        }}
+
+      </p>
+
+
+      <p>
+
+        <strong>
+          Payment Status:
+        </strong>
+
+        {{
+          selectedCustomer.paymentStatus ||
+          'Not provided'
+        }}
+
+      </p>
+
+
+      <p
+        *ngIf="
+          selectedCustomer.paymentMethod === 'UPI'
+        ">
+
+        <strong>
+          UPI Transaction ID / UTR:
+        </strong>
+
+        {{
+          selectedCustomer.transactionId ||
+          'Not provided'
+        }}
+
+      </p>
+
+    </div>
+
+
+    <!-- CANCELLATION DETAILS -->
+
+    <div
+      *ngIf="
+        selectedCustomer.status === 'Cancelled'
+      ">
+
+      <hr>
+
+      <h3>
+        Cancellation Details
+      </h3>
+
+
+      <p>
+
+        <strong>
+          Cancellation Reason:
+        </strong>
+
+        {{
+          selectedCustomer.cancellationReason ||
+          'Not provided'
+        }}
+
+      </p>
+
+    </div>
+
+
+    <div class="customer-actions">
+
+      <a
+        [href]="'tel:' + selectedCustomer.phone"
+        class="call-customer-btn">
+
+        Call Customer
+
+      </a>
+
+
+      <a
+        [href]="
+          'https://wa.me/91' +
+          selectedCustomer.phone
+        "
+        target="_blank"
+        rel="noopener noreferrer"
+        class="whatsapp-customer-btn">
+
+        WhatsApp Customer
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>

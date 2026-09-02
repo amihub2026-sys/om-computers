@@ -71,14 +71,19 @@ export class BookingService {
     );
   }
 
-  updateAdminBookingStatus(
-    id: string,
-    status: BookingStatus
-  ): Observable<BookingStatusUpdateResponse> {
-    return this.http.put<BookingStatusUpdateResponse>(
-      `${this.adminApiUrl}/${id}/status`,
-      { status },
-      this.getHeaders()
-    );
-  }
+updateAdminBookingStatus(
+  id: string,
+  status: BookingStatus,
+  cancellationReason: string = ''
+): Observable<BookingStatusUpdateResponse> {
+
+  return this.http.put<BookingStatusUpdateResponse>(
+    `${this.adminApiUrl}/${id}/status`,
+    {
+      status,
+      cancellationReason
+    },
+    this.getHeaders()
+  );
+}
 }

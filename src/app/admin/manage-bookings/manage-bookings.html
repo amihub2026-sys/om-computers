@@ -152,3 +152,42 @@
   </div>
 
 </div>
+<div
+  class="cancel-booking-overlay"
+  *ngIf="showCancelModal">
+
+  <div class="cancel-booking-modal">
+
+    <h2>Cancel Booking</h2>
+
+    <p>
+      Please enter the reason for cancelling this booking.
+    </p>
+
+    <textarea
+      rows="4"
+      placeholder="Enter cancellation reason"
+      [(ngModel)]="cancellationReason">
+    </textarea>
+
+    <div class="cancel-actions">
+
+      <button
+        type="button"
+        class="close-cancel-btn"
+        (click)="closeCancelModal()">
+        Close
+      </button>
+
+      <button
+        type="button"
+        class="confirm-cancel-btn"
+        (click)="confirmCancelBooking()">
+        Confirm Cancellation
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

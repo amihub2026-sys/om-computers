@@ -1,84 +1,488 @@
-.admin-header{
-    background:#fff;
-    padding:25px;
-    border-radius:20px;
-    margin-bottom:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+/* ================================
+   HEADER
+================================ */
+
+.admin-header {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
-.admin-header h1{
-    color:#081126;
-    margin-bottom:8px;
+.admin-header h1 {
+  color: #081126;
+  margin: 0 0 8px;
+  font-size: 28px;
 }
 
-.admin-header p{
-    color:#64748b;
+.admin-header p {
+  color: #64748b;
+  margin: 0;
 }
 
-.customers-table{
-    background:#fff;
-    border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+/* ================================
+   FILTER CARD
+================================ */
+
+.history-filter-card {
+  background: #ffffff;
+  padding: 18px 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+
+  display: flex;
+  align-items: flex-end;
+  gap: 30px;
+  flex-wrap: wrap;
+
+  box-shadow:
+    0 8px 25px
+    rgba(0, 0, 0, 0.06);
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
 }
 
-thead{
-    background:#2563eb;
-    color:#fff;
+.filter-title {
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.history-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.history-filters button {
+  border: 1px solid #dbe3f0;
+
+  background: #ffffff;
+  color: #475569;
+
+  padding: 9px 16px;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition: 0.2s ease;
+}
+
+.history-filters button:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #2563eb;
+}
+
+.history-filters button.active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 12px
+    rgba(37, 99, 235, 0.22);
+}
+
+.history-filters .cancel-filter.active {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+
+/* ================================
+   TABLE
+================================ */
+
+.customers-table {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.08);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: #2563eb;
+  color: #ffffff;
 }
 
 th,
-td{
-    padding:16px;
-    text-align:left;
-    border-bottom:1px solid #e5e7eb;
+td {
+  padding: 16px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  vertical-align: middle;
 }
 
-.active-status,
-.inactive-status{
-    padding:6px 12px;
-    border-radius:20px;
-    font-size:13px;
-    font-weight:700;
+th {
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
-.active-status{
-    background:#dcfce7;
-    color:#15803d;
+td {
+  color: #475569;
+  font-size: 14px;
 }
 
-.inactive-status{
-    background:#fee2e2;
-    color:#dc2626;
+tbody tr {
+  transition: 0.2s ease;
 }
 
-.view-btn{
-    background:#2563eb;
-    color:#fff;
-    border:none;
-    padding:8px 14px;
-    border-radius:8px;
-    cursor:pointer;
-    font-weight:700;
+tbody tr:hover {
+  background: #f8fafc;
 }
 
-.view-btn:hover{
-    background:#1d4ed8;
+
+/* ================================
+   TYPE BADGES
+================================ */
+
+.history-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
 }
 
-@media(max-width:900px){
+.order-type {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
 
-    .customers-table{
-        overflow-x:auto;
-    }
+.service-type {
+  background: #ede9fe;
+  color: #6d28d9;
+}
 
-    table{
-        min-width:950px;
-    }
+
+/* ================================
+   STATUS BADGES
+================================ */
+
+.history-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.completed-status {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.delivered-status {
+  background: #d1fae5;
+  color: #047857;
+}
+
+.cancelled-status {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+/* ================================
+   VIEW BUTTON
+================================ */
+
+.view-btn {
+  background: #2563eb;
+  color: #ffffff;
+
+  border: none;
+
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: 0.2s ease;
+}
+
+.view-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* ================================
+   MODAL OVERLAY
+================================ */
+
+.customer-details-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.65);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  z-index: 9999;
+}
+
+
+/* ================================
+   DETAILS MODAL
+================================ */
+
+.customer-details-modal {
+  position: relative;
+
+  width: 100%;
+  max-width: 620px;
+  max-height: 85vh;
+
+  overflow-y: auto;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 25px 60px
+    rgba(0, 0, 0, 0.25);
+}
+
+.customer-details-modal h2 {
+  margin: 0 40px 25px 0;
+
+  color: #081126;
+
+  font-size: 25px;
+}
+
+.customer-details-modal h3 {
+  margin: 22px 0 15px;
+
+  color: #1e293b;
+
+  font-size: 17px;
+}
+
+.customer-details-modal p {
+  margin: 10px 0;
+
+  color: #475569;
+
+  line-height: 1.6;
+
+  word-break: break-word;
+}
+
+.customer-details-modal strong {
+  color: #0f172a;
+}
+
+.customer-details-modal hr {
+  border: none;
+
+  border-top: 1px solid #e5e7eb;
+
+  margin: 22px 0;
+}
+
+
+/* ================================
+   CLOSE BUTTON
+================================ */
+
+.close-btn {
+  position: absolute;
+
+  top: 18px;
+  right: 18px;
+
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: #f1f5f9;
+  color: #475569;
+
+  font-size: 22px;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:hover {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+/* ================================
+   CUSTOMER ACTIONS
+================================ */
+
+.customer-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.call-customer-btn,
+.whatsapp-customer-btn {
+  flex: 1;
+
+  min-width: 150px;
+
+  text-align: center;
+
+  padding: 12px 18px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transition: 0.2s ease;
+}
+
+.call-customer-btn {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.call-customer-btn:hover {
+  background: #1d4ed8;
+}
+
+.whatsapp-customer-btn {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+.whatsapp-customer-btn:hover {
+  background: #15803d;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+  .customers-table {
+    overflow-x: auto;
+  }
+
+  table {
+    min-width: 950px;
+  }
+
+  .history-filter-card {
+    align-items: stretch;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .admin-header {
+    padding: 20px;
+    border-radius: 14px;
+  }
+
+  .admin-header h1 {
+    font-size: 23px;
+  }
+
+  .history-filter-card {
+    padding: 14px;
+    gap: 15px;
+  }
+
+  .history-filters {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+  }
+
+  .history-filters button {
+    white-space: nowrap;
+  }
+
+  .customer-details-overlay {
+    padding: 12px;
+  }
+
+  .customer-details-modal {
+    padding: 22px 18px;
+    border-radius: 16px;
+    max-height: 90vh;
+  }
+
+  .customer-details-modal h2 {
+    font-size: 21px;
+  }
+
+  .customer-actions {
+    flex-direction: column;
+  }
+
+  .call-customer-btn,
+  .whatsapp-customer-btn {
+    width: 100%;
+    box-sizing: border-box;
+  }
 
 }

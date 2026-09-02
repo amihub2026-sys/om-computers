@@ -1,0 +1,523 @@
+<div class="inventory-page">
+
+  <div class="inventory-header">
+
+    <div>
+      <h1>Inventory Management</h1>
+      <p>
+        Manage your inventory items separately from products.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="openAddForm()"
+    >
+      + Add Inventory
+    </button>
+
+  </div>
+
+
+  <!-- SEARCH -->
+
+  <div class="inventory-toolbar">
+
+    <input
+      type="text"
+      placeholder="Search item, category, brand, SKU or supplier..."
+      [(ngModel)]="searchText"
+    >
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <div class="inventory-table-card">
+
+    <div class="table-wrapper">
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>Item</th>
+            <th>Category</th>
+            <th>Brand / Model</th>
+            <th>SKU</th>
+            <th>Current Stock</th>
+            <th>Min Stock</th>
+            <th>Selling Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          <tr
+            *ngFor="let item of filteredInventory"
+          >
+
+            <td>
+
+              <div class="item-name">
+                {{ item.itemName }}
+              </div>
+
+            </td>
+
+
+            <td>
+              {{ item.category || '-' }}
+            </td>
+
+
+            <td>
+
+              <div class="brand-model">
+
+                <span>
+                  {{ item.brand || '-' }}
+                </span>
+
+                <small>
+                  {{ item.model || '-' }}
+                </small>
+
+              </div>
+
+            </td>
+
+
+            <td>
+
+              <span class="sku-badge">
+                {{ item.sku }}
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <strong class="stock-number">
+                {{ item.currentStock }}
+              </strong>
+
+            </td>
+
+
+            <td>
+              {{ item.minimumStock }}
+            </td>
+
+
+            <td>
+              ₹{{ item.sellingPrice }}
+            </td>
+
+
+            <td>
+
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(item.status)"
+              >
+                {{ item.status }}
+              </span>
+
+            </td>
+
+
+            <td>
+
+              <div class="action-buttons">
+
+                <button
+                  type="button"
+                  class="edit-btn"
+                  (click)="openEditForm(item)"
+                >
+                  Edit
+                </button>
+
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="deleteInventory(item)"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <tr
+            *ngIf="filteredInventory.length === 0"
+          >
+
+            <td
+              colspan="9"
+              class="empty-state"
+            >
+              No inventory items found.
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+
+  <!-- ADD / EDIT MODAL -->
+
+  <div
+    class="modal-overlay"
+    *ngIf="showForm"
+  >
+
+    <div class="inventory-modal">
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2>
+            {{
+              isEditMode
+                ? 'Edit Inventory'
+                : 'Add Inventory'
+            }}
+          </h2>
+
+          <p>
+            Enter inventory item details.
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          class="close-btn"
+          (click)="closeForm()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form
+        class="inventory-form"
+        (ngSubmit)="saveInventory()"
+      >
+
+        <div class="form-grid">
+
+
+          <!-- ITEM NAME -->
+
+          <div class="form-group">
+
+            <label>
+              Item Name
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: HP Laptop"
+              [(ngModel)]="inventoryForm.itemName"
+              name="itemName"
+            >
+
+          </div>
+
+
+          <!-- SKU -->
+
+          <div class="form-group">
+
+            <label>
+              SKU / Item Code
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: LAP-HP-001"
+              [(ngModel)]="inventoryForm.sku"
+              name="sku"
+            >
+
+          </div>
+
+
+          <!-- CATEGORY -->
+
+          <div class="form-group">
+
+            <label>
+              Category
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: Laptop"
+              [(ngModel)]="inventoryForm.category"
+              name="category"
+            >
+
+          </div>
+
+
+          <!-- BRAND -->
+
+          <div class="form-group">
+
+            <label>
+              Brand
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: HP"
+              [(ngModel)]="inventoryForm.brand"
+              name="brand"
+            >
+
+          </div>
+
+
+          <!-- MODEL -->
+
+          <div class="form-group">
+
+            <label>
+              Model
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: Pavilion 15"
+              [(ngModel)]="inventoryForm.model"
+              name="model"
+            >
+
+          </div>
+
+
+          <!-- OPENING STOCK -->
+
+          <div class="form-group">
+
+            <label>
+              Opening Stock
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              [(ngModel)]="inventoryForm.openingStock"
+              name="openingStock"
+            >
+
+          </div>
+
+
+          <!-- CURRENT STOCK -->
+
+          <div class="form-group">
+
+            <label>
+              Current Stock
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              [(ngModel)]="inventoryForm.currentStock"
+              name="currentStock"
+            >
+
+          </div>
+
+
+          <!-- MINIMUM STOCK -->
+
+          <div class="form-group">
+
+            <label>
+              Minimum Stock
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              [(ngModel)]="inventoryForm.minimumStock"
+              name="minimumStock"
+            >
+
+          </div>
+
+
+          <!-- PURCHASE PRICE -->
+
+          <div class="form-group">
+
+            <label>
+              Purchase Price
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              placeholder="0"
+              [(ngModel)]="inventoryForm.purchasePrice"
+              name="purchasePrice"
+            >
+
+          </div>
+
+
+          <!-- SELLING PRICE -->
+
+          <div class="form-group">
+
+            <label>
+              Selling Price
+            </label>
+
+            <input
+              type="number"
+              min="0"
+              placeholder="0"
+              [(ngModel)]="inventoryForm.sellingPrice"
+              name="sellingPrice"
+            >
+
+          </div>
+
+
+          <!-- SUPPLIER -->
+
+          <div class="form-group">
+
+            <label>
+              Supplier
+            </label>
+
+            <input
+              type="text"
+              placeholder="Enter supplier name"
+              [(ngModel)]="inventoryForm.supplier"
+              name="supplier"
+            >
+
+          </div>
+
+
+          <!-- LOCATION -->
+
+          <div class="form-group">
+
+            <label>
+              Location / Rack
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: Rack A1"
+              [(ngModel)]="inventoryForm.location"
+              name="location"
+            >
+
+          </div>
+
+
+          <!-- NOTES -->
+
+          <div class="form-group full-width">
+
+            <label>
+              Notes
+            </label>
+
+            <textarea
+              rows="4"
+              placeholder="Add inventory notes..."
+              [(ngModel)]="inventoryForm.notes"
+              name="notes"
+            ></textarea>
+
+          </div>
+
+
+          <!-- ACTIVE -->
+
+          <div class="form-group full-width">
+
+            <label class="active-toggle">
+
+              <input
+                type="checkbox"
+                [(ngModel)]="inventoryForm.isActive"
+                name="isActive"
+              >
+
+              <span>
+                Active Inventory Item
+              </span>
+
+            </label>
+
+          </div>
+
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            class="cancel-btn"
+            (click)="closeForm()"
+          >
+            Cancel
+          </button>
+
+          <button
+            type="submit"
+            class="save-btn"
+          >
+            {{
+              isEditMode
+                ? 'Update Inventory'
+                : 'Save Inventory'
+            }}
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</div>

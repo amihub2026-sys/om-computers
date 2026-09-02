@@ -26,10 +26,14 @@
           placeholder="Full Name"
           [(ngModel)]="orderData.customerName">
 
-        <input
-          type="tel"
-          placeholder="Mobile Number"
-          [(ngModel)]="orderData.phone">
+       <input
+  type="tel"
+  placeholder="Mobile Number"
+  [(ngModel)]="orderData.phone"
+  maxlength="10"
+  pattern="[0-9]{10}"
+  inputmode="numeric"
+  (input)="orderData.phone = orderData.phone.replace(/[^0-9]/g, '').slice(0, 10)">
 
         <input
           type="email"
@@ -50,11 +54,57 @@
       </textarea>
 
       <select [(ngModel)]="orderData.paymentMethod">
-        <option value="">Select Payment Method</option>
-        <option value="Cash on Delivery">Cash on Delivery</option>
-        <option value="UPI">UPI</option>
-        <option value="Credit / Debit Card">Credit / Debit Card</option>
-      </select>
+  <option value="">Select Payment Method</option>
+  <option value="Cash on Delivery">Cash on Delivery</option>
+  <option value="UPI">UPI / GPay / PhonePe</option>
+ 
+</select>
+
+
+<!-- UPI PAYMENT -->
+<div
+  class="upi-payment-box"
+  *ngIf="orderData.paymentMethod === 'UPI'">
+
+  <h3>Pay with GPay / PhonePe / UPI</h3>
+
+  <p class="upi-info">
+    Pay the exact amount using the shop payment number or scan the QR code.
+  </p>
+
+  <div class="upi-amount">
+    ₹{{ totalAmount }}
+  </div>
+
+  <div class="shop-payment-number">
+    <span>Shop Payment Number</span>
+    <strong>9876543210</strong>
+  </div>
+
+  <p class="or-text">
+    OR
+  </p>
+
+  <div class="qr-wrapper">
+
+    <!-- DUMMY QR - REPLACE LATER -->
+    <img
+      src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=upi://pay?pa=dummy@upi%26pn=Store"
+      alt="UPI Payment QR"
+      class="upi-qr">
+
+  </div>
+
+  <p class="payment-note">
+    After payment, enter your UPI Transaction ID / UTR number below.
+  </p>
+
+  <input
+    type="text"
+    placeholder="UPI Transaction ID / UTR Number"
+    [(ngModel)]="orderData.transactionId">
+
+</div>
 
     </div>
 

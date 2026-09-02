@@ -31,6 +31,8 @@ import { AddService } from './admin/add-service/add-service';
 import { ManageCustomers } from './admin/manage-customers/manage-customers';
 import { ManageAdminsComponent } from './admin/manage-admins/manage-admins';
 import { ManageContactsComponent } from './admin/manage-contacts/manage-contacts';
+import { ManageCategoriesComponent } from './admin/manage-categories/manage-categories';
+import { ManageInventoryComponent } from './admin/manage-inventory/manage-inventory';
 export const routes: Routes = [
   {
     path: '',
@@ -63,6 +65,7 @@ export const routes: Routes = [
   canActivate: [adminGuard],
   children: [
       { path: 'dashboard', component: AdminDashboard },
+      { path: 'categories', component: ManageCategoriesComponent },
       { path: 'products', component: ManageProducts },
       { path: 'products/add', component: AddProduct },
       { path: 'products/edit/:id', component: AddProduct },
@@ -73,6 +76,10 @@ export const routes: Routes = [
       { path: 'bookings', component: ManageBookings },
       { path: 'customers', component: ManageCustomers },
       { path: 'contacts', component: ManageContactsComponent },
+      {
+  path: 'inventory',
+  component: ManageInventoryComponent
+},
       { path: 'admins', component: ManageAdminsComponent },
     ],
   },

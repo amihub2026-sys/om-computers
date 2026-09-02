@@ -30,7 +30,9 @@ isLoading = false;
 
 selectedBooking: Booking | null = null;
 showDetails = false;
-
+showCancelModal = false;
+bookingToCancel: Booking | null = null;
+cancellationReason = '';
 currentPage = 1;
   pageSize = 10;
   statuses: BookingStatus[] = [
@@ -62,11 +64,19 @@ currentPage = 1;
     this.bookingService.getAdminBookings()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: BookingResponse) => {
-          this.bookings = res.data || [];
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
+    next: (res: BookingResponse) => {
+
+  this.bookings = (res.data || []).filter(
+    booking =>
+      booking.status !== 'Completed' &&
+      booking.status !== 'Cancelled'
+  );
+
+  this.currentPage = 1;
+  this.isLoading = false;
+
+  this.cdr.detectChanges();
+},
         error: (err) => {
           console.error(err);
           this.bookings = [];
@@ -101,23 +111,88 @@ closeBookingDetails(): void {
   this.selectedBooking = null;
   this.showDetails = false;
 }
-  updateStatus(booking: Booking, status: BookingStatus): void {
-    if (!booking._id || booking.status === status) {
-      return;
-    }
+updateStatus(booking: Booking, status: BookingStatus): void {
 
-    this.bookingService.updateAdminBookingStatus(booking._id, status)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          booking.status = status;
-          alert('Booking status updated');
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Status update failed');
-        }
-      });
+  if (!booking._id || booking.status === status) {
+    return;
   }
+
+  // If Cancelled is selected, open reason modal first
+  if (status === 'Cancelled') {
+    this.bookingToCancel = booking;
+    this.cancellationReason = '';
+    this.showCancelModal = true;
+    return;
+  }
+
+  this.bookingService
+    .updateAdminBookingStatus(booking._id, status)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+
+      next: () => {
+        booking.status = status;
+
+        alert('Booking status updated');
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+        alert('Status update failed');
+      }
+
+    });
+}
+confirmCancelBooking(): void {
+
+  if (
+    !this.bookingToCancel ||
+    !this.bookingToCancel._id
+  ) {
+    return;
+  }
+
+  if (!this.cancellationReason.trim()) {
+    alert('Please enter cancellation reason');
+    return;
+  }
+
+  this.bookingService
+    .updateAdminBookingStatus(
+      this.bookingToCancel._id,
+      'Cancelled',
+      this.cancellationReason.trim()
+    )
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+
+      next: () => {
+
+        this.bookingToCancel!.status = 'Cancelled';
+
+        this.showCancelModal = false;
+        this.bookingToCancel = null;
+        this.cancellationReason = '';
+
+        alert('Booking cancelled successfully');
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+        alert('Booking cancellation failed');
+      }
+
+    });
+}
+
+
+closeCancelModal(): void {
+  this.showCancelModal = false;
+  this.bookingToCancel = null;
+  this.cancellationReason = '';
+}
 }

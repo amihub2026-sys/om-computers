@@ -29,15 +29,15 @@ export class Checkout implements OnInit, OnDestroy {
   isLoading = false;
   isPlacingOrder = false;
 
-  orderData = {
-    customerName: '',
-    phone: '',
-    email: '',
-    city: '',
-    address: '',
-    paymentMethod: ''
-  };
-
+orderData = {
+  customerName: '',
+  phone: '',
+  email: '',
+  city: '',
+  address: '',
+  paymentMethod: '',
+  transactionId: ''
+};
   private destroy$ = new Subject<void>();
 
 constructor(
@@ -160,7 +160,13 @@ this.isLoading = false;
       this.toast.error('Please enter mobile number.', 'Required');
       return false;
     }
-
+if (!/^[0-9]{10}$/.test(this.orderData.phone.trim())) {
+  this.toast.error(
+    'Mobile number must be exactly 10 digits.',
+    'Invalid Mobile Number'
+  );
+  return false;
+}
     if (!this.orderData.email.trim()) {
       this.toast.error('Please enter email address.', 'Required');
       return false;
@@ -180,7 +186,17 @@ this.isLoading = false;
       this.toast.error('Please select payment method.', 'Required');
       return false;
     }
+if (
+  this.orderData.paymentMethod === 'UPI' &&
+  !this.orderData.transactionId.trim()
+) {
+  this.toast.error(
+    'Please enter UPI Transaction ID / UTR number.',
+    'Required'
+  );
 
+  return false;
+}
     return true;
   }
 
@@ -197,22 +213,27 @@ placeOrder(): void {
   this.isPlacingOrder = true;
   this.cdr.detectChanges();
 
-  const guestOrderPayload = {
-    customerName: this.orderData.customerName,
-    phone: this.orderData.phone,
-    email: this.orderData.email,
-    address: `${this.orderData.address}, ${this.orderData.city}`,
-    paymentMethod: this.orderData.paymentMethod,
+const guestOrderPayload = {
+  customerName: this.orderData.customerName,
+  phone: this.orderData.phone,
+  email: this.orderData.email,
+  address: `${this.orderData.address}, ${this.orderData.city}`,
+  paymentMethod: this.orderData.paymentMethod,
 
-    products: this.cartItems.map(item => ({
-      productName: item.productName,
-      image: item.image || '',
-      quantity: Number(item.quantity || 1),
-      price: Number(item.price || 0)
-    })),
+  transactionId:
+    this.orderData.paymentMethod === 'UPI'
+      ? this.orderData.transactionId
+      : '',
 
-    totalAmount: this.totalAmount
-  };
+  products: this.cartItems.map(item => ({
+    productName: item.productName,
+    image: item.image || '',
+    quantity: Number(item.quantity || 1),
+    price: Number(item.price || 0)
+  })),
+
+  totalAmount: this.totalAmount
+};
 
   this.orderService.placeGuestOrder(guestOrderPayload)
     .pipe(takeUntil(this.destroy$))
