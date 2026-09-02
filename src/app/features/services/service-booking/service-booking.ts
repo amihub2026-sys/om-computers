@@ -56,6 +56,21 @@ export class ServiceBooking implements OnInit {
   }
 
   bookService(): void {
+    if (!this.booking.phone.trim()) {
+  this.toast.error(
+    'Please enter mobile number.',
+    'Required'
+  );
+  return;
+}
+
+if (!/^[0-9]{10}$/.test(this.booking.phone.trim())) {
+  this.toast.error(
+    'Mobile number must be exactly 10 digits.',
+    'Invalid Mobile Number'
+  );
+  return;
+}
 
     this.bookingService.createBooking(this.booking).subscribe({
       next: (res: any) => {

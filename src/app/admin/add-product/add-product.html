@@ -1,28 +1,401 @@
-<form (ngSubmit)="saveProduct()">
+<div class="product-page">
 
-  <div class="form-grid">
-    <input type="text" placeholder="Product Name" [(ngModel)]="product.name" name="name">
-    <input type="text" placeholder="Category" [(ngModel)]="product.category" name="category">
-    <input type="text" placeholder="Brand" [(ngModel)]="product.brand" name="brand">
-    <input type="text" placeholder="Model" [(ngModel)]="product.model" name="model">
-    <input type="number" placeholder="Price" [(ngModel)]="product.price" name="price">
-    <input type="number" placeholder="Discount Price" [(ngModel)]="product.discountPrice" name="discountPrice">
-    <input type="number" placeholder="Stock" [(ngModel)]="product.stock" name="stock">
-    <input type="text" placeholder="Warranty" [(ngModel)]="product.warranty" name="warranty">
+  <div class="product-page-header">
+
+    <div>
+      <h1>
+        {{ isEditMode ? 'Edit Product' : 'Add Product' }}
+      </h1>
+
+      <p>
+        Select a category and enter the product details.
+      </p>
+    </div>
+
   </div>
 
- <input
-  type="file"
-  accept="image/*"
-  (change)="onImageSelected($event)">
 
-  <textarea rows="5" placeholder="Product Description" [(ngModel)]="product.description" name="description"></textarea>
+  <form
+    class="product-form"
+    (ngSubmit)="saveProduct()"
+  >
 
-  <div class="buttons">
-    <button type="submit">
-  {{ isEditMode ? 'Update Product' : 'Save Product' }}
-</button>
-    <button type="button" class="cancel">Cancel</button>
-  </div>
+    <!-- ========================================
+         CATEGORY
+    ========================================= -->
 
-</form>
+    <div class="category-card">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>Select Category</h2>
+
+          <p>
+            Product fields will appear according
+            to the selected category.
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="category-field">
+
+        <label>
+          Category
+          <span>*</span>
+        </label>
+
+        <select
+          [(ngModel)]="selectedCategoryId"
+          name="categoryId"
+          (change)="onCategoryChange()"
+        >
+
+          <option value="">
+            Select Category
+          </option>
+
+          <option
+            *ngFor="let category of categories"
+            [value]="category._id"
+          >
+            {{ category.name }}
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- ========================================
+         SHOW AFTER CATEGORY SELECT
+    ========================================= -->
+
+    <ng-container *ngIf="selectedCategory">
+
+
+      <!-- ======================================
+           COMMON PRODUCT DETAILS
+      ======================================= -->
+
+      <div class="form-card">
+
+        <div class="section-heading">
+
+          <div>
+            <h2>Product Details</h2>
+
+            <p>
+              Common information required for
+              every product.
+            </p>
+          </div>
+
+        </div>
+
+
+        <div class="form-grid">
+
+          <!-- PRODUCT NAME -->
+
+          <div class="form-group">
+
+            <label>
+              Product Name
+              <span>*</span>
+            </label>
+
+            <input
+              type="text"
+              placeholder="Enter product name"
+              [(ngModel)]="product.name"
+              name="name"
+            >
+
+          </div>
+
+
+          <!-- PRICE -->
+
+          <div class="form-group">
+
+            <label>
+              Price
+              <span>*</span>
+            </label>
+
+            <input
+              type="number"
+              placeholder="Enter price"
+              [(ngModel)]="product.price"
+              name="price"
+              min="0"
+            >
+
+          </div>
+
+
+          <!-- DISCOUNT PRICE -->
+
+          <div class="form-group">
+
+            <label>
+              Discount Price
+            </label>
+
+            <input
+              type="number"
+              placeholder="Enter discount price"
+              [(ngModel)]="product.discountPrice"
+              name="discountPrice"
+              min="0"
+            >
+
+          </div>
+
+
+          <!-- STOCK -->
+
+          <div class="form-group">
+
+            <label>
+              Stock
+            </label>
+
+            <input
+              type="number"
+              placeholder="Enter stock quantity"
+              [(ngModel)]="product.stock"
+              name="stock"
+              min="0"
+            >
+
+          </div>
+
+
+          <!-- WARRANTY -->
+
+          <div class="form-group full-width">
+
+            <label>
+              Warranty
+            </label>
+
+            <input
+              type="text"
+              placeholder="Example: 1 Year Warranty"
+              [(ngModel)]="product.warranty"
+              name="warranty"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           DYNAMIC SPECIFICATIONS
+      ======================================= -->
+
+      <div
+        class="form-card"
+        *ngIf="specificationValues.length > 0"
+      >
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>
+              {{ selectedCategory.name }}
+              Specifications
+            </h2>
+
+            <p>
+              These fields are configured from
+              Manage Categories.
+            </p>
+
+          </div>
+
+
+          <span class="spec-count">
+            {{ specificationValues.length }}
+            Fields
+          </span>
+
+        </div>
+
+
+        <div class="form-grid">
+
+          <div
+            class="form-group"
+            *ngFor="
+              let specification of specificationValues;
+              let i = index
+            "
+          >
+
+            <label>
+              {{ specification.name }}
+            </label>
+
+            <input
+              type="text"
+              [placeholder]="'Enter ' + specification.name"
+              [(ngModel)]="specificationValues[i].value"
+              [name]="'specification_' + i"
+            >
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- NO SPECIFICATIONS -->
+
+      <div
+        class="form-card no-spec-card"
+        *ngIf="specificationValues.length === 0"
+      >
+
+        No specifications configured for
+        <strong>
+          {{ selectedCategory.name }}
+        </strong>.
+
+      </div>
+
+
+      <!-- ======================================
+           PRODUCT IMAGE
+      ======================================= -->
+
+      <div class="form-card">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>Product Image</h2>
+
+            <p>
+              Upload the main image for this product.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="upload-box">
+
+          <div class="upload-icon">
+            ↑
+          </div>
+
+          <div class="upload-content">
+
+            <strong>
+              Choose Product Image
+            </strong>
+
+            <span>
+              JPG, JPEG, PNG or WEBP
+            </span>
+
+          </div>
+
+
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            (change)="onImageSelected($event)"
+          >
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           DESCRIPTION
+      ======================================= -->
+
+      <div class="form-card">
+
+        <div class="section-heading">
+
+          <div>
+
+            <h2>Description</h2>
+
+            <p>
+              Add useful information about this product.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <textarea
+            rows="6"
+            placeholder="Enter product description..."
+            [(ngModel)]="product.description"
+            name="description"
+          ></textarea>
+
+        </div>
+
+      </div>
+
+
+      <!-- ======================================
+           BUTTONS
+      ======================================= -->
+
+      <div class="form-actions">
+
+        <button
+          type="submit"
+          class="save-product-btn"
+        >
+
+          {{
+            isEditMode
+              ? 'Update Product'
+              : 'Save Product'
+          }}
+
+        </button>
+
+
+        <button
+          type="button"
+          class="cancel-product-btn"
+          (click)="cancel()"
+        >
+
+          Cancel
+
+        </button>
+
+      </div>
+
+    </ng-container>
+
+  </form>
+
+</div>

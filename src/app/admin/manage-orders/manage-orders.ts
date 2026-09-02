@@ -29,7 +29,9 @@ export class ManageOrders implements OnInit, OnDestroy {
 
   selectedOrder: OrderItem | null = null;
   showDetails = false;
-
+showCancelModal = false;
+orderToCancel: OrderItem | null = null;
+cancellationReason = '';
   currentPage = 1;
   pageSize = 10;
   statuses: OrderItem['orderStatus'][] = [
@@ -66,11 +68,19 @@ paymentStatuses: OrderItem['paymentStatus'][] = [
     this.orderService.getAdminOrders()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res: OrderResponse) => {
-          this.orders = res.data || [];
-          this.isLoading = false;
-          this.cdr.detectChanges();
-        },
+      next: (res: OrderResponse) => {
+
+  this.orders = (res.data || []).filter(
+    order =>
+      order.orderStatus !== 'Delivered' &&
+      order.orderStatus !== 'Cancelled'
+  );
+
+  this.currentPage = 1;
+  this.isLoading = false;
+
+  this.cdr.detectChanges();
+},
         error: (err) => {
           console.error(err);
           this.orders = [];
@@ -112,25 +122,90 @@ closeOrderDetails(): void {
   this.showDetails = false;
 }
 
-  updateStatus(order: OrderItem, status: OrderItem['orderStatus']): void {
-    if (order.orderStatus === status) {
-      return;
-    }
+updateStatus(
+  order: OrderItem,
+  status: OrderItem['orderStatus']
+): void {
 
-    this.orderService.updateAdminOrderStatus(order._id, status)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          order.orderStatus = status;
-          alert('Order status updated');
-          this.cdr.detectChanges();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Order status update failed');
-        }
-      });
+  if (order.orderStatus === status) {
+    return;
   }
+
+  // If Cancelled is selected, ask for reason first
+  if (status === 'Cancelled') {
+    this.orderToCancel = order;
+    this.cancellationReason = '';
+    this.showCancelModal = true;
+    return;
+  }
+
+  this.orderService
+    .updateAdminOrderStatus(order._id, status)
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+
+      next: () => {
+        order.orderStatus = status;
+
+        alert('Order status updated');
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+        alert('Order status update failed');
+      }
+
+    });
+}
+confirmCancelOrder(): void {
+
+  if (!this.orderToCancel || !this.orderToCancel._id) {
+    return;
+  }
+
+  if (!this.cancellationReason.trim()) {
+    alert('Please enter cancellation reason');
+    return;
+  }
+
+  this.orderService
+    .updateAdminOrderStatus(
+      this.orderToCancel._id,
+      'Cancelled',
+      this.cancellationReason.trim()
+    )
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+
+      next: () => {
+
+        this.orderToCancel!.orderStatus = 'Cancelled';
+
+        this.showCancelModal = false;
+        this.orderToCancel = null;
+        this.cancellationReason = '';
+
+        alert('Order cancelled successfully');
+
+        this.cdr.detectChanges();
+      },
+
+      error: (err) => {
+        console.error(err);
+        alert('Order cancellation failed');
+      }
+
+    });
+}
+
+
+closeCancelModal(): void {
+  this.showCancelModal = false;
+  this.orderToCancel = null;
+  this.cancellationReason = '';
+}
   updatePaymentStatus(
   order: OrderItem,
   status: OrderItem['paymentStatus']

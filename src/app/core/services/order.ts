@@ -89,17 +89,20 @@ placeGuestOrder(data: any) {
       this.getHeaders()
     );
   }
-
-  updateAdminOrderStatus(
-    id: string,
-    status: OrderItem['orderStatus']
-  ) {
-    return this.http.put<SingleOrderResponse>(
-      `${this.adminBaseUrl}/${id}/status`,
-      { orderStatus: status },
-      this.getHeaders()
-    );
-  }
+updateAdminOrderStatus(
+  id: string,
+  status: OrderItem['orderStatus'],
+  cancellationReason: string = ''
+) {
+  return this.http.put<SingleOrderResponse>(
+    `${this.adminBaseUrl}/${id}/status`,
+    {
+      orderStatus: status,
+      cancellationReason
+    },
+    this.getHeaders()
+  );
+}
   updateAdminPaymentStatus(
   id: string,
   status: OrderItem['paymentStatus']

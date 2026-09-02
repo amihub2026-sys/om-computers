@@ -132,6 +132,30 @@
       <strong>Address:</strong>
       {{ selectedOrder.address }}
     </p>
+
+    <hr>
+
+<h3>Payment Details</h3>
+
+<p>
+  <strong>Payment Method:</strong>
+  {{ selectedOrder.paymentMethod }}
+</p>
+
+<p>
+  <strong>Payment Status:</strong>
+  {{ selectedOrder.paymentStatus }}
+</p>
+
+<p *ngIf="selectedOrder.paymentMethod === 'UPI'">
+  <strong>UPI Transaction ID / UTR:</strong>
+  {{ selectedOrder.transactionId || 'Not provided' }}
+</p>
+
+<p *ngIf="selectedOrder.paymentMethod === 'UPI'">
+  <strong>Amount:</strong>
+  ₹{{ selectedOrder.totalAmount }}
+</p>
 <div class="customer-actions">
 
   <a
@@ -148,6 +172,46 @@
   </a>
 
 </div>
+  </div>
+
+</div>
+<!-- ORDER CANCELLATION MODAL -->
+<div
+  class="cancel-order-overlay"
+  *ngIf="showCancelModal">
+
+  <div class="cancel-order-modal">
+
+    <h2>Cancel Order</h2>
+
+    <p>
+      Please enter the reason for cancelling this order.
+    </p>
+
+    <textarea
+      rows="4"
+      placeholder="Enter cancellation reason"
+      [(ngModel)]="cancellationReason">
+    </textarea>
+
+    <div class="cancel-actions">
+
+      <button
+        type="button"
+        class="close-cancel-btn"
+        (click)="closeCancelModal()">
+        Close
+      </button>
+
+      <button
+        type="button"
+        class="confirm-cancel-btn"
+        (click)="confirmCancelOrder()">
+        Confirm Cancellation
+      </button>
+
+    </div>
+
   </div>
 
 </div>

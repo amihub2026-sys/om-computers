@@ -120,3 +120,16 @@ button {
   cursor: pointer;
   font-size: 18px;
 }
+.delete-btn {
+  background: #991b1b;
+  color: #ffffff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.delete-btn:hover {
+  background: #7f1d1d;
+}

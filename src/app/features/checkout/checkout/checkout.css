@@ -117,3 +117,127 @@ textarea{
 .back-btn:hover {
   background: #1d4ed8;
 }
+/* =========================
+   UPI PAYMENT
+========================= */
+
+.upi-payment-box {
+  margin-top: 5px;
+  margin-bottom: 20px;
+  padding: 24px;
+  background: #f8fbff;
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+  text-align: center;
+}
+
+.upi-payment-box h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #081126;
+}
+
+.upi-info {
+  margin: 0 0 15px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upi-amount {
+  font-size: 30px;
+  font-weight: 800;
+  color: #2563eb;
+  margin-bottom: 18px;
+}
+
+.qr-wrapper {
+  width: 240px;
+  max-width: 100%;
+  margin: 0 auto 18px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.upi-qr {
+  width: 100%;
+  max-width: 220px;
+  display: block;
+  margin: auto;
+  border-radius: 8px;
+}
+
+.upi-id {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.upi-id span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upi-id strong {
+  color: #081126;
+}
+
+.payment-note {
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 10px 0 14px;
+}
+
+.upi-payment-box input {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+
+@media(max-width:600px) {
+
+  .upi-payment-box {
+    padding: 18px;
+  }
+
+  .qr-wrapper {
+    width: 210px;
+  }
+
+  .upi-amount {
+    font-size: 26px;
+  }
+
+}
+.shop-payment-number {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 16px 0;
+  padding: 14px;
+  background: #ffffff;
+  border: 1px solid #dbeafe;
+  border-radius: 12px;
+}
+
+.shop-payment-number span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.shop-payment-number strong {
+  font-size: 22px;
+  color: #081126;
+  letter-spacing: 1px;
+}
+
+.or-text {
+  margin: 12px 0;
+  font-weight: 700;
+  color: #64748b;
+}

@@ -2,20 +2,28 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
+
 import {
-  Customer,
-  CustomerResponse
-} from '../interfaces/customer.interface';
+  CategoryResponse,
+  SingleCategoryResponse
+} from '../interfaces/category.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CustomerService {
+export class CategoryService {
 
-  private apiUrl = `${environment.baseUrl}/api/admin/users`;
+  private apiUrl =
+    `${environment.baseUrl}/api/categories`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient
+  ) {}
 
+
+  // ==========================================
+  // AUTH HEADERS
+  // ==========================================
 
   private getHeaders() {
 
@@ -32,12 +40,12 @@ export class CustomerService {
 
 
   // ==========================================
-  // GET CUSTOMERS / USERS
+  // GET ALL CATEGORIES
   // ==========================================
 
-  getCustomers() {
+  getCategories() {
 
-    return this.http.get<CustomerResponse>(
+    return this.http.get<CategoryResponse>(
       this.apiUrl,
       this.getHeaders()
     );
@@ -46,21 +54,13 @@ export class CustomerService {
 
 
   // ==========================================
-  // UPDATE USER STATUS
+  // GET SINGLE CATEGORY
   // ==========================================
 
-  updateUserStatus(
-    id: string,
-    isActive: boolean
-  ) {
+  getCategoryById(id: string) {
 
-    return this.http.put<{
-      success: boolean;
-      message: string;
-      data: Customer;
-    }>(
-      `${this.apiUrl}/${id}/status`,
-      { isActive },
+    return this.http.get<SingleCategoryResponse>(
+      `${this.apiUrl}/${id}`,
       this.getHeaders()
     );
 
@@ -68,39 +68,16 @@ export class CustomerService {
 
 
   // ==========================================
-  // UPDATE USER ROLE
+  // CREATE CATEGORY
   // ==========================================
 
-  updateUserRole(
-    id: string,
-    role: 'user' | 'admin'
-  ) {
+  createCategory(data: {
+    name: string;
+    specifications: string[];
+  }) {
 
-    return this.http.put<{
-      success: boolean;
-      message: string;
-      data: Customer;
-    }>(
-      `${this.apiUrl}/${id}/role`,
-      { role },
-      this.getHeaders()
-    );
-
-  }
-
-
-  // ==========================================
-  // CREATE ADMIN
-  // ==========================================
-
-  createAdmin(data: any) {
-
-    return this.http.post<{
-      success: boolean;
-      message: string;
-      data: Customer;
-    }>(
-      `${this.apiUrl}/admin`,
+    return this.http.post<SingleCategoryResponse>(
+      this.apiUrl,
       data,
       this.getHeaders()
     );
@@ -109,19 +86,18 @@ export class CustomerService {
 
 
   // ==========================================
-  // UPDATE ADMIN
+  // UPDATE CATEGORY
   // ==========================================
 
-  updateAdmin(
+  updateCategory(
     id: string,
-    data: any
+    data: {
+      name: string;
+      specifications: string[];
+    }
   ) {
 
-    return this.http.put<{
-      success: boolean;
-      message: string;
-      data: Customer;
-    }>(
+    return this.http.put<SingleCategoryResponse>(
       `${this.apiUrl}/${id}`,
       data,
       this.getHeaders()
@@ -131,10 +107,10 @@ export class CustomerService {
 
 
   // ==========================================
-  // DELETE ADMIN
+  // DELETE CATEGORY
   // ==========================================
 
-  deleteAdmin(id: string) {
+  deleteCategory(id: string) {
 
     return this.http.delete<{
       success: boolean;

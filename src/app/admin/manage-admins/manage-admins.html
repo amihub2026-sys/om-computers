@@ -1,14 +1,33 @@
 <div class="manage-admins-page">
 
+
+  <!-- HEADER -->
+
   <div class="page-header">
+
     <h1></h1>
-    <button class="add-btn" (click)="openAddAdmin()">
+
+    <button
+      class="add-btn"
+      (click)="openAddAdmin()">
+
       + Add Admin
+
     </button>
+
   </div>
 
-  <div class="admin-form" *ngIf="showForm">
-    <h3>Add New Admin</h3>
+
+  <!-- ADD ADMIN FORM -->
+
+  <div
+    class="admin-form"
+    *ngIf="showForm">
+
+    <h3>
+      Add New Admin
+    </h3>
+
 
     <input
       type="text"
@@ -16,89 +35,377 @@
       [(ngModel)]="adminForm.name"
     >
 
+
     <input
       type="email"
       placeholder="Email"
       [(ngModel)]="adminForm.email"
     >
 
+
     <input
       type="text"
       placeholder="Phone"
+      maxlength="10"
       [(ngModel)]="adminForm.phone"
     >
 
-  <div class="password-field">
-  <input
-    [type]="showPassword ? 'text' : 'password'"
-    placeholder="Password"
-    [(ngModel)]="adminForm.password"
-  />
 
-  <button
-    type="button"
-    class="toggle-password"
-    (click)="showPassword = !showPassword"
-  >
-    {{ showPassword ? '🙈' : '👁️' }}
-  </button>
-</div>
+    <div class="password-field">
+
+      <input
+        [type]="
+          showPassword
+            ? 'text'
+            : 'password'
+        "
+        placeholder="Password"
+        [(ngModel)]="adminForm.password"
+      />
+
+
+      <button
+        type="button"
+        class="toggle-password"
+        (click)="
+          showPassword =
+          !showPassword
+        "
+      >
+
+        {{
+          showPassword
+            ? '🙈'
+            : '👁️'
+        }}
+
+      </button>
+
+    </div>
+
 
     <div class="form-actions">
+
       <button
         class="save-btn"
         (click)="saveAdmin()"
-        [disabled]="isLoading"
-      >
-        {{ isLoading ? 'Saving...' : 'Save Admin' }}
+        [disabled]="isLoading">
+
+        {{
+          isLoading
+            ? 'Saving...'
+            : 'Save Admin'
+        }}
+
       </button>
 
-      <button class="cancel-btn" (click)="cancelForm()">
+
+      <button
+        class="cancel-btn"
+        (click)="cancelForm()">
+
         Cancel
+
       </button>
+
     </div>
+
   </div>
 
-  <div class="created-admin-card" *ngIf="createdAdmin">
-    <h3>Admin Created Successfully</h3>
 
-    <p><strong>Admin ID:</strong> {{ createdAdmin.adminId }}</p>
-    <p><strong>Email:</strong> {{ createdAdmin.email }}</p>
-    <p><strong>Password:</strong> {{ createdAdmin.password }}</p>
+  <!-- EDIT ADMIN FORM -->
 
-    <small>Share these login details with the new admin.</small>
+  <div
+    class="admin-form"
+    *ngIf="showEditForm">
+
+    <h3>
+      Edit Admin
+    </h3>
+
+
+    <input
+      type="text"
+      placeholder="Name"
+      [(ngModel)]="editAdminForm.name"
+    >
+
+
+    <input
+      type="email"
+      placeholder="Email"
+      [(ngModel)]="editAdminForm.email"
+    >
+
+
+    <input
+      type="text"
+      placeholder="Phone"
+      maxlength="10"
+      [(ngModel)]="editAdminForm.phone"
+    >
+
+
+    <div class="password-field">
+
+      <input
+        [type]="
+          showEditPassword
+            ? 'text'
+            : 'password'
+        "
+        placeholder="New Password - leave empty to keep current"
+        [(ngModel)]="editAdminForm.password"
+      />
+
+
+      <button
+        type="button"
+        class="toggle-password"
+        (click)="
+          showEditPassword =
+          !showEditPassword
+        "
+      >
+
+        {{
+          showEditPassword
+            ? '🙈'
+            : '👁️'
+        }}
+
+      </button>
+
+    </div>
+
+
+    <div class="form-actions">
+
+      <button
+        class="save-btn"
+        (click)="saveEditedAdmin()"
+        [disabled]="isLoading">
+
+        {{
+          isLoading
+            ? 'Updating...'
+            : 'Update Admin'
+        }}
+
+      </button>
+
+
+      <button
+        class="cancel-btn"
+        (click)="cancelEdit()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
   </div>
+
+
+  <!-- CREATED ADMIN DETAILS -->
+
+  <div
+    class="created-admin-card"
+    *ngIf="createdAdmin">
+
+    <h3>
+      Admin Created Successfully
+    </h3>
+
+
+    <p>
+
+      <strong>
+        Admin ID:
+      </strong>
+
+      {{ createdAdmin.adminId }}
+
+    </p>
+
+
+    <p>
+
+      <strong>
+        Email:
+      </strong>
+
+      {{ createdAdmin.email }}
+
+    </p>
+
+
+    <p>
+
+      <strong>
+        Password:
+      </strong>
+
+      {{ createdAdmin.password }}
+
+    </p>
+
+
+    <small>
+      Share these login details with the new admin.
+    </small>
+
+  </div>
+
+
+  <!-- ADMINS TABLE -->
 
   <table>
+
     <thead>
+
       <tr>
+
         <th>Name</th>
+
         <th>Email</th>
+
         <th>Phone</th>
+
+        <th>Password</th>
+
         <th>Status</th>
+
         <th>Role</th>
+
         <th>Action</th>
+
       </tr>
+
     </thead>
 
+
     <tbody>
-      <tr *ngFor="let admin of admins">
-        <td>{{ admin.name }}</td>
-        <td>{{ admin.email }}</td>
-        <td>{{ admin.phone || '-' }}</td>
-        <td>{{ admin.isActive ? 'Active' : 'Inactive' }}</td>
-        <td>{{ admin.role }}</td>
+
+      <tr
+        *ngFor="
+          let admin of paginatedAdmins
+        ">
+
+
         <td>
-          <button class="remove-btn" (click)="removeAdmin(admin)">
-            Remove Admin
-          </button>
+          {{ admin.name }}
         </td>
+
+
+        <td>
+          {{ admin.email }}
+        </td>
+
+
+        <td>
+          {{ admin.phone || '-' }}
+        </td>
+
+
+        <td>
+
+          ••••••••
+
+        </td>
+
+
+        <td>
+
+          {{
+            admin.isActive
+              ? 'Active'
+              : 'Inactive'
+          }}
+
+        </td>
+
+
+        <td>
+
+          {{ admin.role }}
+
+        </td>
+
+
+        <td>
+
+          <div
+            style="
+              display:flex;
+              gap:8px;
+              flex-wrap:wrap;
+            "
+          >
+
+
+            <!-- EDIT -->
+
+            <button
+              class="add-btn"
+              type="button"
+              (click)="openEditAdmin(admin)">
+
+              Edit
+
+            </button>
+
+
+            <!-- REMOVE ROLE -->
+
+            <button
+              class="remove-btn"
+              type="button"
+              (click)="removeAdmin(admin)">
+
+              Remove Admin
+
+            </button>
+
+
+            <!-- DELETE -->
+
+            <button
+              class="delete-btn"
+              type="button"
+              (click)="deleteAdmin(admin)">
+
+              Delete
+
+            </button>
+
+
+          </div>
+
+        </td>
+
       </tr>
+
     </tbody>
+
   </table>
 
+
+  <!-- PAGINATION -->
+
+  <app-common-pagination
+    *ngIf="totalPages > 1"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="changePage($event)">
+  </app-common-pagination>
+
+
   <p *ngIf="admins.length === 0">
+
     No admins found.
+
   </p>
 
 </div>

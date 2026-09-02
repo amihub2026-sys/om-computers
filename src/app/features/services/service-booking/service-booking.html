@@ -27,11 +27,15 @@
 
         <div class="form-group">
           <label>Mobile Number</label>
-          <input
-            type="tel"
-            placeholder="Enter mobile number"
-            [(ngModel)]="booking.phone"
-            name="phone">
+        <input
+  type="tel"
+  placeholder="Enter 10-digit mobile number"
+  [(ngModel)]="booking.phone"
+  name="phone"
+  maxlength="10"
+  pattern="[0-9]{10}"
+  inputmode="numeric"
+  (input)="booking.phone = booking.phone.replace(/[^0-9]/g, '').slice(0, 10)">
         </div>
 
         <div class="form-group">

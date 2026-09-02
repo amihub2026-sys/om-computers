@@ -1,0 +1,449 @@
+<div class="manage-categories-page">
+
+  <!-- PAGE HEADER -->
+
+  <div class="page-header">
+
+    <div>
+      <h1>Manage Categories</h1>
+
+      <p>
+        Create categories and configure
+        specification fields.
+      </p>
+    </div>
+
+
+    <button
+      type="button"
+      class="add-category-btn"
+      (click)="openAddCategory()">
+
+      + Add Category
+
+    </button>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- CATEGORY FORM -->
+  <!-- ===================================== -->
+
+  <div
+    class="category-form-card"
+    *ngIf="showForm">
+
+
+    <div class="form-header">
+
+      <h2>
+        {{
+          isEditing
+            ? 'Edit Category'
+            : 'Add Category'
+        }}
+      </h2>
+
+    </div>
+
+
+    <!-- CATEGORY NAME -->
+
+    <div class="form-group">
+
+      <label>
+        Category Name
+      </label>
+
+      <input
+        type="text"
+        placeholder="Example: Laptop"
+        [(ngModel)]="categoryName"
+      >
+
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- SPECIFICATIONS -->
+    <!-- ===================================== -->
+
+    <div class="specification-section">
+
+
+      <div class="specification-header">
+
+        <div>
+
+          <h3>
+            Specifications
+          </h3>
+
+          <p>
+            These fields will automatically
+            appear when this category is
+            selected while adding a product.
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          class="add-spec-btn"
+          (click)="addSpecification()">
+
+          + Add Specification
+
+        </button>
+
+      </div>
+
+
+      <!-- SPECIFICATION ROWS -->
+
+      <div class="specification-list">
+
+
+        <div
+          class="specification-row"
+          *ngFor="
+            let specification
+            of specifications;
+            let i = index;
+            trackBy: trackByIndex
+          ">
+
+
+          <!-- NUMBER -->
+
+          <div class="spec-number">
+
+            {{ i + 1 }}
+
+          </div>
+
+
+          <!-- INPUT -->
+
+          <input
+            type="text"
+            placeholder="Specification name"
+            [(ngModel)]="specifications[i]"
+            [readonly]="editingSpecificationIndex !== i"
+            [class.readonly-input]="editingSpecificationIndex !== i"
+          >
+
+
+          <!-- ACTIONS -->
+
+          <div class="spec-actions">
+
+
+            <!-- EDIT -->
+
+            <button
+              *ngIf="
+                editingSpecificationIndex !== i
+              "
+              type="button"
+              class="spec-edit-btn"
+              (click)="editSpecification(i)">
+
+              Edit
+
+            </button>
+
+
+            <!-- SAVE -->
+
+            <button
+              *ngIf="
+                editingSpecificationIndex === i
+              "
+              type="button"
+              class="spec-save-btn"
+              (click)="saveSpecification(i)">
+
+              Save
+
+            </button>
+
+
+            <!-- CANCEL -->
+
+            <button
+              *ngIf="
+                editingSpecificationIndex === i &&
+                specifications[i].trim()
+              "
+              type="button"
+              class="spec-cancel-btn"
+              (click)="cancelSpecificationEdit(i)">
+
+              Cancel
+
+            </button>
+
+
+            <!-- DELETE -->
+
+            <button
+              type="button"
+              class="remove-spec-btn"
+              (click)="removeSpecification(i)">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MOBILE ADD -->
+
+      <button
+        type="button"
+        class="mobile-add-spec-btn"
+        (click)="addSpecification()">
+
+        + Add Another Specification
+
+      </button>
+
+    </div>
+
+
+    <!-- ===================================== -->
+    <!-- CATEGORY FORM ACTIONS -->
+    <!-- ===================================== -->
+
+    <div class="form-actions">
+
+
+      <button
+        type="button"
+        class="save-btn"
+        [disabled]="isLoading"
+        (click)="saveCategory()">
+
+        {{
+          isLoading
+            ? 'Saving...'
+            : isEditing
+              ? 'Update Category'
+              : 'Save Category'
+        }}
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cancel-btn"
+        [disabled]="isLoading"
+        (click)="cancelForm()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================== -->
+  <!-- CATEGORY LIST -->
+  <!-- ===================================== -->
+
+  <div class="category-list-card">
+
+
+    <div class="list-header">
+
+      <h2>
+        Categories
+      </h2>
+
+      <span>
+
+        {{ categories.length }}
+        Categories
+
+      </span>
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty-state"
+      *ngIf="
+        categories.length === 0
+      ">
+
+      <h3>
+        No categories found
+      </h3>
+
+      <p>
+        Create your first category
+        and specifications.
+      </p>
+
+    </div>
+
+
+    <!-- CATEGORY GRID -->
+
+    <div
+      class="category-grid"
+      *ngIf="
+        categories.length > 0
+      ">
+
+
+      <div
+        class="category-card"
+        *ngFor="
+          let category of categories
+        ">
+
+
+        <!-- CARD HEADER -->
+
+        <div class="category-card-header">
+
+
+          <div>
+
+            <h3>
+              {{ category.name }}
+            </h3>
+
+
+            <span
+              class="status-badge"
+              [class.inactive]="
+                !category.isActive
+              ">
+
+              {{
+                category.isActive
+                  ? 'Active'
+                  : 'Inactive'
+              }}
+
+            </span>
+
+          </div>
+
+
+          <!-- CATEGORY ACTIONS -->
+
+          <div class="category-actions">
+
+
+            <button
+              type="button"
+              class="edit-btn"
+              (click)="
+                openEditCategory(category)
+              ">
+
+              Edit
+
+            </button>
+
+
+            <button
+              type="button"
+              class="delete-btn"
+              (click)="
+                deleteCategory(category)
+              ">
+
+              Delete
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SPECIFICATIONS DISPLAY -->
+        <!-- ================================= -->
+
+        <div class="category-specifications">
+
+
+          <div class="spec-title">
+
+            Specifications
+
+          </div>
+
+
+          <div
+            class="no-specifications"
+            *ngIf="
+              !category.specifications ||
+              category.specifications.length === 0
+            ">
+
+            No specifications configured
+
+          </div>
+
+
+          <div
+            class="spec-display-list"
+            *ngIf="
+              category.specifications &&
+              category.specifications.length > 0
+            ">
+
+
+            <div
+              class="spec-display-item"
+              *ngFor="
+                let specification
+                of category.specifications;
+                let i = index
+              ">
+
+              <span class="display-number">
+
+                {{ i + 1 }}
+
+              </span>
+
+
+              <span class="display-name">
+
+                {{ specification.name }}
+
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
