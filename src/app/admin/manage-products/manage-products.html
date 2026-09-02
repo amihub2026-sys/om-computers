@@ -1,66 +1,151 @@
 <div class="admin-header">
 
-<h1></h1>
-  <a routerLink="/admin/products/add" class="add-btn">
+  <h1></h1>
+
+  <a
+    routerLink="/admin/products/add"
+    class="add-btn"
+  >
     Add Product
   </a>
+
 </div>
- 
-<p><strong>Total Products:</strong> {{ products.length }}</p>
+
+
+<p>
+  <strong>
+    Total Products:
+  </strong>
+
+  {{ products.length }}
+</p>
 
 
 <div class="product-table">
+
   <table>
+
     <thead>
+
       <tr>
+
         <th>Image</th>
+
         <th>Product</th>
+
         <th>Category</th>
+
         <th>Price</th>
+
         <th>Stock</th>
+
         <th>Action</th>
+
       </tr>
+
     </thead>
 
+
     <tbody>
-      <tr *ngFor="let product of paginatedProducts">
-<td>
-  <img
-    [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
-    alt="Product Image"
-    width="80"
-    height="80">
-</td>
 
-        <td>{{ product.name }}</td>
-        <td>{{ product.category }}</td>
-        <td>₹{{ product.price }}</td>
+      <tr
+        *ngFor="
+          let product of paginatedProducts
+        "
+      >
 
         <td>
-          <span [class.stock]="product.stock > 5" [class.low]="product.stock <= 5">
-            {{ product.stock > 5 ? 'In Stock' : 'Low Stock' }}
+
+          <img
+            [src]="
+              product.image
+                ? product.image
+                : 'assets/images/products/gaming-pc.jpg'
+            "
+            alt="Product Image"
+            width="80"
+            height="80"
+          >
+
+        </td>
+
+
+        <td>
+          {{ product.name }}
+        </td>
+
+
+        <td>
+          {{ product.category }}
+        </td>
+
+
+        <td>
+          ₹{{ product.price }}
+        </td>
+
+
+        <td>
+
+          <span
+            [class.stock]="
+              product.stock > 5
+            "
+            [class.low]="
+              product.stock <= 5
+            "
+          >
+
+            {{
+              product.stock > 5
+                ? 'In Stock'
+                : 'Low Stock'
+            }}
+
           </span>
+
         </td>
+
 
         <td>
-          <button class="edit" [routerLink]="['/admin/products/edit', product._id]">
-  Edit
-</button>
 
-<button class="delete" (click)="deleteProduct(product._id)">
-  Delete
-</button> 
+          <button
+            class="edit"
+            [routerLink]="[
+              '/admin/products/edit',
+              product._id
+            ]"
+          >
+            Edit
+          </button>
+
+
+          <button
+            class="delete"
+            (click)="
+              deleteProduct(
+                product._id
+              )
+            "
+          >
+            Delete
+          </button>
+
         </td>
-      </tr>
-    </tbody>
-  </table>
 
+      </tr>
+
+    </tbody>
+
+  </table>
 
 </div>
 
-  <app-common-pagination
+
+<app-common-pagination
   *ngIf="totalPages > 1"
   [currentPage]="currentPage"
   [totalPages]="totalPages"
-  (pageChange)="changePage($event)">
-  </app-common-pagination>
+  (pageChange)="changePage($event)"
+>
+</app-common-pagination>
