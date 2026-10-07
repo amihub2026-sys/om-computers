@@ -101,25 +101,6 @@ td{
   color:#15803d;
 }
 
-.view,
-.update{
-  border:none;
-  padding:8px 14px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:700;
-  margin-right:8px;
-}
-
-.view{
-  background:#dbeafe;
-  color:#2563eb;
-}
-
-.update{
-  background:#081126;
-  color:#fff;
-}
 
 @media(max-width:900px){
   .admin-page{
@@ -275,4 +256,147 @@ td{
 .confirm-cancel-btn {
   background: #dc2626;
   color: #ffffff;
+}
+
+/* =========================================
+   VIEW DETAILS BUTTON
+========================================= */
+
+.view-details-btn {
+  border: none;
+
+  min-width: 105px;
+
+  padding: 9px 14px;
+
+  border-radius: 8px;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition: 0.2s ease;
+}
+
+.view-details-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 10px
+    rgba(37, 99, 235, 0.2);
+}
+
+
+/* =========================================
+   STATUS SELECT
+========================================= */
+
+.status-select {
+  min-width: 120px;
+  height: 38px;
+
+  padding: 0 34px 0 12px;
+
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+
+  background-color: #eff6ff;
+  color: #1d4ed8;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.status-select:hover {
+  border-color: #2563eb;
+  background-color: #dbeafe;
+}
+
+.status-select:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37, 99, 235, 0.12);
+}
+
+
+/* =========================================
+   TABLE ALIGNMENT
+========================================= */
+
+.bookings-table td {
+  vertical-align: middle;
+}
+
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+
+.pending,
+.progress,
+.completed,
+.cancelled {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 76px;
+
+  padding: 7px 12px;
+
+  border-radius: 50px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  line-height: 1;
+}
+
+
+/* PENDING */
+
+.pending {
+  background: #fef3c7;
+  color: #b45309;
+}
+
+
+/* IN PROGRESS */
+
+.progress {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+
+/* COMPLETED */
+
+.completed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+
+/* CANCELLED */
+
+.cancelled {
+  background: #fee2e2;
+  color: #dc2626;
 }

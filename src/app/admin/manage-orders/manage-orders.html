@@ -49,6 +49,7 @@
         </td>
 <td>
   <select
+    class="admin-select payment-select"
     [ngModel]="order.paymentStatus"
     (ngModelChange)="updatePaymentStatus(order, $event)">
 
@@ -69,21 +70,25 @@
 <td>
   <button
     type="button"
+    class="view-details-btn"
     (click)="openOrderDetails(order)">
     View Details
   </button>
 </td>
-        <td>
-          <select
-            [ngModel]="order.orderStatus"
-            (ngModelChange)="updateStatus(order, $event)">
+      <td>
+  <select
+    class="admin-select status-select"
+    [ngModel]="order.orderStatus"
+    (ngModelChange)="updateStatus(order, $event)">
 
-            <option *ngFor="let status of statuses" [value]="status">
-              {{ status }}
-            </option>
+    <option
+      *ngFor="let status of statuses"
+      [value]="status">
+      {{ status }}
+    </option>
 
-          </select>
-        </td>
+  </select>
+</td>
 
       </tr>
     </tbody>

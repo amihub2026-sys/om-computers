@@ -1,32 +1,153 @@
 <section class="add-service-page">
+
   <div class="form-card">
 
-    <h1>{{ isEditMode ? 'Edit Service' : 'Add Service' }}</h1>
-    <p>Enter service details for OM Computers.</p>
+    <h1>
+      {{ isEditMode ? 'Edit Service' : 'Add Service' }}
+    </h1>
+
+    <p>
+      Enter service details for OM Computers.
+    </p>
+
 
     <form (ngSubmit)="saveService()">
 
       <div class="form-grid">
-        <input type="text" placeholder="Service Name" [(ngModel)]="service.name" name="name">
-        <input type="text" placeholder="Category" [(ngModel)]="service.category" name="category">
-        <input type="text" placeholder="Estimated Duration" [(ngModel)]="service.duration" name="duration">
-        <input type="number" placeholder="Starting Price" [(ngModel)]="service.price" name="price">
+
+
+        <!-- SERVICE NAME -->
+
+        <div class="field-group">
+
+          <label>
+            Service Name
+            <span class="required-star">*</span>
+          </label>
+
+          <input
+            type="text"
+            placeholder="Enter Service Name"
+            [(ngModel)]="service.name"
+            name="name"
+            required>
+
+        </div>
+
+
+        <!-- CATEGORY -->
+
+        <div class="field-group">
+
+          <label>
+            Category
+            <span class="required-star">*</span>
+          </label>
+
+          <input
+            type="text"
+            placeholder="Enter Category"
+            [(ngModel)]="service.category"
+            name="category"
+            required>
+
+        </div>
+
+
+        <!-- DURATION -->
+
+        <div class="field-group">
+
+          <label>
+            Estimated Duration
+          </label>
+
+          <input
+            type="text"
+            placeholder="Estimated Duration"
+            [(ngModel)]="service.duration"
+            name="duration">
+
+        </div>
+
+
+        <!-- PRICE -->
+
+        <div class="field-group">
+
+          <label>
+            Starting Price
+          </label>
+
+          <input
+            type="number"
+            placeholder="Starting Price"
+            [(ngModel)]="service.price"
+            name="price">
+
+        </div>
+
       </div>
 
-      <input type="file" accept="image/*" (change)="onImageSelected($event)">
 
-      <textarea rows="5" placeholder="Service Description" [(ngModel)]="service.description" name="description"></textarea>
+      <!-- IMAGE -->
+
+      <div class="field-group">
+
+        <label>
+          Service Image
+        </label>
+
+        <input
+          type="file"
+          accept="image/*"
+          (change)="onImageSelected($event)">
+
+      </div>
+
+
+      <!-- DESCRIPTION -->
+
+      <div class="field-group">
+
+        <label>
+          Service Description
+        </label>
+
+        <textarea
+          rows="5"
+          placeholder="Enter Service Description"
+          [(ngModel)]="service.description"
+          name="description">
+        </textarea>
+
+      </div>
+
+
+      <!-- BUTTONS -->
 
       <div class="buttons">
+
         <button type="submit">
+
           {{ isEditMode ? 'Update Service' : 'Save Service' }}
+
         </button>
 
-        <button type="button" class="cancel" routerLink="/admin/services">
+
+        <button
+          type="button"
+          class="cancel"
+          routerLink="/admin/services">
+
           Cancel
+
         </button>
+
       </div>
 
     </form>
+
   </div>
+
 </section>

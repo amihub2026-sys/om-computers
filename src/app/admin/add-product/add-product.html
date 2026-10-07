@@ -280,52 +280,112 @@
            PRODUCT IMAGE
       ======================================= -->
 
-      <div class="form-card">
+<div class="form-card">
 
-        <div class="section-heading">
+  <div class="section-heading">
+    <div>
+      <h2>Product Image</h2>
 
-          <div>
-
-            <h2>Product Image</h2>
-
-            <p>
-              Upload the main image for this product.
-            </p>
-
-          </div>
-
-        </div>
+      <p>
+        Upload the main image for this product.
+      </p>
+    </div>
+  </div>
 
 
-        <div class="upload-box">
+  <!-- IMAGE PREVIEW -->
+  <div
+    class="image-preview-container"
+    *ngIf="imagePreview"
+  >
 
-          <div class="upload-icon">
-            ↑
-          </div>
+    <div class="image-preview-box">
 
-          <div class="upload-content">
+      <img
+        [src]="imagePreview"
+        alt="Product Preview"
+      >
 
-            <strong>
-              Choose Product Image
-            </strong>
-
-            <span>
-              JPG, JPEG, PNG or WEBP
-            </span>
-
-          </div>
+    </div>
 
 
-          <input
-            type="file"
-            accept="image/jpeg,image/png,image/webp"
-            (change)="onImageSelected($event)"
-          >
+    <div class="preview-details">
 
-        </div>
+      <strong>
+        {{ selectedImageName }}
+      </strong>
 
-      </div>
+      <span>
+        Image selected successfully
+      </span>
 
+      <button
+        type="button"
+        class="remove-image-btn"
+        (click)="removeImage()"
+      >
+        Remove Image
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- UPLOAD BOX -->
+  <div
+    class="upload-box"
+    *ngIf="!imagePreview"
+  >
+
+    <div class="upload-icon">
+      ↑
+    </div>
+
+    <div class="upload-content">
+
+      <strong>
+        Choose Product Image
+      </strong>
+
+      <span>
+        JPG, JPEG, PNG or WEBP
+      </span>
+
+    </div>
+
+
+    <input
+      #productImageInput
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      (change)="onImageSelected($event)"
+    >
+
+  </div>
+
+
+  <!-- CHANGE IMAGE BUTTON -->
+  <div
+    class="change-image-wrapper"
+    *ngIf="imagePreview"
+  >
+
+    <label class="change-image-btn">
+
+      Change Image
+
+      <input
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        (change)="onImageSelected($event)"
+      >
+
+    </label>
+
+  </div>
+
+</div>
 
       <!-- ======================================
            DESCRIPTION

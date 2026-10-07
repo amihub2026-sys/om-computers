@@ -48,21 +48,25 @@
 <td>
   <button
     type="button"
+    class="view-details-btn"
     (click)="openBookingDetails(booking)">
     View Details
   </button>
 </td>
-        <td>
-          <select
-            [ngModel]="booking.status"
-            (ngModelChange)="updateStatus(booking, $event)">
+       <td>
+  <select
+    class="status-select"
+    [ngModel]="booking.status"
+    (ngModelChange)="updateStatus(booking, $event)">
 
-            <option *ngFor="let status of statuses" [value]="status">
-              {{ status }}
-            </option>
+    <option
+      *ngFor="let status of statuses"
+      [value]="status">
+      {{ status }}
+    </option>
 
-          </select>
-        </td>
+  </select>
+</td>
 
       </tr>
     </tbody>

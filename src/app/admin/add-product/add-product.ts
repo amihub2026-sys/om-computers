@@ -51,6 +51,10 @@ export class AddProduct implements OnInit {
 
   selectedImage: File | null = null;
 
+  imagePreview: string | ArrayBuffer | null = null;
+
+selectedImageName: string = '';
+
   productId: string | null = null;
 
   isEditMode = false;
@@ -389,28 +393,87 @@ export class AddProduct implements OnInit {
   // ==========================================
   // IMAGE
   // ==========================================
+onImageSelected(
+  event: Event
+): void {
 
-  onImageSelected(
-    event: Event
-  ): void {
-
-    const input =
-      event.target as HTMLInputElement;
+  const input =
+    event.target as HTMLInputElement;
 
 
-    if (
-      input.files &&
-      input.files.length > 0
-    ) {
+  if (
+    input.files &&
+    input.files.length > 0
+  ) {
 
-      this.selectedImage =
-        input.files[0];
+    const file = input.files[0];
 
+
+    // ================================
+    // VALIDATE IMAGE TYPE
+    // ================================
+
+    const allowedTypes = [
+      'image/jpeg',
+      'image/png',
+      'image/webp'
+    ];
+
+
+    if (!allowedTypes.includes(file.type)) {
+
+      alert(
+        'Please select JPG, JPEG, PNG or WEBP image.'
+      );
+
+      input.value = '';
+
+      return;
     }
+
+
+    // ================================
+    // STORE IMAGE
+    // ================================
+
+    this.selectedImage = file;
+
+    this.selectedImageName = file.name;
+
+
+    // ================================
+    // IMAGE PREVIEW
+    // ================================
+
+    const reader = new FileReader();
+
+
+    reader.onload = () => {
+
+      this.imagePreview =
+        reader.result;
+
+      this.cdr.detectChanges();
+
+    };
+
+
+    reader.readAsDataURL(file);
 
   }
 
+}
 
+
+removeImage(): void {
+
+  this.selectedImage = null;
+
+  this.imagePreview = null;
+
+  this.selectedImageName = '';
+
+}
   // ==========================================
   // SAVE PRODUCT
   // ==========================================

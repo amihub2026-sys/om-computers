@@ -59,7 +59,7 @@ ngOnInit(): void {
 
 get productImage(): string {
   return this.product?.image
-    ? `${environment.baseUrl}/uploads/products/${this.product.image}`
+    ? this.product.image
     : 'assets/images/products/gaming-pc.jpg';
 }
 
