@@ -26,7 +26,7 @@ export class ManageServices implements OnInit, OnDestroy {
   isLoading = false;
   currentPage = 1;
   pageSize = 10;
-  imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
+imageBaseUrl = 'http://localhost:5000/uploads/services/';
 
   private destroy$ = new Subject<void>();
 

@@ -25,7 +25,7 @@ export class ServiceDetails implements OnInit, OnDestroy {
 
   service?: Service;
   isLoading = false;
-  imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
+  imageBaseUrl = `${environment.baseUrl}/uploads/services/`;
 
   private destroy$ = new Subject<void>();
 

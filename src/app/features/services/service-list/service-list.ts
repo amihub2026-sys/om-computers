@@ -37,7 +37,7 @@ export class ServiceList implements OnInit, OnDestroy {
   currentPage = 1;
   pageSize = 6;
 
-  imageBaseUrl = `${environment.baseUrl}/uploads/products/`;
+imageBaseUrl = `${environment.baseUrl}/uploads/services/`;
 
   private destroy$ = new Subject<void>();
 

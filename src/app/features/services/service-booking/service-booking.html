@@ -12,93 +12,155 @@
       <p>Fill in your details and our team will contact you shortly.</p>
     </div>
 
-    <form class="booking-form" (ngSubmit)="bookService()">
+   <form class="booking-form" (ngSubmit)="bookService()">
 
-      <div class="form-grid">
+  <div class="form-grid">
 
-        <div class="form-group">
-          <label>Full Name</label>
-          <input
-            type="text"
-            placeholder="Enter your name"
-            [(ngModel)]="booking.customerName"
-            name="customerName">
-        </div>
+    <!-- FULL NAME -->
+    <div class="form-group">
+      <label>
+        Full Name
+        <span class="required-star">*</span>
+      </label>
 
-        <div class="form-group">
-          <label>Mobile Number</label>
-        <input
-  type="tel"
-  placeholder="Enter 10-digit mobile number"
-  [(ngModel)]="booking.phone"
-  name="phone"
-  maxlength="10"
-  pattern="[0-9]{10}"
-  inputmode="numeric"
-  (input)="booking.phone = booking.phone.replace(/[^0-9]/g, '').slice(0, 10)">
-        </div>
+      <input
+        type="text"
+        placeholder="Enter your name"
+        [(ngModel)]="booking.customerName"
+        name="customerName"
+        required>
+    </div>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            [(ngModel)]="booking.email"
-            name="email">
-        </div>
 
-        <div class="form-group">
-          <label>Service Type</label>
-          <input
-            type="text"
-            [(ngModel)]="booking.serviceName"
-            name="serviceName"
-            readonly>
-        </div>
+    <!-- MOBILE NUMBER -->
+    <div class="form-group">
+      <label>
+        Mobile Number
+        <span class="required-star">*</span>
+      </label>
 
-        <div class="form-group">
-          <label>Preferred Date</label>
-          <input
-            type="date"
-            [(ngModel)]="booking.bookingDate"
-            name="bookingDate">
-        </div>
+      <input
+        type="tel"
+        placeholder="Enter 10-digit mobile number"
+        [(ngModel)]="booking.phone"
+        name="phone"
+        maxlength="10"
+        minlength="10"
+        pattern="[0-9]{10}"
+        inputmode="numeric"
+        required
+        (input)="booking.phone = booking.phone.replace(/[^0-9]/g, '').slice(0, 10)">
+    </div>
 
-        <div class="form-group">
-          <label>Preferred Time</label>
-          <input
-            type="time"
-            [(ngModel)]="booking.bookingTime"
-            name="bookingTime">
-        </div>
 
-      </div>
+    <!-- EMAIL -->
+    <div class="form-group">
+      <label>
+        Email
+        <span class="optional-text">(Optional)</span>
+      </label>
 
-      <div class="form-group">
-        <label>Address</label>
-        <textarea
-          rows="3"
-          placeholder="Enter your address"
-          [(ngModel)]="booking.address"
-          name="address">
-        </textarea>
-      </div>
+      <input
+        type="email"
+        placeholder="Enter email"
+        [(ngModel)]="booking.email"
+        name="email">
+    </div>
 
-      <div class="form-group">
-        <label>Problem Description</label>
-        <textarea
-          rows="5"
-          placeholder="Describe your issue"
-          [(ngModel)]="booking.issueDescription"
-          name="issueDescription">
-        </textarea>
-      </div>
 
-      <button type="submit" class="submit-btn">
-        Book Service
-      </button>
+    <!-- SERVICE TYPE -->
+    <div class="form-group">
+      <label>
+        Service Type
+        <span class="required-star">*</span>
+      </label>
 
-    </form>
+      <input
+        type="text"
+        [(ngModel)]="booking.serviceName"
+        name="serviceName"
+        readonly
+        required>
+    </div>
+
+
+    <!-- PREFERRED DATE -->
+    <div class="form-group">
+      <label>
+        Preferred Date
+        <span class="required-star">*</span>
+      </label>
+
+      <input
+        type="date"
+        [(ngModel)]="booking.bookingDate"
+        name="bookingDate"
+        required>
+    </div>
+
+
+    <!-- PREFERRED TIME -->
+    <div class="form-group">
+      <label>
+        Preferred Time
+        <span class="required-star">*</span>
+      </label>
+
+      <input
+        type="time"
+        [(ngModel)]="booking.bookingTime"
+        name="bookingTime"
+        required>
+    </div>
+
+  </div>
+
+
+  <!-- ADDRESS -->
+  <div class="form-group">
+
+    <label>
+      Address
+      <span class="required-star">*</span>
+    </label>
+
+    <textarea
+      rows="3"
+      placeholder="Enter your address"
+      [(ngModel)]="booking.address"
+      name="address"
+      required>
+    </textarea>
+
+  </div>
+
+
+  <!-- PROBLEM DESCRIPTION -->
+  <div class="form-group">
+
+    <label>
+      Problem Description
+      <span class="required-star">*</span>
+    </label>
+
+    <textarea
+      rows="5"
+      placeholder="Describe your issue"
+      [(ngModel)]="booking.issueDescription"
+      name="issueDescription"
+      required>
+    </textarea>
+
+  </div>
+
+
+  <button
+    type="submit"
+    class="submit-btn">
+    Book Service
+  </button>
+
+</form>
 
   </div>
 </section>

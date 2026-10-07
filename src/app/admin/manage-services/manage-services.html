@@ -28,9 +28,19 @@
     <tbody>
       <tr *ngFor="let service of paginatedServices; trackBy: trackByService">
         <td>
-          <img
-            [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
-            alt="Service Image">
+         <img
+  *ngIf="service.image"
+  [src]="imageBaseUrl + service.image"
+  [alt]="service.name"
+  class="service-image"
+>
+
+<span
+  *ngIf="!service.image"
+  class="no-image"
+>
+  No Image
+</span>
         </td>
 
         <td>{{ service.name }}</td>

@@ -1,74 +1,182 @@
-.add-service-page{
-  min-height:100vh;
-  background:#eef4ff;
-  padding:40px;
+.add-service-page {
+  min-height: 100vh;
+  background: #eef4ff;
+  padding: 40px;
 }
 
-.form-card{
-  max-width:950px;
-  margin:auto;
-  background:#fff;
-  padding:35px;
-  border-radius:22px;
-  box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+.form-card {
+  max-width: 950px;
+  margin: auto;
+
+  background: #ffffff;
+
+  padding: 35px;
+
+  border-radius: 22px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.08);
 }
 
-.form-card h1{
-  color:#081126;
-  margin-bottom:8px;
+
+.form-card h1 {
+  color: #081126;
+  margin-bottom: 8px;
 }
 
-.form-card p{
-  color:#64748b;
-  margin-bottom:30px;
+
+.form-card p {
+  color: #64748b;
+  margin-bottom: 30px;
 }
 
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:18px;
+
+/* =========================================
+   GRID
+========================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 18px;
 }
+
+
+/* =========================================
+   FIELD GROUP
+========================================= */
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+
+  margin-bottom: 18px;
+}
+
+
+.field-group label {
+  margin-bottom: 8px;
+
+  color: #111827;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+
+/* =========================================
+   REQUIRED SYMBOL
+========================================= */
+
+.required-star {
+  color: #dc2626;
+
+  font-size: 15px;
+  font-weight: 800;
+
+  margin-left: 3px;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
 
 input,
-textarea{
-  width:100%;
-  padding:14px;
-  border:1px solid #dbeafe;
-  border-radius:10px;
-  outline:none;
-  margin-bottom:18px;
-  box-sizing:border-box;
+textarea {
+  width: 100%;
+
+  padding: 14px;
+
+  border: 1px solid #dbeafe;
+  border-radius: 10px;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  font-size: 14px;
+
+  margin-bottom: 0;
 }
 
-textarea{
-  resize:none;
+
+input:focus,
+textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(37, 99, 235, 0.1);
 }
 
-.buttons{
-  display:flex;
-  gap:15px;
+
+textarea {
+  resize: none;
 }
 
-button{
-  padding:14px 28px;
-  border:none;
-  border-radius:10px;
-  background:#2563eb;
-  color:#fff;
-  font-weight:800;
-  cursor:pointer;
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.buttons {
+  display: flex;
+  gap: 15px;
 }
 
-.cancel{
-  background:#081126;
+
+button {
+  padding: 14px 28px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  font-weight: 800;
+
+  cursor: pointer;
 }
 
-@media(max-width:700px){
-  .form-grid{
-    grid-template-columns:1fr;
+
+button:hover {
+  background: #1d4ed8;
+}
+
+
+.cancel {
+  background: #081126;
+}
+
+
+.cancel:hover {
+  background: #172033;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 700px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 
-  .add-service-page{
-    padding:20px;
+  .add-service-page {
+    padding: 20px;
   }
+
+  .form-card {
+    padding: 25px;
+  }
+
 }
