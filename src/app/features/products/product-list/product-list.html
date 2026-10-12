@@ -1,38 +1,37 @@
+
 <section
   class="products-page"
-  [class.filter-open]="showFilters"
->
+  [class.filter-open]="showFilters">
 
+  <!-- MOBILE FILTER BUTTON -->
   <button
     class="filter-toggle"
-    (click)="openFilters()"
-  >
+    type="button"
+    (click)="openFilters()">
     ☰ Filter Products
   </button>
 
+  <!-- MOBILE FILTER OVERLAY -->
   <div
     class="filter-overlay"
     [class.show]="showFilters"
-    (click)="closeFilters()"
-  ></div>
+    (click)="closeFilters()">
+  </div>
 
+  <!-- FILTER SIDEBAR -->
   <aside
     class="filter-sidebar"
-    [class.show]="showFilters"
-  >
+    [class.show]="showFilters">
 
     <div class="filter-mobile-head">
-
       <h3>Filters</h3>
-
       <button
         class="filter-close"
         type="button"
-        (click)="closeFilters()"
-      >
+        aria-label="Close filters"
+        (click)="closeFilters()">
         ×
       </button>
-
     </div>
 
     <h2>
@@ -40,247 +39,229 @@
       Filtering
     </h2>
 
-
+    <!-- CATEGORY FILTER -->
     <div class="filter-group">
-
       <h3>Category</h3>
 
-      <label
-        *ngFor="let category of categories"
-      >
-
+      <label *ngFor="let category of categories">
         <input
           type="checkbox"
-          [checked]="
-            selectedCategories.includes(
-              category
-            )
-          "
-          (change)="
-            toggleFilter(
-              selectedCategories,
-              category
-            )
-          "
-        >
-
+          [checked]="selectedCategories.includes(category)"
+          (change)="toggleFilter(selectedCategories, category)">
         {{ category }}
-
       </label>
-
     </div>
 
-
+    <!-- BRAND FILTER -->
     <div class="filter-group">
-
       <h3>Brand</h3>
 
-      <label
-        *ngFor="let brand of brands"
-      >
-
+      <label *ngFor="let brand of brands">
         <input
           type="checkbox"
-          [checked]="
-            selectedBrands.includes(
-              brand
-            )
-          "
-          (change)="
-            toggleFilter(
-              selectedBrands,
-              brand
-            )
-          "
-        >
-
+          [checked]="selectedBrands.includes(brand)"
+          (change)="toggleFilter(selectedBrands, brand)">
         {{ brand }}
-
       </label>
-
     </div>
 
-
+    <!-- PRICE FILTER -->
     <div class="filter-group">
-
       <h3>Price</h3>
 
       <input
         type="range"
         min="0"
         [max]="priceLimit"
-        [(ngModel)]="maxPrice"
-      >
+        [(ngModel)]="maxPrice">
 
-      <p>
-        Up to ₹{{ maxPrice }}
-      </p>
-
+      <p>Up to ₹{{ maxPrice }}</p>
     </div>
 
-
+    <!-- FILTER BUTTONS -->
     <div class="filter-actions">
-
       <button
         class="reset-filter"
         type="button"
-        (click)="resetFilters()"
-      >
+        (click)="resetFilters()">
         Reset
       </button>
 
       <button
         class="apply-filter"
         type="button"
-        (click)="applyFilters()"
-      >
+        (click)="applyFilters()">
         Apply
       </button>
-
     </div>
-
   </aside>
 
-
+  <!-- PRODUCT CONTENT -->
   <main class="products-content">
 
+    <!-- SEARCH -->
     <app-common-search-bar
       placeholder="Search gaming PCs, laptops, accessories..."
-      [(value)]="searchText"
-    >
+      [(value)]="searchText">
     </app-common-search-bar>
 
-
+    <!-- CATEGORY SCROLLER -->
     <div class="category-menu">
-
       <div class="category-track">
 
-        <span
-          *ngFor="let category of categories"
-        >
+        <span *ngFor="let category of categories">
           {{ category }}
         </span>
 
-        <span
-          *ngFor="let category of categories"
-        >
+        <span *ngFor="let category of categories">
           {{ category }}
         </span>
 
       </div>
-
     </div>
 
-
-    <!-- LOADING -->
-
+    <!-- LOADING PRODUCTS -->
     <div
       class="products-grid"
-      *ngIf="isLoading"
-    >
+      *ngIf="isLoading">
 
       <div
         class="product-card skeleton"
-        *ngFor="let item of [1,2,3,4]"
-      >
+        *ngFor="let item of [1,2,3,4]">
       </div>
-
     </div>
 
+    <!-- NO RESULTS -->
+    <div
+      class="products-empty"
+      *ngIf="!isLoading && filteredProducts.length === 0">
 
-    <!-- NO PRODUCTS -->
+      <h3>No products found</h3>
+      <p>Try another search or adjust your filters.</p>
+    </div>
 
-    <p
-      *ngIf="
-        !isLoading &&
-        filteredProducts.length === 0
-      "
-    >
-      No products found
-    </p>
-
-
-    <!-- PRODUCTS -->
-
+    <!-- PRODUCT GRID -->
     <div
       class="products-grid"
-      *ngIf="!isLoading"
-    >
+      *ngIf="!isLoading && filteredProducts.length > 0">
 
-      <div
+      <article
         class="product-card"
         *ngFor="
           let product of paginatedProducts;
           trackBy: trackByProduct
-        "
-      >
+        ">
 
+        <!-- IMAGE -->
         <div class="image-box">
-
           <img
             [src]="
-              product.image
-                ? product.image
-                : 'assets/images/products/gaming-pc.jpg'
+              product.image ||
+              'assets/images/products/gaming-pc.jpg'
             "
             [alt]="product.name"
-          >
-
+            loading="lazy"
+            (error)="onProductImageError($event)">
         </div>
 
-
+        <!-- PRODUCT INFORMATION -->
         <div class="product-body">
 
-          <h3>
+          <h3 class="product-name">
             {{ product.name }}
           </h3>
 
-          <p>
+          <p class="product-description">
             {{ product.description }}
           </p>
 
+          <!-- PRICE -->
+          <div class="product-price">
 
-          <h4>
+            <strong>
+              ₹{{ product.price | number:'1.0-2' }}
+            </strong>
 
-            ₹{{ product.price }}
-
-            <del
-              *ngIf="product.discountPrice"
-            >
-              ₹{{ product.discountPrice }}
+            <del *ngIf="product.discountPrice">
+              ₹{{ product.discountPrice | number:'1.0-2' }}
             </del>
 
-          </h4>
+          </div>
 
+          <!-- ACTIONS -->
+          <div class="product-actions">
 
-          <button
-            class="details-btn"
-            [routerLink]="[
-              '/products',
-              product._id
-            ]"
-          >
-            View Details
-          </button>
+            <!-- ADD / REMOVE CART TOGGLE -->
+            <button
+              type="button"
+              class="product-add-cart-btn"
+              [class.added-to-cart]="
+                !!product._id &&
+                cartItemIds.has(product._id)
+              "
+              [disabled]="
+                cartStatusLoading ||
+                addingProductId !== null
+              "
+              (click)="addToCart(product)">
 
+              <!-- LOADING -->
+              <ng-container
+                *ngIf="
+                  addingProductId === product._id;
+                  else regularCartLabel
+                ">
+                Updating...
+              </ng-container>
+
+              <!-- NORMAL BUTTON TEXT -->
+              <ng-template #regularCartLabel>
+
+                <ng-container
+                  *ngIf="cartStatusLoading; else cartStateLabel">
+                  Checking...
+                </ng-container>
+
+                <ng-template #cartStateLabel>
+
+                  <ng-container
+                    *ngIf="
+                      product._id &&
+                      cartItemIds.has(product._id);
+                      else addCartLabel
+                    ">
+                    ✓ Added to Cart
+                  </ng-container>
+
+                  <ng-template #addCartLabel>
+                    🛒 Add to Cart
+                  </ng-template>
+
+                </ng-template>
+
+              </ng-template>
+
+            </button>
+
+            <!-- VIEW DETAILS -->
+            <a
+              class="details-btn"
+              [routerLink]="['/products', product._id]">
+              View Details →
+            </a>
+
+          </div>
         </div>
-
-      </div>
-
+      </article>
     </div>
 
-
+    <!-- PAGINATION -->
     <app-common-pagination
-      *ngIf="
-        !isLoading &&
-        totalPages > 1
-      "
+      *ngIf="!isLoading && totalPages > 1"
       [currentPage]="currentPage"
       [totalPages]="totalPages"
-      (pageChange)="changePage($event)"
-    >
+      (pageChange)="changePage($event)">
     </app-common-pagination>
 
   </main>
-
 </section>

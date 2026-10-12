@@ -323,3 +323,104 @@
   }
 
 }
+
+
+
+/* ==========================================
+   OM COMPUTERS - PRODUCT DETAILS MOBILE FIX
+========================================== */
+
+@media (max-width: 767px) {
+
+  /* Product details main container */
+  .product-details-page,
+  .product-details-container,
+  .product-details,
+  .details-container {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 12px !important;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  /* Convert desktop columns to single column */
+  .product-details-grid,
+  .product-detail-grid,
+  .details-grid,
+  .product-layout {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 16px !important;
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* Product image area */
+  .product-image,
+  .product-image-box,
+  .image-section,
+  .product-gallery {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* Product picture */
+  .product-image img,
+  .product-image-box img,
+  .image-section img,
+  .product-gallery img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    max-height: 320px;
+    object-fit: contain;
+    margin: 0 auto;
+  }
+
+  /* Product information card */
+  .product-info,
+  .product-details-info,
+  .details-info,
+  .product-content {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    padding: 18px !important;
+    margin: 0 !important;
+    box-sizing: border-box;
+  }
+
+  /* Product title */
+  .product-info h1,
+  .product-content h1,
+  .details-info h1 {
+    font-size: 24px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  /* Price */
+  .product-price {
+    font-size: 28px;
+    line-height: 1.3;
+  }
+
+  /* Product buttons */
+  .product-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .product-actions button {
+    width: 100%;
+    min-height: 44px;
+  }
+}
