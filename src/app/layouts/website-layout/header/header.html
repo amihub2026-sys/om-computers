@@ -1,3 +1,4 @@
+
 <header class="header">
 
   <div class="logo">
@@ -6,39 +7,34 @@
 
   <nav [class.mobile-open]="mobileMenuOpen">
 
-    <a
-      routerLink="/"
-      (click)="mobileMenuOpen=false"
-      routerLinkActive="active-link"
-      [routerLinkActiveOptions]="{ exact: true }">
+    <a routerLink="/"
+       routerLinkActive="active-link"
+       [routerLinkActiveOptions]="{ exact: true }"
+       (click)="mobileMenuOpen = false">
       Home
     </a>
 
-    <a
-      routerLink="/products"
-      (click)="mobileMenuOpen=false"
-      routerLinkActive="active-link">
+    <a routerLink="/products"
+       routerLinkActive="active-link"
+       (click)="mobileMenuOpen = false">
       Products
     </a>
 
-    <a
-      routerLink="/services"
-      (click)="mobileMenuOpen=false"
-      routerLinkActive="active-link">
+    <a routerLink="/services"
+       routerLinkActive="active-link"
+       (click)="mobileMenuOpen = false">
       Services
     </a>
 
-    <a
-      routerLink="/about"
-      (click)="mobileMenuOpen=false"
-      routerLinkActive="active-link">
+    <a routerLink="/about"
+       routerLinkActive="active-link"
+       (click)="mobileMenuOpen = false">
       About
     </a>
 
-    <a
-      routerLink="/contact"
-      (click)="mobileMenuOpen=false"
-      routerLinkActive="active-link">
+    <a routerLink="/contact"
+       routerLinkActive="active-link"
+       (click)="mobileMenuOpen = false">
       Contact
     </a>
 
@@ -46,12 +42,90 @@
 
   <div class="header-right">
 
-    <a routerLink="/cart" class="cart-btn">
+    <!-- SIGN IN -->
+    <button
+      *ngIf="!currentUser"
+      class="premium-signin-btn"
+      type="button"
+      (click)="openLoginModal()">
+
+      <span class="signin-icon">♙</span>
+      <span class="signin-label">Sign In</span>
+
+    </button>
+
+    <!-- LOGGED-IN CUSTOMER -->
+    <div class="account-wrapper" *ngIf="currentUser">
+
+      <button
+        type="button"
+        class="account-trigger"
+        (click)="toggleProfileMenu()"
+        [attr.aria-expanded]="profileMenuOpen">
+
+        
+<span class="account-avatar">
+
+  <img
+    *ngIf="currentUser.picture"
+    [src]="currentUser.picture"
+    [alt]="currentUser.name"
+    (error)="currentUser.picture = ''"
+    class="account-avatar-img"
+  />
+
+  <span *ngIf="!currentUser.picture">
+    {{ currentUser.email.charAt(0).toUpperCase() }}
+  </span>
+
+</span>
+
+
+
+        <span class="account-info">
+          <small>Welcome</small>
+          <strong>{{ currentUser.name }}</strong>
+        </span>
+
+        <span class="account-chevron">⌄</span>
+
+      </button>
+
+      <div class="account-dropdown" *ngIf="profileMenuOpen">
+
+        <div class="dropdown-user">
+          <span class="dropdown-avatar">
+            {{ currentUser.name.charAt(0).toUpperCase() }}
+          </span>
+
+          <div class="dropdown-user-info">
+            <strong>{{ currentUser.name }}</strong>
+            <small>{{ currentUser.email }}</small>
+          </div>
+        </div>
+
+        <div class="dropdown-divider"></div>
+
+        <button
+          type="button"
+          class="dropdown-item logout-item"
+          (click)="logout()">
+          <span>↪</span>
+          Sign Out
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- CART -->
+    <a routerLink="/cart"
+       class="cart-btn"
+       aria-label="Shopping cart">
+
       🛒
 
-      <span
-        class="cart-badge"
-        *ngIf="cartCount > 0">
+      <span class="cart-badge" *ngIf="cartCount > 0">
         {{ cartCount }}
       </span>
 
@@ -59,11 +133,85 @@
 
   </div>
 
+  <!-- MOBILE NAVIGATION -->
   <button
     class="menu-toggle"
     type="button"
-    (click)="mobileMenuOpen = !mobileMenuOpen">
+    (click)="mobileMenuOpen = !mobileMenuOpen"
+    [attr.aria-expanded]="mobileMenuOpen"
+    aria-label="Toggle menu">
     ☰
   </button>
 
 </header>
+
+<!-- LOGIN MODAL -->
+<div
+  class="login-modal-backdrop"
+  *ngIf="loginModalOpen"
+  (click)="closeLoginModal()">
+
+  <div
+    class="login-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="login-modal-title"
+    (click)="$event.stopPropagation()">
+
+    <button
+      type="button"
+      class="login-modal-close"
+      aria-label="Close login"
+      (click)="closeLoginModal()">
+      ✕
+    </button>
+
+    <div class="login-modal-icon">
+      <span>✦</span>
+    </div>
+
+    <span class="login-eyebrow">
+      OM COMPUTERS
+    </span>
+
+    <h2 id="login-modal-title">
+      Welcome
+    </h2>
+
+    <p class="login-description">
+      Sign in securely to access your account
+      and enjoy a personalized shopping experience.
+    </p>
+
+    <div class="login-divider">
+      <span>CONTINUE WITH</span>
+    </div>
+
+    <!-- OFFICIAL GOOGLE BUTTON -->
+    <div class="google-button-container">
+      <div #googleButton></div>
+    </div>
+
+    <p *ngIf="googleLoading" class="login-loading">
+      Signing you in...
+    </p>
+
+    <p *ngIf="googleError"
+       class="login-error"
+       role="alert">
+      {{ googleError }}
+    </p>
+
+    <div class="login-security">
+      <span>♢</span>
+      Secure authentication powered by Google
+    </div>
+
+    <p class="login-footer">
+      By continuing, you agree to our
+      Privacy Policy and Terms when published.
+    </p>
+
+  </div>
+
+</div>

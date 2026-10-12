@@ -38,34 +38,68 @@ export class Cart implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.getCartItems();
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    this.cartItems = [];
+    this.isLoading = false;
+    return;
   }
+
+  this.getCartItems();
+}
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  getCartItems(): void {
-    this.isLoading = true;
-    this.cdr.detectChanges();
+  
+getCartItems(): void {
 
-    this.cartService.getCartItems()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (res: any) => {
-          this.isLoading = false;
-          this.cartItems = res.success ? res.data : [];
-          this.cdr.detectChanges();
-        },
-        error: () => {
-          this.isLoading = false;
-          this.cartItems = [];
-          this.toast.error('Failed to load cart items.', 'Error');
-          this.cdr.detectChanges();
-        }
-      });
+  // Never show a customer's cart after logout
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    this.cartItems = [];
+    this.isLoading = false;
+    this.cdr.detectChanges();
+    return;
   }
+
+  this.isLoading = true;
+  this.cdr.detectChanges();
+
+  this.cartService.getCartItems()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (res: any) => {
+
+        this.isLoading = false;
+
+        // Prevent an in-flight request from restoring
+        // cart items after the customer logs out
+        if (!localStorage.getItem('token')) {
+          this.cartItems = [];
+          this.cdr.detectChanges();
+          return;
+        }
+
+        this.cartItems = res.success
+          ? (res.data || [])
+          : [];
+
+        this.cdr.detectChanges();
+      },
+
+      error: () => {
+        this.isLoading = false;
+        this.cartItems = [];
+        this.cdr.detectChanges();
+      }
+    });
+}
+
 
   get subtotal(): number {
     return this.cartItems.reduce(
@@ -87,6 +121,15 @@ export class Cart implements OnInit, OnDestroy {
   }
 
   updateQuantity(item: CartItem, quantity: number): void {
+
+    if (!localStorage.getItem('token')) {
+  this.cartItems = [];
+  this.toast.error(
+    'Please sign in to update your cart.',
+    'Login Required'
+  );
+  return;
+}
     this.updatingItemId = item._id;
 
     const total = Number(item.price) * quantity;
@@ -102,10 +145,22 @@ export class Cart implements OnInit, OnDestroy {
         next: (res: any) => {
           this.updatingItemId = null;
 
-          if (res.success) {
-            item.quantity = quantity;
-            item.total = total;
-          } else {
+  
+  
+  
+if (res.success) {
+
+  item.quantity = quantity;
+  item.total = total;
+
+  // Update header cart badge
+  window.dispatchEvent(
+    new Event('cart-updated')
+  );
+
+}
+
+else {
             this.toast.error(res.message, 'Error');
           }
 
@@ -135,15 +190,25 @@ export class Cart implements OnInit, OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (res: any) => {
-            if (res.success) {
-              this.cartItems = this.cartItems.filter(
-                cart => cart._id !== item._id
-              );
+            
+if (res.success) {
 
-              this.toast.success(
-                'Item removed from cart.',
-                'Removed'
-              );
+  this.cartItems = this.cartItems.filter(
+    cart => cart._id !== item._id
+  );
+
+  // Notify header that the cart has changed
+  window.dispatchEvent(
+    new Event('cart-updated')
+  );
+
+  this.toast.success(
+    'Item removed from cart.',
+    'Removed'
+  );
+
+
+
             } else {
               this.toast.error(res.message, 'Error');
             }
