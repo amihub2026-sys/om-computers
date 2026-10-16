@@ -25,18 +25,18 @@ export class CategoryService {
   // AUTH HEADERS
   // ==========================================
 
-  private getHeaders() {
+private getHeaders() {
+  const token =
+    localStorage.getItem('admin_token') ||
+    localStorage.getItem('token') ||
+    '';
 
-    const token =
-      localStorage.getItem('token') || '';
-
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      })
-    };
-
-  }
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
 
 
   // ==========================================

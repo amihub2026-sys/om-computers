@@ -35,3 +35,11 @@ body {
   font-size: 15px !important;
   font-weight: 600 !important;
 }
+
+/* HIDE WHATSAPP FLOAT ON MOBILE ONLY */
+
+@media (max-width: 767px) {
+  .whatsapp-float {
+    display: none !important;
+  }
+}

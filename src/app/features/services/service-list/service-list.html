@@ -1,126 +1,355 @@
-<section class="services-page">
 
-  <button class="filter-toggle" (click)="showFilters = true">
-    ☰ Filters
+<!-- ==========================================
+     OM COMPUTERS - SERVICES PAGE
+========================================== -->
+
+<section
+  class="services-page"
+  [class.filter-open]="showFilters"
+>
+
+  <!-- ======================================
+       MOBILE FILTER BUTTON
+  ======================================= -->
+
+  <button
+    class="filter-toggle"
+    type="button"
+    (click)="showFilters = true"
+    aria-label="Open service filters"
+  >
+    <span>☰</span>
+    Filter Services
   </button>
+
+
+  <!-- ======================================
+       MOBILE FILTER OVERLAY
+  ======================================= -->
 
   <div
     class="filter-overlay"
     [class.show]="showFilters"
-    (click)="showFilters = false">
-  </div>
+    (click)="showFilters = false"
+  ></div>
 
-  <aside class="service-sidebar" [class.show]="showFilters">
+
+  <!-- ======================================
+       FILTER SIDEBAR
+  ======================================= -->
+
+  <aside
+    class="service-sidebar"
+    [class.show]="showFilters"
+  >
+
+    <!-- FILTER HEADER -->
 
     <div class="filter-header">
+
       <h2>Filters</h2>
 
-      <button class="filter-close" (click)="showFilters = false">
-        ×
+      <button
+        class="filter-close"
+        type="button"
+        aria-label="Close filters"
+        (click)="showFilters = false"
+      >
+        &times;
       </button>
+
     </div>
+
+
+    <!-- FILTER CONTENT -->
 
     <div class="filter-body">
 
+      <!-- SERVICE CATEGORY FILTER -->
 
       <div class="filter-group">
+
         <h3>Service Type</h3>
 
-        <label *ngFor="let category of categories">
+        <label
+          *ngFor="let category of categories"
+        >
+
           <input
             type="checkbox"
             [checked]="selectedCategories.includes(category)"
-            (change)="toggleCategory(category)">
-          {{ category }}
+            (change)="toggleCategory(category)"
+          >
+
+          <span>{{ category }}</span>
+
         </label>
+
       </div>
 
+
+      <!-- PRICE FILTER -->
+
       <div class="filter-group">
+
         <h3>Starting Price</h3>
 
         <input
           type="range"
           min="0"
           [max]="priceLimit"
-          [(ngModel)]="maxPrice">
+          [(ngModel)]="maxPrice"
+          aria-label="Maximum starting price"
+        >
 
-        <p>Up to ₹{{ maxPrice }}</p>
+        <p class="price-range-text">
+          Up to
+          <strong>
+            ₹{{ maxPrice | number:'1.0-0' }}
+          </strong>
+        </p>
+
       </div>
 
     </div>
 
+
+    <!-- FILTER ACTION BUTTONS -->
+
     <div class="filter-actions">
-      <button class="reset-btn" (click)="resetFilters()">Reset</button>
-      <button class="apply-btn" (click)="applyFilters()">Apply</button>
+
+      <button
+        class="reset-btn"
+        type="button"
+        (click)="resetFilters()"
+      >
+        Reset
+      </button>
+
+      <button
+        class="apply-btn"
+        type="button"
+        (click)="applyFilters()"
+      >
+        Apply Filters
+      </button>
+
     </div>
 
   </aside>
 
+
+  <!-- ======================================
+       MAIN SERVICES CONTENT
+  ======================================= -->
+
   <main class="services-content">
 
-<app-common-search-bar
-  placeholder="Search laptop repair, networking, data recovery..."
-  [(value)]="searchText">
-</app-common-search-bar>
+    <!-- SEARCH BAR -->
 
-    <div class="service-categories" *ngIf="categories.length">
+    <div class="services-search">
+
+      <app-common-search-bar
+        placeholder="Search laptop repair, networking, data recovery..."
+        [(value)]="searchText"
+      >
+      </app-common-search-bar>
+
+    </div>
+
+
+    <!-- ======================================
+         CATEGORY AUTO SCROLLER
+    ======================================= -->
+
+    <div
+      class="service-categories"
+      *ngIf="categories.length > 0"
+    >
+
       <div class="service-track">
-        <span *ngFor="let category of categories">{{ category }}</span>
-        <span *ngFor="let category of categories">{{ category }}</span>
-      </div>
-    </div>
 
-    <div *ngIf="isLoading">
-      Loading services...
-    </div>
+        <span
+          *ngFor="let category of categories"
+        >
+          {{ category }}
+        </span>
 
-    <p *ngIf="!isLoading && filteredServices.length === 0">
-      No services found
-    </p>
+        <!-- DUPLICATE FOR CONTINUOUS ANIMATION -->
 
-    <div class="services-grid" *ngIf="!isLoading">
-
-      <div
-        class="service-card"
-        *ngFor="let service of paginatedServices; trackBy: trackByService">
-
-        <div class="image-box">
-          <span class="badge">{{ service.category }}</span>
-
-          <img
-            [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
-            [alt]="service.name">
-        </div>
-
-        <div class="service-content">
-          <h3>{{ service.name }}</h3>
-
-          <p>
-            {{ service.description || 'Professional computer service support.' }}
-          </p>
-
-          <ul>
-            <li>{{ service.duration || 'Quick service support' }}</li>
-            <li>Starting from ₹{{ service.price }}</li>
-            <li>Expert technician support</li>
-          </ul>
-
-          <a [routerLink]="['/services', service._id]">
-            View Details
-          </a>
-        </div>
+        <span
+          *ngFor="let category of categories"
+          aria-hidden="true"
+        >
+          {{ category }}
+        </span>
 
       </div>
 
     </div>
+
+
+    <!-- ======================================
+         LOADING STATE
+    ======================================= -->
+
+    <div
+      class="services-loading"
+      *ngIf="isLoading"
+      aria-live="polite"
+    >
+
+      <div class="loading-spinner"></div>
+
+      <p>Loading our services...</p>
+
+    </div>
+
+
+    <!-- ======================================
+         NO SERVICES FOUND
+    ======================================= -->
+
+    <div
+      class="services-empty"
+      *ngIf="
+        !isLoading &&
+        filteredServices.length === 0
+      "
+    >
+
+      <div class="empty-icon">
+        &#128269;
+      </div>
+
+      <h3>No Services Found</h3>
+
+      <p>
+        Try searching for another service
+        or adjusting your filters.
+      </p>
+
+      <button
+        type="button"
+        class="reset-btn"
+        (click)="resetFilters()"
+      >
+        Reset Filters
+      </button>
+
+    </div>
+
+
+    <!-- ======================================
+         SERVICES GRID
+    ======================================= -->
+
+    <div
+      class="services-grid"
+      *ngIf="
+        !isLoading &&
+        filteredServices.length > 0
+      "
+    >
+
+      <!-- SERVICE CARD -->
+
+      
+<!-- COMPACT SERVICE CARD -->
+<article
+  class="service-card"
+  *ngFor="
+    let service of paginatedServices;
+    trackBy: trackByService
+  "
+>
+
+  <!-- SERVICE IMAGE -->
+  <div class="image-box">
+
+    <span class="badge">
+      {{ service.category || 'Service' }}
+    </span>
+
+    <img
+      [src]="service.image
+        ? imageBaseUrl + service.image
+        : 'assets/images/categories/laptop.png'"
+      [alt]="service.name"
+      loading="lazy"
+    >
+
+  </div>
+
+  <!-- MINIMAL INFORMATION -->
+  <div class="service-content">
+
+    <h3 class="service-name">
+      {{ service.name }}
+    </h3>
+
+    <!-- STARTING PRICE -->
+    <div class="service-price">
+      <span class="price-label">
+        Starting from
+      </span>
+
+      <strong class="price-value">
+        ₹{{ service.price | number:'1.0-2' }}
+      </strong>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="service-card-actions">
+
+      <a
+        class="service-book-btn"
+        [routerLink]="['/service-booking', service._id]"
+        [class.disabled]="service.isActive === false"
+        [attr.aria-disabled]="service.isActive === false"
+        [attr.tabindex]="service.isActive === false ? -1 : null"
+        (click)="service.isActive === false && $event.preventDefault()"
+      >
+        Book My Service
+        <span aria-hidden="true">→</span>
+      </a>
+
+      <a
+        class="service-details-btn"
+        [routerLink]="['/services', service._id]"
+      >
+        View Details
+      </a>
+
+    </div>
+
+  </div>
+
+</article>
+
+
+    </div>
+
+
+    <!-- ======================================
+         PAGINATION
+    ======================================= -->
+
+    <div class="services-pagination">
+
       <app-common-pagination
-         *ngIf="!isLoading && totalPages > 1"
-          [currentPage]="currentPage"
-          [totalPages]="totalPages"
-          (pageChange)="changePage($event)">
-    </app-common-pagination>
+        *ngIf="
+          !isLoading &&
+          totalPages > 1
+        "
+        [currentPage]="currentPage"
+        [totalPages]="totalPages"
+        (pageChange)="changePage($event)"
+      >
+      </app-common-pagination>
 
-    
+    </div>
+
   </main>
 
 </section>

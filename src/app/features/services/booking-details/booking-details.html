@@ -4,7 +4,7 @@
     <h1>Booking Details</h1>
     <p>Complete information about your service request.</p>
 
-    <a routerLink="/my-bookings" class="back-btn">
+    <a routerLink="/my-orders" class="back-btn">
       ← Back to My Bookings
     </a>
   </div>
@@ -51,6 +51,16 @@
     <div class="actions">
       <a routerLink="/services" class="blue-btn">Book Another Service</a>
 
+      
+<button
+  type="button"
+  class="receipt-btn"
+  (click)="downloadReceipt()"
+>
+  Download Receipt PDF
+</button>
+
+
       <button
         *ngIf="booking.status === 'Pending'"
         class="cancel-btn"
@@ -61,10 +71,10 @@
       <a href="https://wa.me/919789154220" target="_blank" class="green-btn">
         WhatsApp Support
       </a>
-
+<!-- 
       <a href="tel:+919789154220" class="dark-btn">
         Call Support
-      </a>
+      </a> -->
     </div>
 
   </div>

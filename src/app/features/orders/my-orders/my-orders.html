@@ -1,66 +1,267 @@
+
 <section class="orders-page">
+  <div class="orders-shell">
 
-  <div class="page-header">
-    <h1>My Orders</h1>
-    <p>Track and manage all your product orders.</p>
+    <header class="orders-header">
+      <div>
+        <span class="orders-eyebrow">MY ACCOUNT</span>
+        <h1>My Orders</h1>
+        <p>Track your product purchases and service bookings in one place.</p>
+      </div>
+
+      <a routerLink="/" class="back-home">
+        ← Back to Home
+      </a>
+    </header>
+
+    <div class="order-stats">
+      <div class="stat-card">
+        <span>Total Orders</span>
+        <strong>{{ history.length }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Product Orders</span>
+        <strong>{{ productCount }}</strong>
+      </div>
+
+      <div class="stat-card">
+        <span>Service Bookings</span>
+        <strong>{{ serviceCount }}</strong>
+      </div>
+    </div>
+
+    <div class="orders-panel">
+
+      <div class="orders-tabs" role="tablist" aria-label="Order filters">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'all'"
+          [class.active]="activeTab === 'all'"
+          (click)="setTab('all')">
+          All Orders
+          <span>{{ history.length }}</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'products'"
+          [class.active]="activeTab === 'products'"
+          (click)="setTab('products')">
+          Products
+          <span>{{ productCount }}</span>
+        </button>
+
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab === 'services'"
+          [class.active]="activeTab === 'services'"
+          (click)="setTab('services')">
+          Services
+          <span>{{ serviceCount }}</span>
+        </button>
+      </div>
+
+      <div class="orders-loading" *ngIf="isLoading">
+        <div class="loading-spinner"></div>
+        <h3>Loading your orders...</h3>
+        <p>Please wait while we retrieve your order history.</p>
+      </div>
+
+      <div class="orders-error" *ngIf="!isLoading && hasError">
+        <h3>Unable to load your orders</h3>
+        <p>Please check your connection and try again.</p>
+        <button type="button" (click)="loadHistory()">
+          Try Again
+        </button>
+      </div>
+
+      <ng-container *ngIf="!isLoading && !hasError">
+
+        <div class="orders-list" *ngIf="filteredHistory.length > 0">
+
+          <article
+            class="history-card"
+            *ngFor="let item of filteredHistory; trackBy: trackByHistoryId">
+
+
+<!-- PRODUCT / SERVICE IMAGE -->
+<div
+  class="history-icon"
+  [class.service-icon]="item.type === 'service'"
+>
+
+  <!-- Show actual image when available -->
+  <img
+    *ngIf="item.image && !item.imageFailed"
+    [src]="item.image"
+    [alt]="item.title"
+    (error)="onHistoryImageError(item)"
+    loading="lazy"
+    class="history-product-image"
+  />
+
+  <!-- Service fallback icon -->
+  <svg
+    *ngIf="
+      item.type === 'service' &&
+      (!item.image || item.imageFailed)
+    "
+    xmlns="http://www.w3.org/2000/svg"
+    width="25"
+    height="25"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path
+      d="M14.7 6.3a5 5 0 0 0-6.4 6.4L3 17.6a2 2 0 0 0 2.8 2.8l5.3-5.3a5 5 0 0 0 6.4-6.4L14 12l-3-3Z"
+    />
+  </svg>
+
+</div>
+
+
+
+            <div class="history-main">
+              <div class="history-meta">
+                <span class="history-type">
+                  {{ item.type === 'product' ? 'Product Order' : 'Service Booking' }}
+                </span>
+
+                <span class="history-id">
+                  #{{ item.id.slice(-6).toUpperCase() }}
+                </span>
+              </div>
+
+              <h3>{{ item.title }}</h3>
+              <p class="history-subtitle">{{ item.subtitle }}</p>
+
+              <div class="history-info">
+                <span *ngIf="item.date">
+                  {{ item.date | date:'dd MMM yyyy' }}
+                </span>
+
+                <span *ngIf="item.quantity !== null">
+                  Qty: {{ item.quantity }}
+                </span>
+              </div>
+            </div>
+
+            <div class="history-side">
+              <span
+                class="status-badge"
+                [ngClass]="getStatusClass(item.status)">
+                {{ item.status }}
+              </span>
+
+              <strong
+                class="history-price"
+                *ngIf="item.amount !== null">
+                {{ item.amount | currency:'INR':'symbol':'1.0-2' }}
+              </strong>
+
+              <a
+                class="view-details-btn"
+                [routerLink]="item.detailLink">
+                View Details
+                <span aria-hidden="true">→</span>
+              </a>
+              
+<button
+  *ngIf="item.canReview && !hasReviewed(item) && (item.type === 'service' || item.productId)"
+  type="button"
+  class="write-review-btn"
+  (click)="openReview(item)"
+>
+  ★ Write Review
+</button>
+
+<span
+  *ngIf="item.canReview && hasReviewed(item)"
+  class="reviewed-badge"
+>
+  ✓ Reviewed
+</span>
+
+
+<button
+  *ngIf="item.canReview && hasReviewed(item)"
+  type="button"
+  class="write-review-btn"
+  (click)="openEditReview(item)"
+>
+  ✎ Edit Review
+</button>
+
+
+            </div>
+
+          </article>
+
+        </div>
+
+        <div class="orders-empty" *ngIf="filteredHistory.length === 0">
+          <div class="empty-icon">◇</div>
+
+          <h3>No orders found</h3>
+
+          <p *ngIf="activeTab === 'all'">
+            Your product orders and service bookings will appear here.
+          </p>
+
+          <p *ngIf="activeTab === 'products'">
+            You haven't placed any product orders yet.
+          </p>
+
+          <p *ngIf="activeTab === 'services'">
+            You haven't booked any services yet.
+          </p>
+
+          <a
+            [routerLink]="activeTab === 'services' ? '/services' : '/products'">
+            {{ activeTab === 'services' ? 'Explore Services' : 'Shop Products' }}
+          </a>
+        </div>
+
+      </ng-container>
+
+    </div>
+
+<div
+  class="review-modal-overlay"
+  *ngIf="selectedReviewItem as reviewItem"
+>
+  <div class="review-modal">
+
+    <button
+      type="button"
+      class="review-modal-close"
+      (click)="closeReview()"
+      aria-label="Close review form"
+    >
+      ×
+    </button>
+
+<app-review-form
+  [reviewType]="reviewItem.type"
+  [orderId]="reviewItem.type === 'product' ? reviewItem.id : ''"
+  [bookingId]="reviewItem.type === 'service' ? reviewItem.id : ''"
+  [productId]="reviewItem.productId || ''"
+  [existingReview]="selectedExistingReview"
+  (reviewSubmitted)="onReviewSubmitted()"
+></app-review-form>
+
+
   </div>
-
-  <div class="loading" *ngIf="isLoading">
-    Loading orders...
-  </div>
-
-  <div class="orders-table" *ngIf="!isLoading && orders.length > 0">
-
-    <table>
-
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Products</th>
-          <th>Order Date</th>
-          <th>Amount</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        <tr *ngFor="let order of orders; trackBy: trackByOrderId">
-          <td>#{{ order._id.slice(-6).toUpperCase() }}</td>
-
-          <td>
-            <span *ngFor="let product of order.products; let last = last">
-              {{ product.productName }} × {{ product.quantity }}<span *ngIf="!last">, </span>
-            </span>
-          </td>
-
-          <td>{{ order.createdAt | date:'dd MMM yyyy' }}</td>
-
-          <td>₹{{ order.totalAmount }}</td>
-
-          <td>
-            <span [ngClass]="getStatusClass(order.orderStatus)">
-              {{ order.orderStatus }}
-            </span>
-          </td>
-
-          <td>
-            <a [routerLink]="['/my-orders', order._id]" class="view-btn">
-              View
-            </a>
-          </td>
-        </tr>
-
-      </tbody>
-
-    </table>
+</div>
 
   </div>
-
-  <div class="empty-orders" *ngIf="!isLoading && orders.length === 0">
-    <h2>No orders found</h2>
-    <p>Your placed orders will appear here.</p>
-  </div>
-
 </section>

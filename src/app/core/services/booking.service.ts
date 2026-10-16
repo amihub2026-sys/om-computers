@@ -64,12 +64,33 @@ export class BookingService {
     );
   }
 
-  getAdminBookings(): Observable<BookingResponse> {
-    return this.http.get<BookingResponse>(
-      this.adminApiUrl,
-      this.getHeaders()
-    );
-  }
+ 
+getAdminBookings(): Observable<BookingResponse> {
+  const token = localStorage.getItem('admin_token') || '';
+
+  return this.http.get<BookingResponse>(
+    `${this.apiUrl}/admin/all`,
+    {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    }
+  );
+}
+
+
+
+private getAdminHeaders() {
+  const token = localStorage.getItem('admin_token') || '';
+
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
+
+
 
 updateAdminBookingStatus(
   id: string,
@@ -83,7 +104,6 @@ updateAdminBookingStatus(
       status,
       cancellationReason
     },
-    this.getHeaders()
-  );
+this.getAdminHeaders()  );
 }
 }

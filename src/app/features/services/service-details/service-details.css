@@ -1,167 +1,2154 @@
-.service-details-page{
-    padding:40px 6%;
-    background:#eef4ff;
-    min-height:100vh;
-}
+/* ==========================================
 
-.service-container {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+   OM COMPUTERS
 
-  gap: 24px;
+   PROFESSIONAL SERVICE DETAILS PAGE
 
-  align-items: stretch;
+========================================== */
 
-  width: 100%;
-  max-width: 1260px;
-
-  margin: 16px auto 0;
-}
-
-.service-image,
-.service-info{
-    background:#fff;
-    padding:28px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-      width: 100%;
-  box-sizing: border-box;
-  border-radius: 20px;
-}
-
-.service-image {
-  width: 100%;
-  height: 390px;
-
-  border-radius: 20px;
-  overflow: hidden;
-
-  background: #ffffff;
-}
-
-.service-image img {
-  width: 100%;
-  height: 100%;
+:host {
 
   display: block;
 
-  object-fit: cover;
+  width: 100%;
+
+  min-width: 0;
+
 }
 
-.service-badge{
-    display:inline-block;
-    background:#dbeafe;
-    color:#2563eb;
-    padding:8px 18px;
-    border-radius:30px;
-    font-weight:700;
-    margin-bottom:18px;
+*,
+
+*::before,
+
+*::after {
+
+  box-sizing: border-box;
+
 }
 
-.service-info h1{
-    font-size:38px;
-    color:#111827;
-    margin-bottom:22px;
+/* ==========================================
+
+   MAIN PAGE
+
+========================================== */
+
+.service-details-page {
+
+  width: 100%;
+
+  min-height: 100vh;
+
+  padding: 115px 5% 65px;
+
+  background: #f1f5fb;
+
+  overflow-x: clip;
+
 }
 
-.service-meta{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:22px;
+.service-details-shell {
+
+  width: 100%;
+
+  max-width: 1320px;
+
+  min-width: 0;
+
+  margin: 0 auto;
+
 }
 
-.service-meta p{
-    color:#475569;
+/* ==========================================
+
+   BREADCRUMB
+
+========================================== */
+
+.service-breadcrumb {
+
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 24px;
+
+  color: #94a3b8;
+
+  font-size: 13px;
+
 }
 
-.service-meta strong{
-    color:#111827;
-}
+.service-breadcrumb a {
 
-.description{
-    color:#555;
-    line-height:1.8;
-    margin-bottom:24px;
-}
+  color: #2563eb;
 
-.service-info h3{
-    color:#111827;
-    margin-bottom:14px;
-}
+  font-size: 13px;
 
-.service-info ul{
-    padding-left:20px;
-    margin-bottom:28px;
-}
+  font-weight: 700;
 
-.service-info li{
-    margin-bottom:8px;
-    color:#475569;
-}
-
-.buttons{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-}
-
-.buttons button,
-.buttons a{
-    padding:14px;
-    border-radius:12px;
-    text-align:center;
-    font-weight:800;
-    text-decoration:none;
-    cursor:pointer;
-    border:none;
-}
-
-.book-btn{
-    background:#2563eb;
-    color:#fff;
-}
-
-.whatsapp-btn{
-    background:#25d366;
-    color:#fff;
-}
-
-.call-btn{
-    background:#081126;
-    color:#fff;
-}
-
-@media(max-width:900px){
-    .service-container{
-        grid-template-columns:1fr;
-    }
-
-    .service-meta,
-    .buttons{
-        grid-template-columns:1fr;
-    }
-
-    .service-image{
-        min-height:280px;
-    }
-}
-.back-section {
-  margin-bottom: 25px;
-}
-
-.back-btn {
-  display: inline-block;
-  padding: 10px 20px;
-  background: #2563eb;
-  color: #fff;
   text-decoration: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  transition: all 0.3s ease;
+
 }
 
-.back-btn:hover {
+.service-breadcrumb a:hover {
+
+  color: #1d4ed8;
+
+  text-decoration: underline;
+
+}
+
+.breadcrumb-current {
+
+  max-width: 75%;
+
+  color: #475569;
+
+  overflow: hidden;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+}
+
+/* ==========================================
+
+   LOADING STATE
+
+========================================== */
+
+.service-loading {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 16px;
+
+  min-height: 400px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf3;
+
+  border-radius: 20px;
+
+}
+
+.loading-spinner {
+
+  width: 44px;
+
+  height: 44px;
+
+  border: 4px solid #dbeafe;
+
+  border-top-color: #2563eb;
+
+  border-radius: 50%;
+
+  animation: serviceLoading 0.8s linear infinite;
+
+}
+
+.service-loading p {
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+}
+
+@keyframes serviceLoading {
+
+  to {
+
+    transform: rotate(360deg);
+
+  }
+
+}
+
+/* ==========================================
+
+   DESKTOP MAIN LAYOUT
+
+========================================== */
+
+.service-container {
+
+  display: grid;
+
+  grid-template-columns:
+
+    minmax(0, 1fr) minmax(0, 1.05fr);
+
+  align-items: start;
+
+  gap: 28px;
+
+  width: 100%;
+
+  min-width: 0;
+
+}
+
+/* ==========================================
+
+   SERVICE IMAGE GALLERY
+
+========================================== */
+
+.service-image {
+
+  position: relative;
+
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 18px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf3;
+
+  border-radius: 22px;
+
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.055);
+
+}
+
+.service-image-frame {
+
+  display: block;
+
+  width: 100%;
+
+  height: 440px;
+
+  margin: 0;
+
+  padding: 0;
+
+  overflow: hidden;
+
+  background: #eef4ff;
+
+  border-radius: 16px;
+
+}
+
+.service-image-frame img {
+
+  display: block;
+
+  width: 100%;
+
+  height: 100%;
+
+  margin: 0;
+
+  padding: 0;
+
+  object-fit: cover;
+
+  object-position: center;
+
+  transition: transform 0.4s ease;
+
+}
+
+.service-image:hover .service-image-frame img {
+
+  transform: scale(1.035);
+
+}
+
+/* ==========================================
+
+   SERVICE INFORMATION PANEL
+
+========================================== */
+
+.service-info {
+
+  width: 100%;
+
+  min-width: 0;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf3;
+
+  border-radius: 22px;
+
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.055);
+
+}
+
+/* ==========================================
+
+   CATEGORY AND AVAILABILITY
+
+========================================== */
+
+.service-heading-top {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+
+}
+
+.service-badge {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  max-width: 100%;
+
+  padding: 8px 15px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 30px;
+
+  font-size: 12px;
+
+  font-weight: 750;
+
+  text-transform: capitalize;
+
+  overflow-wrap: anywhere;
+
+}
+
+.service-status {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #15803d;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+}
+
+.status-dot {
+
+  display: inline-block;
+
+  width: 7px;
+
+  height: 7px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #16a34a;
+
+}
+
+.service-status.inactive {
+
+  color: #dc2626;
+
+}
+
+.service-status.inactive .status-dot {
+
+  background: #dc2626;
+
+}
+
+/* ==========================================
+
+   SERVICE TITLE AND DESCRIPTION
+
+========================================== */
+
+.service-title {
+
+  margin: 0 0 18px;
+
+  color: #0f172a;
+
+  font-size: clamp(27px, 2.8vw, 39px);
+
+  font-weight: 850;
+
+  line-height: 1.25;
+
+  letter-spacing: -0.6px;
+
+  overflow-wrap: anywhere;
+
+}
+
+.service-intro {
+
+  margin: 0 0 26px;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.8;
+
+  white-space: pre-line;
+
+  overflow-wrap: anywhere;
+
+}
+
+/* ==========================================
+
+   STARTING PRICE PANEL
+
+========================================== */
+
+.service-price-box {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  margin-bottom: 26px;
+
+  padding: 23px;
+
+  background: linear-gradient(135deg,
+
+      #eff6ff,
+
+      #f8fbff);
+
+  border: 1px solid #dbeafe;
+
+  border-radius: 17px;
+
+}
+
+.price-label {
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 650;
+
+}
+
+.price-main {
+
+  display: flex;
+
+  align-items: baseline;
+
+  gap: 10px;
+
+}
+
+.price-main strong {
+
+  color: #1d4ed8;
+
+  font-size: clamp(32px, 3.3vw, 43px);
+
+  font-weight: 850;
+
+  line-height: 1.15;
+
+  overflow-wrap: anywhere;
+
+}
+
+.service-price-box p {
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+}
+
+/* ==========================================
+
+   SERVICE HIGHLIGHTS
+
+========================================== */
+
+.service-highlights {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin-bottom: 26px;
+
+}
+
+.highlight-item {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  padding: 15px;
+
+  background: #f8fafc;
+
+  border: 1px solid #edf1f7;
+
+  border-radius: 12px;
+
+}
+
+.highlight-item:last-child {
+
+  grid-column: 1 / -1;
+
+}
+
+.highlight-icon {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  width: 36px;
+
+  height: 36px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  border-radius: 10px;
+
+  font-size: 17px;
+
+}
+
+.highlight-text {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+
+}
+
+.highlight-text small {
+
+  color: #64748b;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+
+}
+
+.highlight-text strong {
+
+  color: #0f172a;
+
+  font-size: 12px;
+
+  font-weight: 750;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+
+}
+
+/* ==========================================
+
+   BOOK SERVICE BUTTON
+
+========================================== */
+
+.service-actions {
+
+  width: 100%;
+
+  margin-bottom: 12px;
+
+}
+
+.book-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 12px;
+
+  width: 100%;
+
+  min-height: 50px;
+
+  padding: 12px 16px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border: 1px solid #2563eb;
+
+  border-radius: 11px;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 750;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+
+    background 0.25s ease,
+
+    transform 0.25s ease,
+
+    box-shadow 0.25s ease;
+
+}
+
+.book-btn:hover:not(:disabled) {
+
   background: #1d4ed8;
-  transform: translateX(-3px);
+
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.23);
+
+  transform: translateY(-2px);
+
+}
+
+.book-btn:disabled {
+
+  background: #94a3b8;
+
+  border-color: #94a3b8;
+
+  cursor: not-allowed;
+
+  opacity: 0.8;
+
+}
+
+/* ==========================================
+
+   CONTACT BUTTONS
+
+========================================== */
+
+.contact-actions {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  width: 100%;
+
+}
+
+.whatsapp-btn,
+
+.call-btn {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  width: 100%;
+
+  min-width: 0;
+
+  min-height: 46px;
+
+  padding: 11px 10px;
+
+  border-radius: 11px;
+
+  text-decoration: none;
+
+  text-align: center;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  transition:
+
+    background 0.25s ease,
+
+    transform 0.25s ease,
+
+    border-color 0.25s ease;
+
+}
+
+.whatsapp-btn {
+
+  background: #e8f9ef;
+
+  border: 1px solid #b7ebc9;
+
+  color: #15803d;
+
+}
+
+.whatsapp-btn:hover {
+
+  background: #d7f5e3;
+
+  transform: translateY(-2px);
+
+}
+
+.call-btn {
+
+  background: #ffffff;
+
+  border: 1px solid #cbd5e1;
+
+  color: #1e293b;
+
+}
+
+.call-btn:hover {
+
+  background: #f8fafc;
+
+  border-color: #94a3b8;
+
+  transform: translateY(-2px);
+
+}
+
+/* ==========================================
+
+   SERVICE SUPPORT NOTE
+
+========================================== */
+
+.service-support-note {
+
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-top: 20px;
+
+  padding: 15px 16px;
+
+  background: #f8fafc;
+
+  border: 1px solid #edf1f7;
+
+  border-radius: 11px;
+
+}
+
+.support-note-icon {
+
+  color: #2563eb;
+
+  font-size: 18px;
+
+  font-weight: 800;
+
+  line-height: 1.2;
+
+}
+
+.service-support-note p {
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+}
+
+/* ==========================================
+
+   ADDITIONAL SERVICE DETAILS
+
+========================================== */
+
+.service-details-section {
+
+  width: 100%;
+
+  margin-top: 28px;
+
+  padding: 30px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5eaf3;
+
+  border-radius: 22px;
+
+  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.055);
+
+}
+
+.details-heading {
+
+  margin-bottom: 24px;
+
+}
+
+.section-eyebrow {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #2563eb;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+}
+
+.details-heading h2 {
+
+  margin: 0 0 9px;
+
+  color: #0f172a;
+
+  font-size: 25px;
+
+  font-weight: 850;
+
+}
+
+.details-heading p {
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+}
+
+/* ==========================================
+
+   SERVICE SPECIFICATIONS GRID
+
+========================================== */
+
+.service-spec-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+
+  margin: 0;
+
+}
+
+.service-spec-item {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  min-width: 0;
+
+  padding: 17px 19px;
+
+  background: #f8fafc;
+
+  border: 1px solid #edf1f7;
+
+  border-radius: 12px;
+
+}
+
+.service-spec-item dt {
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+}
+
+.service-spec-item dd {
+
+  margin: 0;
+
+  color: #0f172a;
+
+  font-size: 14px;
+
+  font-weight: 750;
+
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+
+}
+
+.unavailable-text {
+
+  color: #dc2626 !important;
+
+}
+
+/* ==========================================
+
+   SMALL LAPTOPS
+
+========================================== */
+
+@media (max-width: 1100px) {
+
+  .service-details-page {
+
+    padding-left: 3%;
+
+    padding-right: 3%;
+
+  }
+
+  .service-container {
+
+    gap: 18px;
+
+  }
+
+  .service-image {
+
+    padding: 12px;
+
+  }
+
+  .service-image-frame {
+
+    height: 350px;
+
+  }
+
+  .service-info {
+
+    padding: 23px;
+
+  }
+
+  .service-highlights {
+
+    grid-template-columns: 1fr;
+
+  }
+
+  .highlight-item:last-child {
+
+    grid-column: auto;
+
+  }
+
+}
+
+/* ==========================================
+
+   TABLET - SINGLE COLUMN
+
+========================================== */
+
+@media (max-width: 900px) {
+
+  .service-details-page {
+
+    padding: 105px 20px 50px;
+
+  }
+
+  .service-container {
+
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 18px;
+
+  }
+
+  .service-image {
+
+    padding: 15px;
+
+  }
+
+  .service-image-frame {
+
+    height: 350px;
+
+  }
+
+  .service-info {
+
+    padding: 25px;
+
+  }
+
+  .service-title {
+
+    font-size: 30px;
+
+  }
+
+  .service-highlights {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  }
+
+  .highlight-item:last-child {
+
+    grid-column: 1 / -1;
+
+  }
+
+  .service-details-section {
+
+    padding: 25px;
+
+    margin-top: 20px;
+
+  }
+
+}
+
+/* ==========================================
+
+   MOBILE - ONE CONTINUOUS WHITE CARD
+
+========================================== */
+
+@media (max-width: 767px) {
+
+  /* PAGE PADDING AND BOTTOM NAV SPACE */
+
+  .service-details-page {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    padding:
+
+      88px 16px calc(110px + env(safe-area-inset-bottom));
+
+    background: #eef3fb;
+
+    overflow-x: clip;
+
+  }
+
+  /* SINGLE OUTER CARD */
+
+  .service-details-shell {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    background: #ffffff;
+
+    border: 1px solid #e5eaf3;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+
+  }
+
+  /* BREADCRUMB */
+
+  .service-breadcrumb {
+
+    padding: 16px 16px 0;
+
+    margin-bottom: 12px;
+
+    gap: 7px;
+
+    font-size: 12px;
+
+  }
+
+  .service-breadcrumb a {
+
+    font-size: 12px;
+
+  }
+
+  .breadcrumb-current {
+
+    max-width: 65%;
+
+  }
+
+  /* MAIN CONTENT */
+
+  .service-container {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 0;
+
+    width: 100%;
+
+    padding: 0;
+
+  }
+
+  /* REMOVE SEPARATE CARD STYLING */
+
+  .service-image,
+
+  .service-info,
+
+  .service-details-section {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    min-width: 0;
+
+    margin: 0;
+
+    border: none;
+
+    border-radius: 0;
+
+    background: transparent;
+
+    box-shadow: none;
+
+  }
+
+  /* IMAGE */
+
+  .service-image {
+
+    padding: 12px 14px;
+
+  }
+
+  .service-image-frame {
+
+    width: 100%;
+
+    height: 245px;
+
+    margin: 0;
+
+    padding: 0;
+
+    overflow: hidden;
+
+    border-radius: 14px;
+
+    background: #f1f5f9;
+
+  }
+
+  .service-image-frame img {
+
+    display: block;
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    object-position: center;
+
+  }
+
+  /* INFORMATION */
+
+  .service-info {
+
+    padding: 20px 18px;
+
+  }
+
+  .service-heading-top {
+
+    gap: 8px;
+
+    margin-bottom: 14px;
+
+  }
+
+  .service-badge {
+
+    padding: 6px 12px;
+
+    font-size: 11px;
+
+  }
+
+  .service-status {
+
+    font-size: 11px;
+
+  }
+
+  .service-title {
+
+    margin-bottom: 14px;
+
+    font-size: 24px;
+
+    line-height: 1.3;
+
+  }
+
+  .service-intro {
+
+    margin-bottom: 20px;
+
+    font-size: 13px;
+
+    line-height: 1.7;
+
+  }
+
+  /* PRICE PANEL */
+
+  .service-price-box {
+
+    margin-bottom: 20px;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+  }
+
+  .price-label {
+
+    font-size: 11px;
+
+  }
+
+  .price-main strong {
+
+    font-size: 34px;
+
+  }
+
+  .service-price-box p {
+
+    font-size: 11px;
+
+  }
+
+  /* SERVICE HIGHLIGHTS */
+
+  .service-highlights {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+  }
+
+  .highlight-item {
+
+    padding: 12px;
+
+    gap: 8px;
+
+    border-radius: 10px;
+
+  }
+
+  .highlight-item:last-child {
+
+    grid-column: 1 / -1;
+
+  }
+
+  .highlight-icon {
+
+    width: 28px;
+
+    height: 28px;
+
+    font-size: 13px;
+
+  }
+
+  .highlight-text small {
+
+    font-size: 10px;
+
+  }
+
+  .highlight-text strong {
+
+    font-size: 11px;
+
+  }
+
+  /* BOOKING BUTTON */
+
+  .service-actions {
+
+    margin-bottom: 10px;
+
+  }
+
+  .book-btn {
+
+    min-height: 47px;
+
+    padding: 11px 12px;
+
+    border-radius: 10px;
+
+    font-size: 13px;
+
+  }
+
+  /* CONTACT BUTTONS */
+
+  .contact-actions {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+
+  }
+
+  .whatsapp-btn,
+
+  .call-btn {
+
+    min-height: 44px;
+
+    padding: 10px 6px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+
+  }
+
+  /* SUPPORT NOTE */
+
+  .service-support-note {
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+  }
+
+  .service-support-note p {
+
+    font-size: 11px;
+
+  }
+
+  /* DETAILS SECTION INSIDE SAME CARD */
+
+  .service-details-section {
+
+    padding: 22px 18px 26px;
+
+    border-top: 1px solid #e5eaf3;
+
+  }
+
+  .details-heading {
+
+    margin-bottom: 18px;
+
+  }
+
+  .details-heading h2 {
+
+    font-size: 21px;
+
+  }
+
+  .details-heading p {
+
+    font-size: 12px;
+
+  }
+
+  .section-eyebrow {
+
+    font-size: 10px;
+
+  }
+
+  .service-spec-grid {
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 9px;
+
+  }
+
+  .service-spec-item {
+
+    padding: 13px 11px;
+
+    gap: 6px;
+
+    border-radius: 10px;
+
+  }
+
+  .service-spec-item dt {
+
+    font-size: 11px;
+
+  }
+
+  .service-spec-item dd {
+
+    font-size: 12px;
+
+  }
+
+}
+
+/* ==========================================
+
+   SMALL MOBILE - 12PX PADDING
+
+========================================== */
+
+@media (max-width: 390px) {
+
+  .service-details-page {
+
+    padding-left: 12px;
+
+    padding-right: 12px;
+
+  }
+
+  .service-details-shell {
+
+    border-radius: 16px;
+
+  }
+
+  .service-breadcrumb {
+
+    padding-left: 14px;
+
+    padding-right: 14px;
+
+  }
+
+  .service-image {
+
+    padding: 10px;
+
+  }
+
+  .service-image-frame {
+
+    height: 210px;
+
+  }
+
+  .service-info {
+
+    padding: 16px 14px;
+
+  }
+
+  .service-title {
+
+    font-size: 22px;
+
+  }
+
+  .service-price-box {
+
+    padding: 14px;
+
+  }
+
+  .price-main strong {
+
+    font-size: 30px;
+
+  }
+
+  .service-highlights {
+
+    gap: 8px;
+
+  }
+
+  .highlight-item {
+
+    padding: 9px;
+
+    gap: 6px;
+
+  }
+
+  .highlight-icon {
+
+    width: 25px;
+
+    height: 25px;
+
+  }
+
+  .contact-actions {
+
+    gap: 7px;
+
+  }
+
+  .whatsapp-btn,
+
+  .call-btn {
+
+    font-size: 10px;
+
+  }
+
+  .service-details-section {
+
+    padding: 20px 14px;
+
+  }
+
+  .service-spec-grid {
+
+    gap: 8px;
+
+  }
+
+  .service-spec-item {
+
+    padding: 12px 9px;
+
+  }
+
+}
+
+/* ==========================================
+
+   ACCESSIBILITY
+
+========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .loading-spinner {
+
+    animation: none;
+
+  }
+
+  .service-image-frame img,
+
+  .book-btn,
+
+  .whatsapp-btn,
+
+  .call-btn {
+
+    transition: none;
+
+  }
+
+}
+
+
+/* ==========================================
+   CUSTOMER REVIEWS — SERVICE DETAILS
+   ========================================== */
+
+.customer-reviews-section {
+  min-width: 0;
+}
+
+.customer-reviews-section .details-heading {
+  margin-bottom: 26px;
+}
+
+.reviews-loading,
+.reviews-error,
+.reviews-empty {
+  padding: 35px 20px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+  background: #f8fafc;
+  border: 1px solid #e5eaf3;
+  border-radius: 14px;
+}
+
+.reviews-error {
+  color: #b91c1c;
+  background: #fff7f7;
+  border-color: #fecaca;
+}
+
+.reviews-error p {
+  margin: 0 0 12px;
+}
+
+.reviews-error button {
+  padding: 9px 17px;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  background: #fff;
+  color: #b91c1c;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.empty-review-icon {
+  color: #eab308;
+  font-size: 50px;
+  line-height: 1;
+}
+
+.reviews-empty h3 {
+  margin: 12px 0 4px;
+  color: #16233d;
+  font-size: 18px;
+}
+
+.reviews-empty p {
+  margin: 0;
+}
+
+/* Average rating and distribution */
+.reviews-summary {
+  display: grid;
+  grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
+  gap: 32px;
+  align-items: center;
+  padding: 28px;
+  border: 1px solid #e6ebf3;
+  border-radius: 17px;
+  background: #f8fbff;
+  margin-bottom: 29px;
+}
+
+.reviews-average {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.average-number {
+  font-size: clamp(40px, 4vw, 57px);
+  font-weight: 850;
+  letter-spacing: -1.5px;
+  line-height: 1;
+  color: #132643;
+}
+
+.average-number span {
+  font-size: 20px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0;
+}
+
+.average-stars {
+  display: flex;
+  gap: 3px;
+  font-size: 22px;
+  color: #cbd5e1;
+}
+
+.average-stars .filled {
+  color: #eab308;
+}
+
+.reviews-average p {
+  margin: 0;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.reviews-distribution {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.distribution-row {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 28px;
+  gap: 12px;
+  align-items: center;
+}
+
+.distribution-label {
+  color: #475569;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.distribution-track {
+  height: 9px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.distribution-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #f0b429;
+  transition: width .25s ease;
+}
+
+.distribution-count {
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Reviews heading and cards */
+.customer-review-list {
+  min-width: 0;
+}
+
+.review-list-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.review-list-heading h3 {
+  margin: 0;
+  color: #15243d;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.review-list-heading h3 span {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.review-list-heading small {
+  color: #94a3b8;
+  font-size: 12px;
+}
+
+.customer-review-card {
+  padding: 24px 0;
+  border-top: 1px solid #e9edf4;
+  min-width: 0;
+}
+
+.customer-review-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.review-customer {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+.review-avatar {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #eaf2ff;
+  border-radius: 50%;
+  color: #2563eb;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.review-customer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.review-customer-info strong {
+  color: #16233d;
+  font-size: 14px;
+  font-weight: 750;
+  overflow-wrap: anywhere;
+}
+
+.verified-purchase {
+  color: #15803d;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.review-customer-info time {
+  color: #94a3b8;
+  font-size: 11px;
+}
+
+.review-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
+}
+
+.review-stars {
+  display: flex;
+  gap: 2px;
+  color: #cbd5e1;
+  font-size: 19px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.review-stars .filled {
+  color: #eab308;
+}
+
+.rating-value {
+  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.customer-review-comment {
+  margin: 17px 0 0;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Uploaded images */
+.customer-review-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.customer-review-photos a {
+  display: block;
+  width: 86px;
+  height: 86px;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.customer-review-photos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .2s ease;
+}
+
+.customer-review-photos a:hover img {
+  transform: scale(1.05);
+}
+
+/* Public admin reply */
+.review-admin-reply {
+  margin-top: 19px;
+  padding: 15px 17px;
+  border-left: 3px solid #2563eb;
+  background: #f2f7ff;
+  border-radius: 0 10px 10px 0;
+}
+
+.review-admin-reply strong {
+  color: #1e40af;
+  font-size: 12px;
+}
+
+.review-admin-reply p {
+  margin: 8px 0 0;
+  color: #475569;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* Show more / less */
+.review-pagination-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #e9edf4;
+}
+
+.show-more-reviews-btn,
+.show-less-reviews-btn {
+  padding: 11px 19px;
+  min-height: 44px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background .2s ease;
+}
+
+.show-more-reviews-btn {
+  background: #2563eb;
+  border: 1px solid #2563eb;
+  color: #fff;
+}
+
+.show-more-reviews-btn:hover {
+  background: #1d4ed8;
+}
+
+.show-less-reviews-btn {
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+}
+
+.show-less-reviews-btn:hover {
+  background: #f1f5f9;
+}
+
+/* Reviews tablet */
+@media (max-width: 900px) {
+  .reviews-summary {
+    gap: 22px;
+    padding: 22px;
+  }
+}
+
+/* Reviews mobile: remain inside existing continuous white card */
+@media (max-width: 767px) {
+  .customer-reviews-section {
+    padding: 22px 18px 28px;
+    border-top: 1px solid #e5eaf3;
+  }
+
+  .reviews-summary {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 18px;
+    margin-bottom: 22px;
+    border-radius: 13px;
+  }
+
+  .reviews-average {
+    align-items: center;
+    text-align: center;
+  }
+
+  .average-number {
+    font-size: 43px;
+  }
+
+  .average-number span {
+    font-size: 16px;
+  }
+
+  .distribution-row {
+    gap: 9px;
+  }
+
+  .review-list-heading h3 {
+    font-size: 17px;
+  }
+
+  .customer-review-card {
+    padding: 20px 0;
+  }
+
+  .review-avatar {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+    font-size: 16px;
+  }
+
+  .customer-review-top {
+    gap: 12px;
+  }
+
+  .review-stars {
+    font-size: 16px;
+  }
+
+  .customer-review-comment {
+    font-size: 13px;
+  }
+
+  .customer-review-photos a {
+    width: 70px;
+    height: 70px;
+  }
+
+  .review-admin-reply {
+    padding: 12px;
+  }
+
+  .review-pagination-actions button {
+    flex: 1 1 auto;
+  }
+}
+
+@media (max-width: 390px) {
+  .customer-reviews-section {
+    padding: 20px 14px 24px;
+  }
+
+  .customer-review-photos a {
+    width: 62px;
+    height: 62px;
+  }
+
+  .review-rating {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .distribution-fill,
+  .customer-review-photos img,
+  .show-more-reviews-btn,
+  .show-less-reviews-btn {
+    transition: none;
+  }
 }

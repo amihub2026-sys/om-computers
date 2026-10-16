@@ -30,6 +30,16 @@ export class Order {
     };
   }
 
+private getAdminHeaders() {
+  const token = localStorage.getItem('admin_token') || '';
+
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
+
   getOrders() {
     return this.http.get<OrderResponse>(
       this.baseUrl,
@@ -59,6 +69,25 @@ export class Order {
       this.getHeaders()
     );
   }
+
+  
+buyNowOrder(data: {
+  productId: string;
+  quantity: number;
+  customerName: string;
+  phone: string;
+  email: string;
+  address: string;
+  paymentMethod: string;
+  transactionId: string;
+}) {
+  return this.http.post<SingleOrderResponse>(
+    `${this.baseUrl}/buy-now`,
+    data,
+    this.getHeaders()
+  );
+}
+
 placeGuestOrder(data: any) {
   return this.http.post<SingleOrderResponse>(
     `${this.baseUrl}/guest-order`,
@@ -83,34 +112,59 @@ placeGuestOrder(data: any) {
     );
   }
 
-  getAdminOrders() {
-    return this.http.get<OrderResponse>(
-      this.adminBaseUrl,
-      this.getHeaders()
-    );
-  }
+ 
+getAdminOrders() {
+  const token = localStorage.getItem('admin_token') || '';
+
+  return this.http.get<OrderResponse>(
+    `${this.baseUrl}/admin/all`,
+    {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    }
+  );
+}
+
+
+
 updateAdminOrderStatus(
   id: string,
   status: OrderItem['orderStatus'],
   cancellationReason: string = ''
 ) {
+  const token = localStorage.getItem('admin_token') || '';
+
   return this.http.put<SingleOrderResponse>(
     `${this.adminBaseUrl}/${id}/status`,
     {
       orderStatus: status,
       cancellationReason
     },
-    this.getHeaders()
+    {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    }
   );
 }
-  updateAdminPaymentStatus(
+
+ 
+updateAdminPaymentStatus(
   id: string,
   status: OrderItem['paymentStatus']
 ) {
+  const token = localStorage.getItem('admin_token') || '';
+
   return this.http.put<SingleOrderResponse>(
     `${this.adminBaseUrl}/${id}/payment-status`,
     { paymentStatus: status },
-    this.getHeaders()
+    {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    }
   );
 }
+
 }

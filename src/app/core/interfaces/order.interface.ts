@@ -3,6 +3,7 @@ export interface OrderProduct {
   image?: string;
   quantity: number;
   price: number;
+  productId?: string;
 }
 
 export interface OrderItem {
@@ -54,4 +55,11 @@ export interface PlaceOrderRequest {
     | 'UPI';
 
   transactionId?: string;
+
+  
+items?: {
+  productId: string;
+  quantity: number;
+}[];
+
 }

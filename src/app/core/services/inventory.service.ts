@@ -30,8 +30,10 @@ export class InventoryService {
 
   private getHeaders() {
 
-    const token =
-      localStorage.getItem('token') || '';
+    
+const token =
+  localStorage.getItem('admin_token') || '';
+
 
     return {
       headers: new HttpHeaders({

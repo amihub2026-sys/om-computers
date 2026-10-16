@@ -1,0 +1,154 @@
+
+<section class="review-form-card">
+
+  <div class="review-heading">
+    <div>
+      <span class="review-eyebrow">YOUR FEEDBACK</span>
+
+      <h3>
+        {{ isEditMode ? 'Edit Your Review' : 'Write a Review' }}
+      </h3>
+
+      <p>
+        {{ isEditMode
+          ? 'Update your experience with OM Computers.'
+          : 'Share your experience with OM Computers.' }}
+      </p>
+    </div>
+
+    <span class="verified-label">
+      ✓ Verified Purchase
+    </span>
+  </div>
+
+  <div class="rating-section">
+    <label>How would you rate your experience?</label>
+
+    <div class="star-rating" role="group" aria-label="Choose rating">
+      <button
+        *ngFor="let star of [1, 2, 3, 4, 5]"
+        type="button"
+        class="star-button"
+        [class.selected]="star <= (hoverRating || rating)"
+        [attr.aria-label]="star + ' out of 5 stars'"
+        [attr.aria-pressed]="rating === star"
+        (mouseenter)="hoverRating = star"
+        (mouseleave)="hoverRating = 0"
+        (focus)="hoverRating = star"
+        (blur)="hoverRating = 0"
+        (click)="setRating(star)"
+      >
+        ★
+      </button>
+    </div>
+
+    <p class="rating-text" *ngIf="rating > 0">
+      {{ rating }}/5 — {{ ratingLabels[rating] }}
+    </p>
+  </div>
+
+  <div class="review-field">
+    <label for="review-comment">Your Review</label>
+
+    <textarea
+      id="review-comment"
+      rows="5"
+      maxlength="2000"
+      placeholder="Tell us about the quality, delivery or service..."
+      [(ngModel)]="comment"
+    ></textarea>
+
+    <span class="character-count">
+      {{ comment.length }}/2000
+    </span>
+  </div>
+
+  <div class="photo-section">
+    <label>Review Photos (Optional)</label>
+
+    <div class="preview-grid" *ngIf="existingImages.length > 0">
+      <div
+        class="preview-item"
+        *ngFor="let url of existingImages; let i = index"
+      >
+        <img [src]="url" alt="Existing review photo">
+
+        <button
+          type="button"
+          class="remove-image"
+          [attr.aria-label]="'Remove existing photo ' + (i + 1)"
+          (click)="removeExistingImage(i)"
+        >
+          ×
+        </button>
+      </div>
+    </div>
+
+    <label
+      class="upload-area"
+      for="review-photos"
+      *ngIf="totalImages < maxImages"
+    >
+      <span class="upload-icon">＋</span>
+      <strong>Choose Photos</strong>
+      <small>
+        JPG, PNG or WebP · Maximum 5 images · 5 MB each
+      </small>
+    </label>
+
+    <input
+      id="review-photos"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      multiple
+      hidden
+      (change)="onFilesSelected($event)"
+    />
+
+    <div class="preview-grid" *ngIf="previews.length > 0">
+      <div
+        class="preview-item"
+        *ngFor="let url of previews; let i = index"
+      >
+        <img [src]="url" alt="New review photo">
+
+        <button
+          type="button"
+          class="remove-image"
+          [attr.aria-label]="'Remove new photo ' + (i + 1)"
+          (click)="removeImage(i)"
+        >
+          ×
+        </button>
+      </div>
+    </div>
+
+    <p class="upload-notice" *ngIf="selectedFiles.length > 0">
+      {{ selectedFiles.length }} new photo(s) will be uploaded.
+    </p>
+
+    <p class="upload-notice">
+      {{ totalImages }}/5 photos selected
+    </p>
+  </div>
+
+  <p class="review-error" *ngIf="error">
+    {{ error }}
+  </p>
+
+  <p class="review-success" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <button
+    type="button"
+    class="submit-review-btn"
+    [disabled]="!canSubmit"
+    (click)="submitReview()"
+  >
+    {{ isSubmitting
+      ? 'Saving...'
+      : (isEditMode ? 'Save Changes' : 'Submit Review') }}
+  </button>
+
+</section>

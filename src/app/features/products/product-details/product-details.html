@@ -1,52 +1,641 @@
+
+<!-- ==========================================
+     OM COMPUTERS - PRODUCT DETAILS PAGE
+     PROFESSIONAL E-COMMERCE DESIGN
+========================================== -->
+
 <section class="product-details-page">
 
-  <p *ngIf="isLoading">Loading product...</p>
+  <div class="product-details-shell">
 
-  <div class="product-container" *ngIf="!isLoading && product">
+    <!-- ======================================
+         LOADING STATE
+    ======================================= -->
 
-    <div class="product-gallery">
-      <div class="main-image">
-        <img [src]="productImage" [alt]="product.name">
-      </div>
+    <div
+      class="loading-state"
+      *ngIf="isLoading"
+    >
+      <div class="loading-spinner"></div>
+
+      <p>Loading product details...</p>
     </div>
 
-    <div class="product-info">
 
-      <span class="category-badge">{{ product.category }}</span>
+    <!-- ======================================
+         PRODUCT DETAILS CONTENT
+    ======================================= -->
 
-      <h1>{{ product.name }}</h1>
+    <ng-container
+      *ngIf="!isLoading && product as item"
+    >
 
-      <div class="meta-grid">
-        <p><strong>Category:</strong> {{ product.category }}</p>
-        <p><strong>Brand:</strong> {{ product.brand }}</p>
-        <p><strong>Model:</strong> {{ product.model || 'N/A' }}</p>
-        <p><strong>Stock:</strong> {{ product.stock }}</p>
-        <p><strong>Warranty:</strong> {{ product.warranty || 'N/A' }}</p>
+      <!-- BREADCRUMB -->
+
+      <div class="product-breadcrumb">
+
+        <button
+          type="button"
+          (click)="goBackToProducts()"
+        >
+          Products
+        </button>
+
+        <span>/</span>
+
+        <span class="breadcrumb-current">
+          {{ item.name }}
+        </span>
+
       </div>
 
-      <div class="price-box">
-        <h2>₹{{ product.price }}</h2>
-        <del *ngIf="product.discountPrice">₹{{ product.discountPrice }}</del>
+
+      <!-- ======================================
+           MAIN PRODUCT LAYOUT
+      ======================================= -->
+
+      <div class="product-container">
+
+        <!-- ==================================
+             LEFT - PRODUCT GALLERY
+        =================================== -->
+
+        <div class="product-gallery">
+
+          <div class="main-image">
+
+            <img
+              [src]="productImage"
+              [alt]="item.name"
+              loading="eager"
+              (error)="onImageError($event)"
+            >
+
+          </div>
+
+          <div class="gallery-footnote">
+
+            <span class="footnote-dot"></span>
+
+            Product image
+
+          </div>
+
+        </div>
+
+
+        <!-- ==================================
+             RIGHT - PRODUCT INFORMATION
+        =================================== -->
+
+        <div class="product-info">
+
+          <!-- CATEGORY AND AVAILABILITY -->
+
+          <div class="info-heading">
+
+            <span class="category-badge">
+              {{ item.category || 'Product' }}
+            </span>
+
+            <span
+              class="availability"
+              [class.out-of-stock]="
+                item.stock !== undefined &&
+                item.stock <= 0
+              "
+            >
+
+              {{
+                item.stock === undefined ||
+                item.stock === null
+                  ? 'Availability on request'
+                  : item.stock > 0
+                    ? 'In stock'
+                    : 'Out of stock'
+              }}
+
+            </span>
+
+          </div>
+
+
+          <!-- PRODUCT TITLE -->
+
+          <h1>
+            {{ item.name }}
+          </h1>
+
+
+          <!-- BRAND AND MODEL -->
+
+          <p
+            class="product-subtitle"
+            *ngIf="item.brand || item.model"
+          >
+
+            <span *ngIf="item.brand">
+              {{ item.brand }}
+            </span>
+
+            <span
+              *ngIf="item.brand && item.model"
+            >
+              ·
+            </span>
+
+            <span *ngIf="item.model">
+              {{ item.model }}
+            </span>
+
+          </p>
+
+
+          <!-- ==================================
+               PRODUCT PRICE
+          =================================== -->
+
+          <div class="price-box">
+
+            <span class="price-label">
+              Product price
+            </span>
+
+            <div class="price-line">
+
+              <strong>
+                ₹{{ item.price | number:'1.0-2' }}
+              </strong>
+
+              <del
+                *ngIf="
+                  item.discountPrice &&
+                  item.discountPrice > item.price
+                "
+              >
+                ₹{{ item.discountPrice | number:'1.0-2' }}
+              </del>
+
+            </div>
+
+            <small>
+              Final charges, if any, are shown at checkout.
+            </small>
+
+          </div>
+
+
+          <!-- ==================================
+               PRODUCT OVERVIEW
+          =================================== -->
+
+          <div
+            class="short-description"
+            *ngIf="item.description"
+          >
+
+            <h2>Overview</h2>
+
+            <p>
+              {{ item.description }}
+            </p>
+
+          </div>
+
+
+          <!-- ==================================
+               PURCHASE BUTTONS
+          =================================== -->
+
+          <div class="purchase-actions">
+
+            <!-- BUY NOW -->
+
+            <button
+              class="buy-btn"
+              type="button"
+              (click)="buyNow()"
+            >
+
+              Buy Now
+
+              <span aria-hidden="true">
+                &rarr;
+              </span>
+
+            </button>
+
+
+            <!-- ADD TO CART -->
+
+            <button
+              class="cart-btn"
+              type="button"
+              (click)="addToCart()"
+            >
+
+              Add to Cart
+
+            </button>
+
+          </div>
+
+
+          <!-- ==================================
+               CUSTOMER ENQUIRY BUTTONS
+          =================================== -->
+
+          <div class="contact-actions">
+
+            <!-- WHATSAPP -->
+
+            <a
+              class="whatsapp-btn"
+              href="https://wa.me/919789154220"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              WhatsApp Enquiry
+
+            </a>
+
+
+            <!-- PHONE CALL -->
+
+            <a
+              class="call-btn"
+              href="tel:+919789154220"
+            >
+
+              Call Store
+
+            </a>
+
+          </div>
+
+
+          <!-- CUSTOMER SUPPORT NOTE -->
+
+          <div class="product-assurance">
+
+            Questions about compatibility or availability?
+            Contact our team before ordering.
+
+          </div>
+
+        </div>
+
       </div>
 
-      <p class="description">
-        {{ product.description || 'No description available.' }}
+
+      <!-- ======================================
+           PRODUCT SPECIFICATIONS
+      ======================================= -->
+
+      <section
+        class="details-section"
+        aria-labelledby="spec-heading"
+      >
+
+        <div class="details-section-heading">
+
+          <span class="section-eyebrow">
+            PRODUCT INFORMATION
+          </span>
+
+          <h2 id="spec-heading">
+            Specifications
+          </h2>
+
+        </div>
+
+
+<dl class="spec-grid">
+
+  <!-- CATEGORY -->
+  <div class="spec-row">
+    <dt>Category</dt>
+    <dd>{{ item.category || 'Not specified' }}</dd>
+  </div>
+
+  <!-- DYNAMIC PRODUCT SPECIFICATIONS -->
+  <ng-container *ngFor="let spec of item.specifications || []">
+
+    <div class="spec-row" *ngIf="spec.name && spec.value">
+
+      <dt>{{ spec.name }}</dt>
+
+      <dd>{{ spec.value }}</dd>
+
+    </div>
+
+  </ng-container>
+
+  <!-- AVAILABILITY -->
+  <div class="spec-row">
+    <dt>Availability</dt>
+
+    <dd>
+      {{
+        item.stock === undefined || item.stock === null
+          ? 'Contact for availability'
+          : item.stock > 0
+            ? item.stock + ' in stock'
+            : 'Out of stock'
+      }}
+    </dd>
+  </div>
+
+  <!-- WARRANTY -->
+  <div class="spec-row" *ngIf="item.warranty">
+    <dt>Warranty</dt>
+    <dd>{{ item.warranty }}</dd>
+  </div>
+
+</dl>
+
+
+      </section>
+
+      
+<!-- ==========================================
+     CUSTOMER RATINGS & REVIEWS
+========================================== -->
+
+<section
+  class="details-section customer-reviews-section"
+  aria-labelledby="customer-reviews-heading"
+>
+
+  <!-- SECTION HEADER -->
+  <div class="details-section-heading">
+
+    <span class="section-eyebrow">
+      CUSTOMER FEEDBACK
+    </span>
+
+    <h2 id="customer-reviews-heading">
+      Customer Ratings & Reviews
+    </h2>
+
+    <p class="reviews-subtitle">
+      Genuine feedback from customers who purchased this product.
+    </p>
+
+  </div>
+
+  <!-- LOADING STATE -->
+  <div
+    class="reviews-loading"
+    *ngIf="isReviewsLoading"
+  >
+    Loading customer reviews...
+  </div>
+
+  <!-- ERROR STATE -->
+  <div
+    class="reviews-error"
+    *ngIf="!isReviewsLoading && reviewsError"
+  >
+    {{ reviewsError }}
+
+    <button
+      type="button"
+      
+(click)="item._id && loadProductReviews(item._id)"
+
+    >
+      Try Again
+    </button>
+  </div>
+
+  <ng-container
+    *ngIf="!isReviewsLoading && !reviewsError"
+  >
+
+    <!-- RATING SUMMARY -->
+    <div
+      class="reviews-summary"
+      *ngIf="totalReviews > 0"
+    >
+
+      <div class="reviews-average">
+
+        <div class="average-number">
+          {{ formattedAverageRating }}
+          <span>/5</span>
+        </div>
+
+        <div
+          class="average-stars"
+          aria-label="Average customer rating"
+        >
+          <span
+            *ngFor="let star of stars"
+            [class.filled]="isStarFilled(star, averageRating)"
+          >
+            ★
+          </span>
+        </div>
+
+        <p>
+          Based on
+          <strong>{{ totalReviews }}</strong>
+          {{ totalReviews === 1 ? 'review' : 'reviews' }}
+        </p>
+
+      </div>
+
+      <!-- RATING DISTRIBUTION -->
+      <div class="reviews-distribution">
+
+        <div
+          class="distribution-row"
+          *ngFor="let star of [5, 4, 3, 2, 1]"
+        >
+
+          <span class="distribution-label">
+            {{ star }} ★
+          </span>
+
+          <div class="distribution-track">
+
+            <div
+              class="distribution-fill"
+              [style.width.%]="getRatingPercentage(star)"
+            ></div>
+
+          </div>
+
+          <span class="distribution-count">
+            {{ getRatingCount(star) }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- NO REVIEWS -->
+    <div
+      class="reviews-empty"
+      *ngIf="totalReviews === 0"
+    >
+
+      <div class="empty-review-icon">
+        ☆
+      </div>
+
+      <h3>No Reviews Yet</h3>
+
+      <p>
+        This product has not received any approved
+        customer reviews yet.
       </p>
 
-      <div class="buttons">
-        <button class="buy-btn" (click)="buyNow()">Buy Now</button>
-        <button class="cart-btn" (click)="addToCart()">Add to Cart</button>
+    </div>
 
-        <a class="whatsapp-btn" href="https://wa.me/919789154220" target="_blank">
-          WhatsApp Enquiry
-        </a>
+    <!-- CUSTOMER REVIEW LIST -->
+    <div
+      class="customer-review-list"
+      *ngIf="totalReviews > 0"
+    >
 
-        <a class="call-btn" href="tel:+919789154220">
-          Call Now
-        </a>
+      <div class="review-list-heading">
+
+        <h3>
+          Customer Reviews
+          <span>({{ totalReviews }})</span>
+        </h3>
+
+        <small>Most recent first</small>
+
+      </div>
+
+      <!-- INDIVIDUAL REVIEW -->
+      <article
+        class="customer-review-card"
+        *ngFor="let review of visibleReviews"
+      >
+
+        <!-- CUSTOMER DETAILS -->
+        <div class="customer-review-top">
+
+          <div class="review-customer">
+
+            <div class="review-avatar">
+              {{ getReviewerName(review).charAt(0) | uppercase }}
+            </div>
+
+            <div class="review-customer-info">
+
+              <strong>
+                {{ getReviewerName(review) }}
+              </strong>
+
+              <span class="verified-purchase">
+                ✓ Verified Purchase
+              </span>
+
+              <time>
+                {{ review.createdAt | date:'dd MMM yyyy' }}
+              </time>
+
+            </div>
+
+          </div>
+
+          <!-- CUSTOMER STARS -->
+          <div class="review-rating">
+
+            <div class="review-stars">
+
+              <span
+                *ngFor="let star of stars"
+                [class.filled]="star <= review.rating"
+              >
+                ★
+              </span>
+
+            </div>
+
+            <span class="rating-value">
+              {{ review.rating }}/5
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- REVIEW TEXT -->
+        <p class="customer-review-comment">
+          {{ review.comment }}
+        </p>
+
+        <!-- CUSTOMER REVIEW PHOTOS -->
+        <div
+          class="customer-review-photos"
+          *ngIf="getReviewImages(review).length > 0"
+        >
+
+          <a
+            *ngFor="let image of getReviewImages(review)"
+            [href]="image"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View customer review photo"
+          >
+
+            <img
+              [src]="image"
+              alt="Customer review photo"
+              loading="lazy"
+            >
+
+          </a>
+
+        </div>
+
+      </article>
+
+      <!-- SHOW MORE / SHOW LESS -->
+      <div
+        class="review-pagination-actions"
+        *ngIf="totalReviews > reviewsPerPage"
+      >
+
+        <button
+          type="button"
+          class="show-more-reviews-btn"
+          *ngIf="hasMoreReviews"
+          (click)="showMoreReviews()"
+        >
+          Show More Reviews
+          <span aria-hidden="true">↓</span>
+        </button>
+
+        <button
+          type="button"
+          class="show-less-reviews-btn"
+          *ngIf="canShowLessReviews"
+          (click)="showLessReviews()"
+        >
+          Show Less
+          <span aria-hidden="true">↑</span>
+        </button>
+
       </div>
 
     </div>
+
+  </ng-container>
+
+</section>
+
+
+    </ng-container>
 
   </div>
 
