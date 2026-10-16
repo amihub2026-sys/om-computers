@@ -32,8 +32,12 @@
         *ngFor="let product of order.products; trackBy: trackByProduct">
 
 <img
-  [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
-  [alt]="product.productName">
+  [src]="getProductImage(product.image)"
+  [alt]="product.productName"
+  (error)="onProductImageError($event)"
+  loading="lazy"
+>
+
 
         <div>
           <h3>{{ product.productName }}</h3>

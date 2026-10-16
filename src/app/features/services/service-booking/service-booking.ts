@@ -72,7 +72,14 @@ if (!/^[0-9]{10}$/.test(this.booking.phone.trim())) {
   return;
 }
 
-    this.bookingService.createBooking(this.booking).subscribe({
+
+const bookingData = {
+  ...this.booking,
+  serviceId: this.serviceId
+};
+
+this.bookingService.createBooking(bookingData).subscribe({
+
       next: (res: any) => {
         if (res.success) {
           this.toast.success('Service booked successfully!', 'Success');

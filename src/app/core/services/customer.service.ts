@@ -17,18 +17,17 @@ export class CustomerService {
   constructor(private http: HttpClient) {}
 
 
-  private getHeaders() {
+private getHeaders() {
+  const token =
+    localStorage.getItem('admin_token') || '';
 
-    const token =
-      localStorage.getItem('token') || '';
+  return {
+    headers: new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    })
+  };
+}
 
-    return {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${token}`
-      })
-    };
-
-  }
 
 
   // ==========================================

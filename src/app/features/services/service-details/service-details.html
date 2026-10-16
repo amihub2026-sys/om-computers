@@ -1,58 +1,673 @@
+
+<!-- ==========================================
+     OM COMPUTERS - SERVICE DETAILS PAGE
+     PROFESSIONAL RESPONSIVE DESIGN
+========================================== -->
+
 <section class="service-details-page">
 
-  <div class="back-section">
-    <a routerLink="/services" class="back-btn">
-      ← Back to Services
-    </a>
-  </div>
+  <div class="service-details-shell">
 
-  <div *ngIf="isLoading">
-    Loading service...
-  </div>
+    <!-- ======================================
+         LOADING STATE
+    ======================================= -->
 
-  <div class="service-container" *ngIf="!isLoading && service">
+    <div
+      class="service-loading"
+      *ngIf="isLoading"
+      aria-live="polite"
+    >
 
-    <div class="service-image">
-      <img
-        [src]="service.image ? imageBaseUrl + service.image : 'assets/images/categories/laptop.png'"
-        [alt]="service.name">
+      <div class="loading-spinner"></div>
+
+      <p>Loading service details...</p>
+
     </div>
 
-    <div class="service-info">
 
-      <span class="service-badge">
-        {{ service.category }}
-      </span>
+    <!-- ======================================
+         SERVICE DETAILS
+    ======================================= -->
 
-      <h1>{{ service.name }}</h1>
+    <ng-container *ngIf="!isLoading && service as item">
 
-      <div class="service-meta">
-        <p><strong>Category:</strong> {{ service.category }}</p>
-        <p><strong>Duration:</strong> {{ service.duration || '-' }}</p>
-        <p><strong>Starting Price:</strong> ₹{{ service.price }}</p>
-        <p><strong>Status:</strong> {{ service.isActive ? 'Active' : 'Inactive' }}</p>
+      <!-- BREADCRUMB NAVIGATION -->
+
+      <nav
+        class="service-breadcrumb"
+        aria-label="Breadcrumb"
+      >
+
+        <a routerLink="/services">
+          Services
+        </a>
+
+        <span aria-hidden="true">/</span>
+
+        <span class="breadcrumb-current">
+          {{ item.name }}
+        </span>
+
+      </nav>
+
+
+      <!-- ======================================
+           MAIN SERVICE CONTAINER
+      ======================================= -->
+
+      <div class="service-container">
+
+        <!-- ==================================
+             LEFT SIDE - SERVICE IMAGE
+        =================================== -->
+
+        <div class="service-image">
+
+          <div class="service-image-frame">
+
+            <img
+              [src]="getServiceImage(item.image)"
+              [alt]="item.name"
+              loading="eager"
+              (error)="onServiceImageError($event)"
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- ==================================
+             RIGHT SIDE - SERVICE INFORMATION
+        =================================== -->
+
+        <div class="service-info">
+
+          <!-- CATEGORY AND SERVICE STATUS -->
+
+          <div class="service-heading-top">
+
+            <span class="service-badge">
+              {{ item.category || 'Computer Service' }}
+            </span>
+
+            <span
+              class="service-status"
+              [class.inactive]="!item.isActive"
+            >
+
+              <span class="status-dot"></span>
+
+              {{ item.isActive ? 'Service Available' : 'Currently Unavailable' }}
+
+            </span>
+
+          </div>
+
+
+          <!-- SERVICE NAME -->
+
+          <h1 class="service-title">
+            {{ item.name }}
+          </h1>
+
+
+          <!-- SHORT DESCRIPTION -->
+
+          <p class="service-intro">
+            {{
+              item.description ||
+              'Professional computer service and technical support for your home, office and business.'
+            }}
+          </p>
+
+
+          <!-- ==================================
+               SERVICE PRICE
+          =================================== -->
+
+          <div class="service-price-box">
+
+            <span class="price-label">
+              Starting from
+            </span>
+
+            <div class="price-main">
+
+              <strong>
+                ₹{{ item.price | number:'1.0-2' }}
+              </strong>
+
+            </div>
+
+            <p>
+              Final service cost may vary depending on
+              the issue, parts required, and work involved.
+            </p>
+
+          </div>
+
+
+          <!-- ==================================
+               SERVICE HIGHLIGHTS
+          =================================== -->
+
+          <div class="service-highlights">
+
+            <!-- DURATION -->
+
+            <div class="highlight-item">
+
+              <span class="highlight-icon">
+                &#9201;
+              </span>
+
+              <div class="highlight-text">
+
+                <small>Estimated Duration</small>
+
+                <strong>
+                  {{ item.duration || 'Contact for details' }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- CATEGORY -->
+
+            <div class="highlight-item">
+
+              <span class="highlight-icon">
+                &#9881;
+              </span>
+
+              <div class="highlight-text">
+
+                <small>Service Category</small>
+
+                <strong>
+                  {{ item.category || 'General Service' }}
+                </strong>
+
+              </div>
+
+            </div>
+
+
+            <!-- TECHNICAL SUPPORT -->
+
+            <div class="highlight-item">
+
+              <span class="highlight-icon">
+                &#10003;
+              </span>
+
+              <div class="highlight-text">
+
+                <small>Support</small>
+
+                <strong>
+                  Expert Technician Support
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- ==================================
+               BOOKING ACTION
+          =================================== -->
+
+          <div class="service-actions">
+
+            <!-- BOOK SERVICE -->
+
+            <button
+              type="button"
+              class="book-btn"
+              [disabled]="!item.isActive"
+              (click)="bookService()"
+            >
+
+              <span>
+                {{ item.isActive ? 'Book This Service' : 'Service Unavailable' }}
+              </span>
+
+              <span
+                *ngIf="item.isActive"
+                aria-hidden="true"
+              >
+                &rarr;
+              </span>
+
+            </button>
+
+          </div>
+
+
+          <!-- ==================================
+               CONTACT ACTIONS
+          =================================== -->
+
+          <div class="contact-actions">
+
+            <!-- WHATSAPP -->
+
+            <a
+              class="whatsapp-btn"
+              href="https://wa.me/919789154220"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+
+              <span aria-hidden="true">
+                &#9993;
+              </span>
+
+              <span>
+                WhatsApp Enquiry
+              </span>
+
+            </a>
+
+
+            <!-- CALL -->
+
+            <a
+              class="call-btn"
+              href="tel:+919789154220"
+            >
+
+              <span aria-hidden="true">
+                &#9742;
+              </span>
+
+              <span>
+                Call Store
+              </span>
+
+            </a>
+
+          </div>
+
+
+          <!-- SERVICE SUPPORT NOTE -->
+
+          <div class="service-support-note">
+
+            <span class="support-note-icon">
+              &#9432;
+            </span>
+
+            <p>
+              Need assistance before booking?
+              Contact our team to discuss your
+              service requirements.
+            </p>
+
+          </div>
+
+        </div>
+
       </div>
 
-      <p class="description">
-        {{ service.description || 'Professional computer service support.' }}
+
+      <!-- ======================================
+           ADDITIONAL SERVICE INFORMATION
+      ======================================= -->
+
+      <section
+        class="service-details-section"
+        aria-labelledby="service-details-heading"
+      >
+
+        <div class="details-heading">
+
+          <span class="section-eyebrow">
+            SERVICE INFORMATION
+          </span>
+
+          <h2 id="service-details-heading">
+            Service Details
+          </h2>
+
+          <p>
+            Essential information about this service.
+          </p>
+
+        </div>
+
+
+        <!-- DETAILS GRID -->
+
+        <dl class="service-spec-grid">
+
+          <!-- CATEGORY -->
+
+          <div class="service-spec-item">
+
+            <dt>Service Category</dt>
+
+            <dd>
+              {{ item.category || 'Not specified' }}
+            </dd>
+
+          </div>
+
+
+          <!-- DURATION -->
+
+          <div class="service-spec-item">
+
+            <dt>Estimated Duration</dt>
+
+            <dd>
+              {{ item.duration || 'Contact for details' }}
+            </dd>
+
+          </div>
+
+
+          <!-- STARTING PRICE -->
+
+          <div class="service-spec-item">
+
+            <dt>Starting Price</dt>
+
+            <dd>
+              ₹{{ item.price | number:'1.0-2' }}
+            </dd>
+
+          </div>
+
+
+          <!-- SERVICE STATUS -->
+
+          <div class="service-spec-item">
+
+            <dt>Availability</dt>
+
+            <dd [class.unavailable-text]="!item.isActive">
+              {{ item.isActive ? 'Available' : 'Currently Unavailable' }}
+            </dd>
+
+          </div>
+
+        </dl>
+
+      </section>
+
+    </ng-container>
+    
+<!-- ==========================================
+     CUSTOMER RATINGS & REVIEWS
+========================================== -->
+
+<section
+  class="service-details-section customer-reviews-section"
+  aria-labelledby="service-reviews-heading"
+>
+
+  <!-- HEADER -->
+  <div class="details-heading">
+    <span class="section-eyebrow">
+      CUSTOMER FEEDBACK
+    </span>
+
+    <h2 id="service-reviews-heading">
+      Customer Ratings & Reviews
+    </h2>
+
+    <p>
+      Feedback from customers who completed this service.
+    </p>
+  </div>
+
+  <!-- LOADING -->
+  <div
+    class="reviews-loading"
+    *ngIf="isReviewsLoading"
+  >
+    Loading customer reviews...
+  </div>
+
+  <!-- ERROR -->
+  <div
+    class="reviews-error"
+    *ngIf="!isReviewsLoading && reviewsError"
+  >
+    <p>{{ reviewsError }}</p>
+
+    <button
+      type="button"
+
+*ngIf="service?._id"
+
+(click)="loadServiceReviews(service?._id || '')"
+
+
+    >
+      Try Again
+    </button>
+  </div>
+
+  <ng-container *ngIf="!isReviewsLoading && !reviewsError">
+
+    <!-- AVERAGE RATING -->
+    <div
+      class="reviews-summary"
+      *ngIf="totalReviews > 0"
+    >
+
+      <div class="reviews-average">
+
+        <div class="average-number">
+          {{ formattedAverageRating }}
+          <span>/5</span>
+        </div>
+
+        <div class="average-stars">
+          <span
+            *ngFor="let star of stars"
+            [class.filled]="isStarFilled(star, averageRating)"
+          >
+            ★
+          </span>
+        </div>
+
+        <p>
+          Based on {{ totalReviews }}
+          {{ totalReviews === 1 ? 'review' : 'reviews' }}
+        </p>
+
+      </div>
+
+      <!-- RATING BREAKDOWN -->
+      <div class="reviews-distribution">
+
+        <div
+          class="distribution-row"
+          *ngFor="let star of [5, 4, 3, 2, 1]"
+        >
+
+          <span class="distribution-label">
+            {{ star }} ★
+          </span>
+
+          <div class="distribution-track">
+            <div
+              class="distribution-fill"
+              [style.width.%]="getRatingPercentage(star)"
+            ></div>
+          </div>
+
+          <span class="distribution-count">
+            {{ getRatingCount(star) }}
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div
+      class="reviews-empty"
+      *ngIf="totalReviews === 0"
+    >
+      <div class="empty-review-icon">☆</div>
+
+      <h3>No Reviews Yet</h3>
+
+      <p>
+        This service has not received any approved
+        customer reviews yet.
       </p>
+    </div>
 
+    <!-- INDIVIDUAL CUSTOMER REVIEWS -->
+    <div
+      class="customer-review-list"
+      *ngIf="totalReviews > 0"
+    >
 
-      <div class="buttons">
-        <button class="book-btn" (click)="bookService()">
-          Book Service
+      <div class="review-list-heading">
+        <h3>
+          Customer Reviews
+          <span>({{ totalReviews }})</span>
+        </h3>
+
+        <small>Most recent first</small>
+      </div>
+
+      <article
+        class="customer-review-card"
+        *ngFor="let review of visibleReviews"
+      >
+
+        <div class="customer-review-top">
+
+          <!-- CUSTOMER -->
+          <div class="review-customer">
+
+            <div class="review-avatar">
+              {{ getReviewerName(review).charAt(0) | uppercase }}
+            </div>
+
+            <div class="review-customer-info">
+
+              <strong>
+                {{ getReviewerName(review) }}
+              </strong>
+
+              <span class="verified-purchase">
+                ✓ Verified Service
+              </span>
+
+              <time>
+                {{ review.createdAt | date:'dd MMM yyyy' }}
+              </time>
+
+            </div>
+
+          </div>
+
+          <!-- STAR RATING -->
+          <div class="review-rating">
+
+            <div class="review-stars">
+              <span
+                *ngFor="let star of stars"
+                [class.filled]="star <= review.rating"
+              >
+                ★
+              </span>
+            </div>
+
+            <span class="rating-value">
+              {{ review.rating }}/5
+            </span>
+
+          </div>
+
+        </div>
+
+        <!-- REVIEW COMMENT -->
+        <p class="customer-review-comment">
+          {{ review.comment }}
+        </p>
+
+        <!-- CUSTOMER PHOTOS -->
+        <div
+          class="customer-review-photos"
+          *ngIf="getReviewImages(review).length > 0"
+        >
+
+          <a
+            *ngFor="let image of getReviewImages(review)"
+            [href]="image"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="View customer review photo"
+          >
+            <img
+              [src]="image"
+              alt="Customer service review photo"
+              loading="lazy"
+            >
+          </a>
+
+        </div>
+
+        <!-- ADMIN REPLY -->
+        <div
+          class="review-admin-reply"
+          *ngIf="review.adminReply"
+        >
+          <strong>Response from OM Computers</strong>
+          <p>{{ review.adminReply }}</p>
+        </div>
+
+      </article>
+
+      <!-- SHOW MORE / SHOW LESS -->
+      <div
+        class="review-pagination-actions"
+        *ngIf="totalReviews > reviewsPerPage"
+      >
+
+        <button
+          type="button"
+          class="show-more-reviews-btn"
+          *ngIf="hasMoreReviews"
+          (click)="showMoreReviews()"
+        >
+          Show More Reviews ↓
         </button>
 
-        <a class="whatsapp-btn" href="https://wa.me/919789154220" target="_blank">
-          WhatsApp
-        </a>
+        <button
+          type="button"
+          class="show-less-reviews-btn"
+          *ngIf="canShowLessReviews"
+          (click)="showLessReviews()"
+        >
+          Show Less ↑
+        </button>
 
-        <a class="call-btn" href="tel:+919789154220">
-          Call Now
-        </a>
       </div>
 
     </div>
+
+  </ng-container>
+
+</section>
+
 
   </div>
 

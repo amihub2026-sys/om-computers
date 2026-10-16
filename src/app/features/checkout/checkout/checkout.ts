@@ -29,7 +29,16 @@ export class Checkout implements OnInit, OnDestroy {
   isLoading = false;
   isPlacingOrder = false;
 
-orderData = {
+
+orderData: {
+  customerName: string;
+  phone: string;
+  email: string;
+  city: string;
+  address: string;
+  paymentMethod: '' | 'UPI' | 'Cash on Delivery';
+  transactionId: string;
+} = {
   customerName: '',
   phone: '',
   email: '',
@@ -38,6 +47,7 @@ orderData = {
   paymentMethod: '',
   transactionId: ''
 };
+
   private destroy$ = new Subject<void>();
 
 constructor(
@@ -167,10 +177,13 @@ if (!/^[0-9]{10}$/.test(this.orderData.phone.trim())) {
   );
   return false;
 }
-    if (!this.orderData.email.trim()) {
-      this.toast.error('Please enter email address.', 'Required');
-      return false;
-    }
+   if (
+  this.orderData.email.trim() &&
+  !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.orderData.email.trim())
+) {
+  this.toast.error('Please enter a valid email address.', 'Invalid Email');
+  return false;
+}
 
     if (!this.orderData.city.trim()) {
       this.toast.error('Please enter city.', 'Required');
@@ -200,76 +213,147 @@ if (
     return true;
   }
 
+
 placeOrder(): void {
+  if (this.isPlacingOrder) {
+    return;
+  }
+
   if (!this.validateOrder()) {
     return;
   }
 
   if (this.cartItems.length === 0) {
-    this.toast.error('No products selected.', 'Error');
+    this.toast.error(
+      'No products selected.',
+      'Error'
+    );
     return;
   }
+
+  const token = localStorage.getItem('token');
+
+  if (!token) {
+    this.toast.error(
+      'Please sign in before placing your order.',
+      'Login Required'
+    );
+    return;
+  }
+
+  const productId =
+    this.route.snapshot.queryParamMap.get('productId');
+
+    
+const paymentMethod = this.orderData.paymentMethod;
+
+if (
+  paymentMethod !== 'UPI' &&
+  paymentMethod !== 'Cash on Delivery'
+) {
+  this.toast.error(
+    'Please select a valid payment method.',
+    'Required'
+  );
+  return;
+}
+
+const payload = {
+  customerName: this.orderData.customerName.trim(),
+  phone: this.orderData.phone.trim(),
+  email: this.orderData.email.trim(),
+  address: [
+    this.orderData.address.trim(),
+    this.orderData.city.trim()
+  ].filter(Boolean).join(', '),
+  paymentMethod,
+  transactionId:
+    paymentMethod === 'UPI'
+      ? this.orderData.transactionId.trim()
+      : ''
+};
+
 
   this.isPlacingOrder = true;
   this.cdr.detectChanges();
 
-const guestOrderPayload = {
-  customerName: this.orderData.customerName,
-  phone: this.orderData.phone,
-  email: this.orderData.email,
-  address: `${this.orderData.address}, ${this.orderData.city}`,
-  paymentMethod: this.orderData.paymentMethod,
+  
+const request$ = productId
+  ? this.orderService.buyNowOrder({
+      ...payload,
+      productId,
+      quantity: 1
+    })
+  : this.orderService.placeOrder({
+      ...payload,
 
-  transactionId:
-    this.orderData.paymentMethod === 'UPI'
-      ? this.orderData.transactionId
-      : '',
+items: this.cartItems.map(item => ({
+  productId: item.productId || '',
+  quantity: Number(item.quantity)
+}))
+    });
 
-  products: this.cartItems.map(item => ({
-    productName: item.productName,
-    image: item.image || '',
-    quantity: Number(item.quantity || 1),
-    price: Number(item.price || 0)
-  })),
 
-  totalAmount: this.totalAmount
-};
-
-  this.orderService.placeGuestOrder(guestOrderPayload)
+  request$
     .pipe(takeUntil(this.destroy$))
     .subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.isPlacingOrder = false;
 
-        if (res.success) {
-          this.cartService.clearCart();
-          this.cartItems = [];
-
-          this.toast.success(
-            'Order placed successfully!',
-            'Success'
+        if (!res.success || !res.data?._id) {
+          this.toast.error(
+            res.message || 'Unable to confirm your order.',
+            'Order Failed'
           );
-
-          this.router.navigate(['/order-success']);
-        } else {
-          this.toast.error(res.message, 'Error');
+          this.cdr.detectChanges();
+          return;
         }
+
+        const savedOrderId = res.data._id;
+
+        // Only cart checkout should clear the cart.
+        // Buy Now must not remove unrelated cart items.
+        if (!productId) {
+          this.cartService.clearCart();
+        }
+
+        this.toast.success(
+          'Order placed successfully!',
+          'Success'
+        );
+
+        this.router.navigate(['/order-success'], {
+          queryParams: {
+            orderId: savedOrderId
+          }
+        });
 
         this.cdr.detectChanges();
       },
 
-      error: () => {
+      error: (err) => {
+        console.error('Order placement failed:', err);
+
         this.isPlacingOrder = false;
 
-        this.toast.error(
-          'Failed to place order.',
-          'Error'
-        );
+        if (err.status === 401) {
+          this.toast.error(
+            'Your login has expired. Please sign in again.',
+            'Authentication Required'
+          );
+        } else {
+          this.toast.error(
+            err.error?.message ||
+              'Failed to place order. Please try again.',
+            'Order Failed'
+          );
+        }
 
         this.cdr.detectChanges();
       }
     });
 }
+
 trackByCartId(index: number, item: CartItem): string {
   return item._id;
 }

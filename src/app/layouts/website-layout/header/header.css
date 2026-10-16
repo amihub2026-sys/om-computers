@@ -1050,3 +1050,258 @@ color: #111;
   border-radius: 50%;
   display: block;
 }
+
+
+/* =====================================
+   MOBILE BOTTOM NAVIGATION
+===================================== */
+
+/* HIDE ON DESKTOP */
+
+.mobile-bottom-nav {
+  display: none;
+}
+
+/* MOBILE ONLY */
+
+@media (max-width: 767px) {
+
+  /* TOP HEADER */
+
+  .header {
+    height: 70px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-right {
+    display: none;
+  }
+
+  .logo {
+    min-width: 0;
+  }
+
+  .logo h2 {
+    font-size: clamp(18px, 5.5vw, 23px);
+    white-space: nowrap;
+  }
+
+  .menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+
+  /* BOTTOM BAR */
+
+  .mobile-bottom-nav {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 9997;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    width: 100%;
+    height: calc(68px + env(safe-area-inset-bottom));
+    padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+
+    background: #081126;
+    border-top: 1px solid rgba(255,255,255,0.12);
+
+    box-shadow: 0 -6px 25px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+  }
+
+  /* NAV ITEM */
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+
+    padding: 4px 2px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: transparent;
+    color: #cbd5e1;
+
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+
+    cursor: pointer;
+    transition: 0.25s ease;
+  }
+
+  .bottom-icon {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 24px;
+    font-size: 21px;
+    color: inherit;
+  }
+
+  /* ACTIVE PAGE */
+
+  .bottom-nav-item.bottom-active {
+    color: #f5d68a;
+    background: rgba(245,214,138,0.10);
+  }
+
+  .bottom-nav-item:hover {
+    color: #f5d68a;
+  }
+
+  /* CART COUNT */
+
+  .cart-bottom-icon {
+    position: relative;
+  }
+
+  .bottom-cart-count {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 17px;
+    height: 17px;
+    padding: 0 4px;
+
+    border-radius: 50px;
+    background: #ef4444;
+    color: #fff;
+
+    font-size: 9px;
+    font-weight: 800;
+  }
+
+  /* ACCOUNT */
+
+  .bottom-account-wrapper {
+    position: relative;
+    min-width: 0;
+  }
+
+  .bottom-account-menu {
+    position: absolute;
+    right: -55px;
+    bottom: calc(100% + 12px);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    width: min(250px, 85vw);
+    padding: 16px;
+
+    background: #151e2d;
+    border: 1px solid #344154;
+    border-radius: 14px;
+
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+  }
+
+  .bottom-account-menu strong {
+    color: #fff;
+    font-size: 14px;
+    overflow-wrap: anywhere;
+  }
+
+  .bottom-account-menu small {
+    color: #aab5c7;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+  }
+
+  .bottom-account-menu button {
+    width: 100%;
+    padding: 11px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #26344b;
+    color: #ffb4b4;
+
+    font-size: 13px;
+    cursor: pointer;
+  }
+
+}
+
+/* SMALL PHONES */
+
+@media (max-width: 390px) {
+
+  .mobile-bottom-nav {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+  .bottom-nav-item {
+    font-size: 10px;
+  }
+
+  .bottom-icon {
+    font-size: 19px;
+  }
+
+}
+
+.account-menu-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: #eef2f8;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.account-menu-link:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #f1c76c;
+}
+
+.account-menu-link .menu-icon {
+  width: 20px;
+  font-size: 17px;
+  text-align: center;
+  color: #f1c76c;
+}
+
+@media (max-width: 767px) {
+  .account-menu-link {
+    padding: 13px 12px;
+    font-size: 14px;
+  }
+}

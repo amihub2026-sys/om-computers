@@ -1,0 +1,474 @@
+
+<section class="manage-reviews-page">
+
+  <!-- PAGE HEADER -->
+  <div class="reviews-header">
+    <div>
+      <h1>Customer Reviews</h1>
+      <p>Manage product and service customer feedback.</p>
+    </div>
+
+    <button
+      type="button"
+      class="refresh-btn"
+      (click)="loadReviews()"
+      [disabled]="isLoading"
+    >
+      ↻ Refresh
+    </button>
+  </div>
+
+  <!-- STATISTICS -->
+  <div class="review-stats">
+
+    <div class="stat-card">
+      <span>Total Reviews</span>
+      <h2>{{ totalReviews }}</h2>
+    </div>
+
+    <div class="stat-card pending">
+      <span>Pending</span>
+      <h2>{{ pendingCount }}</h2>
+    </div>
+
+    <div class="stat-card approved">
+      <span>Approved</span>
+      <h2>{{ approvedCount }}</h2>
+    </div>
+
+    <div class="stat-card rejected">
+      <span>Rejected</span>
+      <h2>{{ rejectedCount }}</h2>
+    </div>
+
+  </div>
+
+  <!-- MESSAGES -->
+  <div class="alert error-alert" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <div class="alert success-alert" *ngIf="successMessage">
+    {{ successMessage }}
+  </div>
+
+  <!-- FILTERS -->
+  <div class="review-filters">
+
+    <input
+      type="search"
+      placeholder="Search customer, item or review..."
+      [(ngModel)]="searchText"
+      (ngModelChange)="resetPage()"
+    />
+
+    <select
+      [(ngModel)]="selectedType"
+      (ngModelChange)="resetPage()"
+    >
+      <option value="All">All Types</option>
+      <option value="product">Products</option>
+      <option value="service">Services</option>
+    </select>
+
+    <select
+      [(ngModel)]="selectedStatus"
+      (ngModelChange)="resetPage()"
+    >
+      <option value="All">All Statuses</option>
+      <option value="Pending">Pending</option>
+      <option value="Approved">Approved</option>
+      <option value="Rejected">Rejected</option>
+      <option value="Hidden">Hidden</option>
+    </select>
+
+  </div>
+
+  <!-- LOADING -->
+  <div class="reviews-empty" *ngIf="isLoading">
+    Loading customer reviews...
+  </div>
+
+  <!-- EMPTY STATE -->
+  <div
+    class="reviews-empty"
+    *ngIf="!isLoading && paginatedReviews.length === 0"
+  >
+    No reviews found.
+  </div>
+
+  <!-- REVIEWS TABLE -->
+  <div
+    class="reviews-table-wrap"
+    *ngIf="!isLoading && paginatedReviews.length > 0"
+  >
+
+    <table class="reviews-table">
+
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Product / Service</th>
+          <th>Rating</th>
+          <th>Review</th>
+          <th>Photos</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let review of paginatedReviews;
+            trackBy: trackByReviewId
+          "
+        >
+
+          <!-- CUSTOMER -->
+          <td>
+            <div class="customer-cell">
+              <strong>
+                {{ getCustomerName(review) }}
+              </strong>
+
+              <small>
+                {{ getCustomerEmail(review) || '-' }}
+              </small>
+            </div>
+          </td>
+
+          <!-- PRODUCT / SERVICE -->
+          <td>
+            <div class="item-cell">
+              <span
+                class="type-label"
+                [class.service-type]="review.reviewType === 'service'"
+              >
+                {{ review.reviewType | titlecase }}
+              </span>
+
+              <strong>
+                {{ getItemName(review) }}
+              </strong>
+            </div>
+          </td>
+
+          <!-- RATING -->
+          <td>
+            <div class="rating-stars">
+              <span
+                *ngFor="let star of stars"
+                [class.filled]="star <= review.rating"
+              >
+                ★
+              </span>
+            </div>
+
+            <small>
+              {{ review.rating }}/5
+            </small>
+          </td>
+
+          <!-- REVIEW -->
+          <td>
+            <p class="review-comment">
+              {{ review.comment }}
+            </p>
+          </td>
+
+          <!-- PHOTOS -->
+          <td>
+            <div class="photo-thumbnails">
+
+              <a
+                *ngFor="let photo of (review.images || []) | slice:0:3"
+                [href]="photo"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  [src]="photo"
+                  alt="Customer review photo"
+                  loading="lazy"
+                />
+              </a>
+
+              <span
+                class="more-photos"
+                *ngIf="(review.images.length || 0) > 3"
+              >
+                +{{ (review.images.length || 0) - 3 }}
+              </span>
+
+              <span *ngIf="!review.images.length">
+                -
+              </span>
+
+            </div>
+          </td>
+
+          <!-- DATE -->
+          <td class="review-date">
+            {{ review.createdAt | date:'dd MMM yyyy' }}
+          </td>
+
+          <!-- STATUS -->
+          <td>
+            <span
+              class="review-status"
+              [ngClass]="getStatus(review).toLowerCase()"
+            >
+              {{ getStatus(review) }}
+            </span>
+          </td>
+
+          <!-- ACTIONS -->
+          <td>
+            <div class="review-actions">
+
+              <button
+                type="button"
+                class="action-btn view"
+                (click)="openReview(review)"
+              >
+                View
+              </button>
+
+              <button
+                type="button"
+                class="action-btn approve"
+                *ngIf="getStatus(review) !== 'Approved'"
+                (click)="moderateReview(review, 'Approved')"
+                [disabled]="isSaving"
+              >
+                Approve
+              </button>
+
+              <button
+                type="button"
+                class="action-btn reject"
+                *ngIf="getStatus(review) !== 'Rejected'"
+                (click)="moderateReview(review, 'Rejected')"
+                [disabled]="isSaving"
+              >
+                Reject
+              </button>
+
+              <button
+                type="button"
+                class="action-btn hide"
+                *ngIf="getStatus(review) === 'Approved'"
+                (click)="moderateReview(review, 'Hidden')"
+                [disabled]="isSaving"
+              >
+                Hide
+              </button>
+
+            </div>
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <!-- PAGINATION -->
+  <div
+    class="review-pagination"
+    *ngIf="!isLoading && totalPages > 1"
+  >
+    <button
+      type="button"
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      Previous
+    </button>
+
+    <span>
+      Page {{ currentPage }} of {{ totalPages }}
+    </span>
+
+    <button
+      type="button"
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage >= totalPages"
+    >
+      Next
+    </button>
+  </div>
+
+  <!-- REVIEW DETAILS MODAL -->
+  <div
+    class="review-modal-overlay"
+    *ngIf="selectedReview as review"
+    (click)="closeReview()"
+  >
+
+    <div
+      class="review-modal"
+      (click)="$event.stopPropagation()"
+    >
+
+      <div class="modal-header">
+        <div>
+          <h2>Review Details</h2>
+          <p>
+            {{ getCustomerName(review) }}
+            · {{ review.createdAt | date:'dd MMM yyyy, h:mm a' }}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          class="modal-close"
+          (click)="closeReview()"
+        >
+          ×
+        </button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="detail-row">
+          <strong>Customer</strong>
+          <span>{{ getCustomerName(review) }}</span>
+        </div>
+
+        <div class="detail-row">
+          <strong>Email</strong>
+          <span>{{ getCustomerEmail(review) || '-' }}</span>
+        </div>
+
+        <div class="detail-row">
+          <strong>Type</strong>
+          <span>{{ review.reviewType | titlecase }}</span>
+        </div>
+
+        <div class="detail-row">
+          <strong>Product / Service</strong>
+          <span>{{ getItemName(review) }}</span>
+        </div>
+
+        <div class="detail-row">
+          <strong>Rating</strong>
+          <span class="modal-stars">
+            <span
+              *ngFor="let star of stars"
+              [class.filled]="star <= review.rating"
+            >
+              ★
+            </span>
+            {{ review.rating }}/5
+          </span>
+        </div>
+
+        <div class="detail-row">
+          <strong>Status</strong>
+          <span
+            class="review-status"
+            [ngClass]="getStatus(review).toLowerCase()"
+          >
+            {{ getStatus(review) }}
+          </span>
+        </div>
+
+        <div class="review-full-comment">
+          <h3>Customer Review</h3>
+          <p>{{ review.comment }}</p>
+        </div>
+
+        <div
+          class="review-full-photos"
+          *ngIf="review.images.length"
+        >
+          <h3>Customer Photos</h3>
+
+          <div class="review-photo-grid">
+            <a
+              *ngFor="let photo of review.images"
+              [href]="photo"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                [src]="photo"
+                alt="Review attachment"
+                loading="lazy"
+              />
+            </a>
+          </div>
+        </div>
+
+        <!-- ADMIN RESPONSE -->
+        <div class="admin-reply-section">
+          <label for="adminReviewReply">
+            Admin Reply
+          </label>
+
+          <textarea
+            id="adminReviewReply"
+            [(ngModel)]="replyText"
+            rows="4"
+            maxlength="2000"
+            placeholder="Write a reply to this customer..."
+          ></textarea>
+
+          <small>
+            {{ replyText.length }}/2000 characters
+          </small>
+        </div>
+
+      </div>
+
+      <!-- MODERATION BUTTONS -->
+      <div class="modal-footer">
+
+        <button
+          type="button"
+          class="action-btn reject"
+          (click)="moderateReview(review, 'Rejected')"
+          [disabled]="isSaving"
+        >
+          Reject
+        </button>
+
+        <button
+          type="button"
+          class="action-btn hide"
+          (click)="moderateReview(review, 'Hidden')"
+          [disabled]="isSaving"
+        >
+          Hide
+        </button>
+
+        <button
+          type="button"
+          class="action-btn view"
+          (click)="saveReply(review)"
+          [disabled]="isSaving"
+        >
+          Save Reply
+        </button>
+
+        <button
+          type="button"
+          class="action-btn approve"
+          (click)="moderateReview(review, 'Approved')"
+          [disabled]="isSaving"
+        >
+          {{ isSaving ? 'Saving...' : 'Approve' }}
+        </button>
+
+      </div>
+
+    </div>
+  </div>
+
+</section>

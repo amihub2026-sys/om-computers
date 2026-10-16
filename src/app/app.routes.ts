@@ -19,6 +19,10 @@ import { Cart } from './features/cart/cart/cart';
 import { Checkout } from './features/checkout/checkout/checkout';
 import { OrderSuccess } from './features/orders/order-success/order-success';
 
+import { MyOrders } from './features/orders/my-orders/my-orders';
+import { OrderDetails } from './features/orders/order-details/order-details';
+
+
 import { AdminLogin } from './admin/admin-login/admin-login';
 import { AdminLayout } from './admin/admin-layout/admin-layout';
 import { AdminDashboard } from './admin/admin-dashboard/admin-dashboard';
@@ -33,6 +37,9 @@ import { ManageAdminsComponent } from './admin/manage-admins/manage-admins';
 import { ManageContactsComponent } from './admin/manage-contacts/manage-contacts';
 import { ManageCategoriesComponent } from './admin/manage-categories/manage-categories';
 import { ManageInventoryComponent } from './admin/manage-inventory/manage-inventory';
+
+import { ManageReviews } from './admin/manage-reviews/manage-reviews';
+
 export const routes: Routes = [
   {
     path: '',
@@ -45,11 +52,28 @@ export const routes: Routes = [
       { path: 'services/:id', component: ServiceDetails },
       { path: 'service-booking/:id', component: ServiceBooking },
       { path: 'booking-success', component: BookingSuccess },
+      { path: 'my-bookings', redirectTo: 'my-orders', pathMatch: 'full' },
       { path: 'about', component: About },
       { path: 'contact', component: Contact },
       { path: 'cart', component: Cart },
       { path: 'checkout', component: Checkout },
       { path: 'order-success', component: OrderSuccess },
+      
+{ path: 'my-orders', component: MyOrders },
+{ path: 'my-orders/:id', component: OrderDetails },
+
+//       {
+//   path: 'my-bookings',
+//   loadComponent: () =>
+//     import('./features/services/my-bookings/my-bookings')
+//       .then(m => m.MyBookings)
+// },
+{
+  path: 'my-bookings/:id',
+  loadComponent: () =>
+    import('./features/services/booking-details/booking-details')
+      .then(m => m.BookingDetails)
+},
       
     ],
   },
@@ -75,6 +99,9 @@ export const routes: Routes = [
       { path: 'orders', component: ManageOrders },
       { path: 'bookings', component: ManageBookings },
       { path: 'customers', component: ManageCustomers },
+      
+{ path: 'reviews', component: ManageReviews },
+
       { path: 'contacts', component: ManageContactsComponent },
       {
   path: 'inventory',

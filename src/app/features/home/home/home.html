@@ -57,6 +57,9 @@
     </div>
 
 </section>
+
+
+
 <!-- =========================
      FEATURED CATEGORIES
 ========================= -->
@@ -65,79 +68,70 @@
   <div class="section-title">
     <span class="section-tag">OUR COLLECTION</span>
 
-    <h2>Explore Our Categories</h2>
-<p>
-  Explore premium computers, accessories, networking solutions,
-  software, and expert repair services tailored for modern
-  businesses and everyday users.
-</p>
-  </div>
+    <h2>Explore Our <span>Categories</span></h2>
 
-  <div class="categories-grid">
-
-    <div class="category-item">
-      <img src="/assets/images/categories/laptop.png" alt="Laptops">
-      <h3>Laptops</h3>
-    </div>
-
-    <div class="category-item">
-      <img src="/assets/images/categories/desktop.png" alt="Desktop PCs">
-      <h3>Desktop PCs</h3>
-    </div>
-
-    <div class="category-item">
-      <img src="/assets/images/categories/accessories.png" alt="Accessories">
-      <h3>Accessories</h3>
-    </div>
-
-    <div class="category-item">
-      <img src="/assets/images/categories/repair.png" alt="Repair">
-      <h3>Repair</h3>
-    </div>
-
-    <div class="category-item">
-      <img src="/assets/images/categories/software.png" alt="Software">
-      <h3>Software</h3>
-    </div>
-
-    <div class="category-item">
-      <img src="/assets/images/categories/network.png" alt="Networking">
-      <h3>Networking</h3>
-    </div>
-
-    <div class="category-item">
-  <img src="/assets/images/categories/inverter.png" alt="Inverter">
-  <h3>Inverter</h3>
-</div>
-
-<div class="category-item">
-  <img src="/assets/images/categories/upsbattery.png" alt="UPS Battery">
-  <h3>UPS Battery</h3>
-</div>
-
+    <p>
+      Explore premium computers, accessories, networking solutions,
+      software, and expert repair services tailored for modern
+      businesses and everyday users.
+    </p>
   </div>
 
   <div class="categories-wrapper">
 
-  <button class="nav-btn left" (click)="prev()">‹</button>
+    <button
+      class="nav-btn left"
+      type="button"
+      aria-label="Previous categories"
+      (click)="prev()"
+      [disabled]="currentIndex === 0">
+      &#10094;
+    </button>
 
-  <div class="categories-view">
-    
-    <div class="categories-track" [style.transform]="'translateX(-' + offset + '%)'">
+    <div class="categories-view">
+      <div class="categories-track">
 
-      <div class="category-item" *ngFor="let item of categories">
-        <img [src]="item.img">
-        <h3>{{ item.name }}</h3>
+        <div
+          class="category-item"
+          *ngFor="let item of visibleCategories">
+
+          <div class="category-image">
+            <img
+              [src]="item.img"
+              [alt]="item.name"
+              loading="lazy">
+          </div>
+
+          <h3>{{ item.name }}</h3>
+
+        </div>
+
       </div>
-
     </div>
+
+    <button
+      class="nav-btn right"
+      type="button"
+      aria-label="Next categories"
+      (click)="next()"
+      [disabled]="currentIndex >= maxIndex">
+      &#10095;
+    </button>
 
   </div>
 
-  <button class="nav-btn right" (click)="next()">›</button>
+  <div class="category-dots" *ngIf="maxIndex > 0">
+    <button
+      *ngFor="let dot of categoryPages"
+      type="button"
+      [class.active]="currentIndex === dot"
+      [attr.aria-label]="'Go to category position ' + (dot + 1)"
+      (click)="goToCategory(dot)">
+    </button>
+  </div>
 
-</div>
 </section>
+
 
 <!-- =========================
      Featured Products
@@ -173,41 +167,42 @@
 <div class="products-grid" #productsContainer>
 
   <div
-    class="card"
-    *ngFor="let product of products; trackBy: trackByProduct"
-  >
+  class="card elegant-card"
+  *ngFor="let product of products; trackBy: trackByProduct"
+>
 
-    <div class="card-top">
-      <span class="category">{{ product.category || 'Product' }}</span>
+  <div class="card-top clean-top">
+    <span class="category-chip">
+      {{ product.category || 'Product' }}
+    </span>
+  </div>
 
-      <div class="icons">
-        <span>♡</span>
-        <span>⇄</span>
-      </div>
-    </div>
+  <div class="image-box elegant-image-box">
+    <img
+      [src]="getProductImage(product.image)"
+      [alt]="product.name"
+      loading="lazy"
+      (error)="onProductImageError($event)"
+    />
+  </div>
 
-    <!-- <span class="badgee" *ngIf="product.discountPrice">SALE</span> -->
+  <div class="card-content">
+    <h3 class="product-title">{{ product.name }}</h3>
 
-    <div class="image-box">
- <img
-  [src]="product.image ? imageBaseUrl + product.image : 'assets/images/products/gaming-pc.jpg'"
-  [alt]="product.name">
-    </div>
+    <div class="price elegant-price">
+      <span class="current-price">₹{{ product.price }}</span>
 
-    <h3>{{ product.name }}</h3>
-
-    <div class="price">
-      ₹{{ product.price }}
-      <del *ngIf="product.discountPrice">
+      <del *ngIf="product.discountPrice" class="old-price">
         ₹{{ product.discountPrice }}
       </del>
     </div>
 
-    <a [routerLink]="['/products', product._id]" class="view-btn">
+    <a [routerLink]="['/products', product._id]" class="view-btn elegant-btn">
       View Details
     </a>
-
   </div>
+
+</div>
 
 </div>
     <div class="wave-bg">
@@ -295,6 +290,31 @@
       <p>WiFi, LAN, router setup and office network configuration support.</p>
       <span>04</span>
     </div>
+
+    
+<!-- 05 - INVERTER SERVICE -->
+<div class="service-card">
+
+  <div class="service-icon">
+    <img
+      src="/assets/images/categories/inverter.png"
+      alt="Inverter Sales and Service"
+      loading="lazy"
+    >
+  </div>
+
+  <h3>Inverter Sales & Service</h3>
+
+  <p>
+    Inverter installation, repair, battery replacement,
+    maintenance and power backup solutions for homes
+    and businesses.
+  </p>
+
+  <span>05</span>
+
+</div>
+
 
   </div>
 

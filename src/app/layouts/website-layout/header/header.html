@@ -103,8 +103,31 @@
             <small>{{ currentUser.email }}</small>
           </div>
         </div>
+        
 
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider">
+          
+
+        </div>
+
+<a
+  routerLink="/my-orders"
+  class="account-menu-link"
+  (click)="profileMenuOpen = false"
+>
+  <span class="menu-icon">▣</span>
+  <span>My Orders</span>
+</a>
+
+<a
+  routerLink="/my-account"
+  class="account-menu-link"
+  (click)="profileMenuOpen = false"
+>
+  <span class="menu-icon">◉</span>
+  <span>My Account</span>
+</a>
+
 
         <button
           type="button"
@@ -144,6 +167,113 @@
   </button>
 
 </header>
+
+
+<!-- =====================================
+     MOBILE BOTTOM NAVIGATION
+===================================== -->
+
+<div class="mobile-bottom-nav">
+
+  <!-- PRODUCTS -->
+  <a
+    routerLink="/products"
+    routerLinkActive="bottom-active"
+    class="bottom-nav-item">
+
+    <span class="bottom-icon">
+      <i class="fa-solid fa-box"></i>
+    </span>
+
+    <span>Products</span>
+  </a>
+
+  <!-- SERVICES -->
+  <a
+    routerLink="/services"
+    routerLinkActive="bottom-active"
+    class="bottom-nav-item">
+
+    <span class="bottom-icon">
+      <i class="fa-solid fa-screwdriver-wrench"></i>
+    </span>
+
+    <span>Services</span>
+  </a>
+
+  <!-- SIGN IN -->
+  <button
+    *ngIf="!currentUser"
+    type="button"
+    class="bottom-nav-item"
+    (click)="openLoginModal()">
+
+    <span class="bottom-icon">
+      <i class="fa-regular fa-user"></i>
+    </span>
+
+    <span>Sign In</span>
+  </button>
+
+  <!-- LOGGED IN ACCOUNT -->
+  <div
+    *ngIf="currentUser"
+    class="bottom-account-wrapper">
+
+    <button
+      type="button"
+      class="bottom-nav-item"
+      [attr.aria-expanded]="profileMenuOpen"
+      (click)="toggleProfileMenu()">
+
+      <span class="bottom-icon">
+        <i class="fa-regular fa-circle-user"></i>
+      </span>
+
+      <span>Account</span>
+    </button>
+
+    <!-- ACCOUNT POPUP -->
+    <div
+      class="bottom-account-menu"
+      *ngIf="profileMenuOpen">
+
+      <strong>{{ currentUser.name }}</strong>
+      <small>{{ currentUser.email }}</small>
+
+      <button
+        type="button"
+        (click)="logout()">
+        Sign Out
+      </button>
+
+    </div>
+
+  </div>
+
+  <!-- CART -->
+  <a
+    routerLink="/cart"
+    routerLinkActive="bottom-active"
+    class="bottom-nav-item">
+
+    <span class="bottom-icon cart-bottom-icon">
+
+      <i class="fa-solid fa-cart-shopping"></i>
+
+      <span
+        class="bottom-cart-count"
+        *ngIf="cartCount > 0">
+        {{ cartCount }}
+      </span>
+
+    </span>
+
+    <span>Cart</span>
+  </a>
+
+</div>
+
 
 <!-- LOGIN MODAL -->
 <div

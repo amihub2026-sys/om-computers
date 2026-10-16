@@ -34,7 +34,9 @@ export class AdminLogin {
     this.auth.login(payload).subscribe({
       next: (res: AuthResponse) => {
         if (res.success && res.data?.role === 'admin') {
-          localStorage.setItem('token', res.token || '');
+          
+localStorage.setItem('admin_token', res.token || '');
+
           localStorage.setItem('role', res.data.role);
           localStorage.setItem('name', res.data.name || '');
           localStorage.setItem('email', res.data.email || '');

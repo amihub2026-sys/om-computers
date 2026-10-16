@@ -108,3 +108,34 @@
         flex-direction:column;
     }
 }
+
+
+/* Back to Home Button */
+.success-buttons > a:not(.home-btn):not(.products-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 11px 24px;
+  background: #eef3ff;
+  color: #245cf0;
+  border: 1px solid #d6e2ff;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.success-buttons > a:not(.home-btn):not(.products-btn):hover {
+  background: #245cf0;
+  color: #ffffff;
+  border-color: #245cf0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .success-buttons > a:not(.home-btn):not(.products-btn) {
+    width: 100%;
+  }
+}

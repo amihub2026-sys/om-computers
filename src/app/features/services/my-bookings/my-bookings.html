@@ -4,9 +4,11 @@
     <h1>My Service Bookings</h1>
     <p>Track all your service requests in one place.</p>
 
-    <a routerLink="/dashboard" class="back-btn">
-      ← Back to Dashboard
-    </a>
+    
+<a routerLink="/" class="back-btn">
+  ← Back to Home
+</a>
+
   </div>
 
   <p *ngIf="isLoading">Loading bookings...</p>
@@ -51,7 +53,7 @@
 
           <td>
             <a
-              [routerLink]="['/my-bookings', booking._id]"
+              [routerLink]="['/my-orders', booking._id]"
               class="view-btn">
               View
             </a>

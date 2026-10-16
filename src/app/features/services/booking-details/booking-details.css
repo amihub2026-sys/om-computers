@@ -113,3 +113,30 @@
   background: #fee2e2;
   color: #dc2626;
 }
+
+
+.receipt-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.receipt-btn:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 600px) {
+  .receipt-btn {
+    width: 100%;
+  }
+}

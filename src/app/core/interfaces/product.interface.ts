@@ -1,3 +1,10 @@
+
+export interface ProductSpecification {
+  specificationId: string;
+  name: string;
+  value: string;
+}
+
 export interface Product {
   _id?: string;
   name: string;
@@ -11,4 +18,6 @@ export interface Product {
   description?: string;
   image?: string;
   isActive?: boolean;
+
+  specifications?: ProductSpecification[];
 }
